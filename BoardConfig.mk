@@ -15,7 +15,9 @@
 # inherit from the proprietary version
 
 LOCAL_PATH := device/samsung/i927
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/overlay/include
+
+# Disabled GPS fix
+#TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/overlay/include
 
 -include vendor/samsung/i927/BoardConfigVendor.mk
 
