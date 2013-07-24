@@ -16,8 +16,7 @@
 
 LOCAL_PATH := device/samsung/i927
 
-# Disabled GPS fix
-#TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/overlay/include
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/include
 
 -include vendor/samsung/i927/BoardConfigVendor.mk
 
@@ -75,9 +74,9 @@ TARGET_NO_RADIOIMAGE := true
 TARGET_PROVIDES_INIT_RC := true
 
 # RIL
-BOARD_USES_LIBSECRIL_STUB := false
-
 # 3G
+BOARD_PROVIDES_LIBRIL := true
+BOARD_MODEM_TYPE := xmm6260
 BOARD_MOBILEDATA_INTERFACE_NAME := "rmnet0"
 
 # Audio

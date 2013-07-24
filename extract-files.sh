@@ -37,7 +37,6 @@ mkdir -p ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
 ./adb pull /system/lib/egl/libGLESv2_perfhud.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
 
 # RIL files
-./adb pull /system/lib/libril.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 ./adb pull /system/lib/libsec-ril.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 ./adb pull /system/lib/libsecril-client.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 
@@ -170,7 +169,6 @@ chmod 755 ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/nvcpud
 
 # Prebuilt libraries that are needed to build open-source libraries
 PRODUCT_COPY_FILES := \\
-    vendor/__MANUFACTURER__/__DEVICE__/proprietary/libril.so:obj/lib/libril.so \\
     vendor/__MANUFACTURER__/__DEVICE__/proprietary/libsecril-client.so:obj/lib/libsecril-client.so
 
 # HAL
@@ -192,7 +190,6 @@ PRODUCT_COPY_FILES += \\
 
 # RIL files
 PRODUCT_COPY_FILES += \\
-    vendor/__MANUFACTURER__/__DEVICE__/proprietary/libril.so:system/lib/libril.so \\
     vendor/__MANUFACTURER__/__DEVICE__/proprietary/libsec-ril.so:system/lib/libsec-ril.so \\
     vendor/__MANUFACTURER__/__DEVICE__/proprietary/libsecril-client.so:system/lib/libsecril-client.so
 

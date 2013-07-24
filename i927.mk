@@ -176,6 +176,11 @@ PRODUCT_COPY_FILES += \
 # Overlay to set device specific parameters
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
+# RIL
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.telephony.ril_class=SamsungExynos4RIL \
+    mobiledata.interfaces=rmnet0,rmnet1,rmnet2
+         
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
 PRODUCT_PROPERTY_OVERRIDES += \
