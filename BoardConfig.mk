@@ -18,7 +18,6 @@ LOCAL_PATH := device/samsung/i927
 
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/include
 
--include vendor/samsung/i927/BoardConfigVendor.mk
 
 # CPU
 TARGET_ARCH := arm
@@ -160,3 +159,5 @@ TW_EXTERNAL_STORAGE_PATH := "/externalsd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "externalsd"
 TW_NO_REBOOT_BOOTLOADER := true
 TW_DEFAULT_EXTERNAL_STORAGE := true
+
+-include vendor/samsung/i927/BoardConfigVendor.mk
