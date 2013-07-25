@@ -186,7 +186,7 @@ PRODUCT_COPY_FILES += \\
 
 # RIL files
 PRODUCT_COPY_FILES += \\
-    vendor/__MANUFACTURER__/__DEVICE__/proprietary/libsec-ril.so:system/lib/libsec-ril.so \\
+    vendor/__MANUFACTURER__/__DEVICE__/proprietary/libsec-ril.so:system/lib/libsec-ril.so
 
 # SENSORS
 PRODUCT_COPY_FILES += \\
