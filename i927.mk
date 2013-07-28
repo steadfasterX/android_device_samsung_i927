@@ -212,6 +212,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.checkjni=false
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sf.lcd_density=240 \
     ro.com.android.dateformat=yyyy-MM-dd \
     ro.setupwizard.enable_bypass=1 \
     ro.media.dec.jpeg.memcap=20000000 \
