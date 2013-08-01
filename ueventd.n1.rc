@@ -17,7 +17,7 @@
 /dev/link_pm    0666    system  radio
 /dev/block/mmcblk0p5    0660    system  radio
 /dev/block/mmcblk0p7    0660    system  radio
-/dev/usb_mtp_gadget 0660       system  system
+
 # for MPL
 /dev/mpu	0660	system	system
 /dev/mpuirq	0660	system	system
@@ -27,9 +27,15 @@
 
 # for GPS
 /dev/ttyHS0	0660	root		system
+/sys/devices/virtual/sec/gps/GPS* value 0664 radio system
 
 # for FM Radio
 /dev/fmradio	0660	system	audio
+
+# cpufreq
+/sys/devices/system/cpu/cpu* scaling_min_freq 0664 system system
+/sys/devices/system/cpu/cpu* scaling_max_freq 0664 system system
+/sys/devices/system/cpu/cpu* scaling_governor 0664 system system
 
 # for usb printer
 /dev/bus/usb/*         0660        system        usb

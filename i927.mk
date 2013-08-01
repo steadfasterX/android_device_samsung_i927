@@ -48,17 +48,11 @@ DISABLE_DEXPREOPT := false
 
 # INIT-scripts
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/fstab.n1:root/fstab.n1 \
     $(LOCAL_PATH)/lpm.rc:root/lpm.rc \
     $(LOCAL_PATH)/init.n1.rc:root/init.n1.rc \
     $(LOCAL_PATH)/init.n1.usb.rc:root/init.n1.usb.rc \
     $(LOCAL_PATH)/ueventd.n1.rc:root/ueventd.n1.rc \
-    $(LOCAL_PATH)/init.rc:root/init.rc
-
-# Prebuilt modules
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/dhd.ko:root/lib/modules/dhd.ko \
-    $(LOCAL_PATH)/prebuilt/scsi_wait_scan.ko:root/lib/modules/scsi_wait_scan.ko \
-    $(LOCAL_PATH)/prebuilt/modules.dep:root/lib/modules/modules.dep
 
 # Vold and Storage
 PRODUCT_COPY_FILES += \

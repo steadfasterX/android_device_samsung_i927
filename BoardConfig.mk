@@ -42,13 +42,15 @@ TARGET_USERIMAGES_USE_EXT4 := true
 
 BOARD_NAND_PAGE_SIZE := 4096
 BOARD_NAND_SPARE_SIZE := 128
-#BOARD_KERNEL_PAGESIZE := 2048
-#BOARD_KERNEL_BASE := 0x10000000
-#BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
-# Changed to match LiteKernel configuration
-BOARD_KERNEL_PAGESIZE := 4096
-BOARD_KERNEL_BASE := 0x81600000
-BOARD_KERNEL_CMDLINE := 
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_BASE := 0x10000000
+BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
+KERNEL_MODULES_DIR := /system/lib/modules
+TARGET_KERNEL_SOURCE := kernel/samsung/i927
+TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
+#TARGET_PREBUILT_KERNEL := device/samsung/i927/prebuilt/kernel
+#TARGET_PREBUILT_RECOVERY := device/samsung/i927/prebuilt/recovery.img
+
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 8388608
@@ -60,18 +62,11 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
 
-#TARGET_KERNEL_SOURCE := kernel/samsung/i927
-#TARGET_KERNEL_CONFIG := tegra_bose_defconfig
-TARGET_PREBUILT_KERNEL := device/samsung/i927/prebuilt/kernel
-TARGET_PREBUILT_RECOVERY := device/samsung/i927/prebuilt/recovery.img
 
 TARGET_NO_KERNEL := false
 TARGET_NO_RECOVERY := false
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
-
-# Use our init.rc
-TARGET_PROVIDES_INIT_RC := true
 
 # RIL
 # 3G
