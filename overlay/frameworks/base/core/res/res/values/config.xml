@@ -372,7 +372,7 @@
     <!-- Our amoled doesn't animate well. -->
     <bool name="config_animateScreenLights">false</bool>
 
-    <integer name="config_screenOnAnimation">400</integer>
+<!--    <integer name="config_screenOnAnimation">400</integer> -->
 
     <!--Boolean to enable stk functionality on Samsung phones-->
     <bool name="config_samsung_stk">true</bool>
