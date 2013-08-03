@@ -21,9 +21,7 @@ PRODUCT_PACKAGES += \
     librs_jni
 
 # Charger
-PRODUCT_PACKAGES += \
-    charger \
-    charger_res_images
+PRODUCT_PACKAGES += motocharger
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
