@@ -52,10 +52,16 @@ TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 8388608
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8000000
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 5136896 # 5242880 bytes exactly
 BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 629145600
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147483648
 BOARD_FLASH_BLOCK_SIZE := 4096
+
+# Required to build a recovery image of 5MB max
+ifeq ($(TARGET_NO_RECOVERY),false)
+    BOARD_CUSTOM_BOOTIMG_MK := device/samsung/i927/recovery/bootimg.mk
+    TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/i927/recovery/kernel-selinux
+endif
 
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -142,7 +148,7 @@ BOARD_CHARGER_RES := device/samsung/i927/res/charger
 BOARD_SUPPRESS_EMMC_WIPE := true
 
 # Recovery
-TARGET_RECOVERY_INITRC := device/samsung/i927/recovery.rc
+TARGET_RECOVERY_INITRC := $(LOCAL_PATH)/recovery/init.recovery.n1.rc
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/i927/recovery/recovery_keys.c
 BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/i927/recovery/graphics.c
 
@@ -154,9 +160,12 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 DEVICE_RESOLUTION := 480x800
 TW_INTERNAL_STORAGE_PATH := "/sdcard"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
-TW_EXTERNAL_STORAGE_PATH := "/externalsd"
-TW_EXTERNAL_STORAGE_MOUNT_POINT := "externalsd"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 TW_NO_REBOOT_BOOTLOADER := true
 TW_DEFAULT_EXTERNAL_STORAGE := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/pwm-backlight/brightness"
+TW_MAX_BRIGHTNESS := 255
 
 -include vendor/samsung/i927/BoardConfigVendor.mk
