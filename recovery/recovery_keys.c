@@ -1,9 +1,7 @@
 #include <linux/input.h>
-
 #include "recovery_ui.h"
 #include "common.h"
 #include "extendedcommands.h"
-
 #if 0
 int device_toggle_display(volatile char* key_pressed, int key_code) {
     return 0;
@@ -21,7 +19,6 @@ int device_toggle_display(volatile char* key_pressed, int key_code) {
     return get_allow_toggle_display() && (key_code == KEY_HOMEPAGE || key_code == KEY_MENU || key_code == KEY_POWER || key_code == KEY_END);
 }
 #endif
-
 int device_handle_key(int key_code, int visible) {
     if (visible) {
         switch (key_code) {
@@ -56,6 +53,5 @@ int device_handle_key(int key_code, int visible) {
                 }
         }
     }
-
     return NO_ACTION;
 }

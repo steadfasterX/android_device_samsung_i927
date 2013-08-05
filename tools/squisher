@@ -7,9 +7,9 @@
 echo "I9103 SQUISHER"
 echo "================"
 
-DEVICE_OUT=$ANDROID_BUILD_TOP/out/target/product/i9103
-DEVICE_TOP=$ANDROID_BUILD_TOP/device/samsung/i9103
-VENDOR_TOP=$ANDROID_BUILD_TOP/vendor/samsung/i9103
+DEVICE_OUT=$ANDROID_BUILD_TOP/out/target/product/i927
+DEVICE_TOP=$ANDROID_BUILD_TOP/device/samsung/i927
+VENDOR_TOP=$ANDROID_BUILD_TOP/vendor/samsung/i927
 
 OUT_TARGET_HOST=`uname -a | grep Darwin`
 if [ -z "$OUT_TARGET_HOST" ]
