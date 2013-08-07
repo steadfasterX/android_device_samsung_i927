@@ -50,30 +50,20 @@ char const*const PANEL_FILE = "/sys/class/backlight/pwm-backlight/brightness";
 char const*const BUTTON_FILE = "/sys/class/misc/melfas_touchkey/brightness";
 char const*const KEYBOARD_FILE = "/sys/class/sec/sec_stmpe_bl/backlight";
 char const*const NOTIFICATION_FILE_BLN = "/sys/class/misc/backlightnotification/notification_led";
-#define LIGHT_LIMIT 45
-bool button_on = false;
+char const*const LIGHTSENSOR_FILE= "/sys/devices/virtual/lightsensor/switch_cmd/lightsensor_file_state";
+#define LIGHT_LIMIT 30
+#define SENSOR_LIMIT 100
+int keyboard_on = 0;
+int button_on = 0;
+
+// better use panel brightness
+#undef USE_SENSOR
 
 void init_g_lock(void)
 {
     pthread_mutex_init(&g_lock, NULL);
 }
 
-
-static int get_panel_light() {
-    FILE* file = fopen (PANEL_FILE , "r");
-    int i = 0;
-    fscanf (file, "%d", &i); 
-    fclose (file);
-    return i;
-}
-
-int turn_on_light_buttons() {
-    if ( get_panel_light >= LIGHT_LIMIT && button_on ) 
-        err = write_int(KEYBOARD_FILE, 1);
-    else 
-        err = write_int(KEYBOARD_FILE, 0);
-    return err;
-}
 
 static int write_int(char const *path, int value)
 {
@@ -98,6 +88,53 @@ static int write_int(char const *path, int value)
     }
 }
 
+
+static int get_panel_light() {
+    FILE* file = fopen (PANEL_FILE , "r");
+    int i = 0;
+    fscanf (file, "%d", &i); 
+    fclose (file);
+    return i;
+}
+
+
+static int get_sensor_light() {
+    FILE* file = fopen (LIGHTSENSOR_FILE , "r");
+    int i = 0;
+    fscanf (file, "%d", &i); 
+    fclose (file);
+    return i;
+}
+
+
+static int turn_on_light_keyboard() {
+    int err = 0;
+#ifdef USE_SENSOR
+    if ( (get_sensor_light() <= SENSOR_LIMIT ) && keyboard_on )
+#else
+    if ( (get_panel_light() <= LIGHT_LIMIT ) && keyboard_on )
+#endif
+        err = write_int(KEYBOARD_FILE, 1);
+    else 
+        err = write_int(KEYBOARD_FILE, 0);
+    return err;
+}
+
+
+static int turn_on_light_button() {
+    int err = 0;
+#ifdef USE_SENSOR
+    if ( (get_sensor_light() <= SENSOR_LIMIT && button_on ) )
+#else
+    if ( (get_panel_light() <= LIGHT_LIMIT && button_on  ) ) 
+#endif
+        err = write_int(BUTTON_FILE, 255);
+    else 
+        err = write_int(BUTTON_FILE, 0);
+    return err;
+}
+
+
 static int is_lit(struct light_state_t const* state)
 {
     return state->color & 0x00ffffff;
@@ -120,7 +157,8 @@ static int set_light_backlight(struct light_device_t *dev,
     pthread_mutex_lock(&g_lock);
     ALOGV("%s(%d)", __FUNCTION__, brightness);
     err = write_int(PANEL_FILE, brightness);
-    turn_on_light_buttons();
+    turn_on_light_keyboard();
+    turn_on_light_button();
     pthread_mutex_unlock(&g_lock);
 
     return err;
@@ -137,7 +175,11 @@ static int set_light_buttons(struct light_device_t *dev,
 
     pthread_mutex_lock(&g_lock);
     ALOGV("%s(%d)", __FUNCTION__, brightness);
-    err = write_int(BUTTON_FILE, brightness);
+    button_on = (brightness ? 1 : 0);
+    if ( brightness )
+	err = turn_on_light_button();
+    else
+	err = write_int(BUTTON_FILE, brightness);
     pthread_mutex_unlock(&g_lock);
 
     return err;
@@ -148,14 +190,15 @@ static int set_light_keyboard(struct light_device_t* dev,
 {
     int err = 0;
     int on = is_lit (state);
+
+    keyboard_on = on ? 1 : 0;
  
     pthread_mutex_lock(&g_lock);
     ALOGV("%s(%d)", __FUNCTION__, on);
     if ( on )
-        err = turn_on_light_buttons();
+        err = turn_on_light_keyboard();
     else 
         err = write_int(KEYBOARD_FILE, 0);
-    button_on = on ? 1 : 0;
     pthread_mutex_unlock(&g_lock);
  
     return err;
