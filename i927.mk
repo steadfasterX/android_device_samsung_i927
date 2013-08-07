@@ -8,7 +8,6 @@ LOCAL_PATH := device/samsung/i927
 
 PRODUCT_PACKAGES += \
     libnetcmdiface \
-    GlideSettings \
     libOmxCore \
     libOmxVidEnc \
     sec_touchscreen.kcm \
