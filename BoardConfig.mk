@@ -26,7 +26,8 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a
 TARGET_ARCH_VARIANT_CPU := cortex-a9
-TARGET_CPU_VARIANT := cortex-a9
+# TEGRA 2 has no NEON
+TARGET_CPU_VARIANT := generic
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 # DO NOT change the following line to vfpv3 as it is not really supported on our device!
@@ -63,6 +64,9 @@ ifeq ($(TARGET_NO_RECOVERY),false)
     BOARD_CUSTOM_BOOTIMG_MK := device/samsung/i927/recovery/bootimg.mk
     TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/i927/recovery/kernel-selinux
 endif
+
+RECOVERY_FSTAB_VERSION := 2
+TARGET_RECOVERY_FSTAB := device/samsung/i927/recovery.fstab
 
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true

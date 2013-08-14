@@ -1,12 +1,15 @@
-# mount point	fstype	device			[device2]
-/efs 		ext4	/dev/block/mmcblk0p1
-/system 	ext4	/dev/block/mmcblk0p2
-/cache		ext4	/dev/block/mmcblk0p3
-/data		ext4	/dev/block/mmcblk0p6
-/preload	ext4	/dev/block/mmcblk0p11
-/misc		emmc	/dev/block/mmcblk0p5
-/recovery	emmc	/dev/block/mmcblk0p8
-/boot		emmc	/dev/block/mmcblk0p9
-/sdcard		vfat	/dev/block/mmcblk0p4
-/external_sd	vfat	/dev/block/mmcblk1p1
-/sd-ext		ext4	/dev/block/mmcblk1p2
+# Android fstab file.
+#<src>                  <mnt_point>    <type>    <mnt_flags and options>                                     <fs_mgr_flags>
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+
+/dev/block/mmcblk0p1    /efs           ext4      noatime,nosuid,nodev,journal_async_commit,errors=panic      wait
+/dev/block/mmcblk0p2    /system        ext4      ro,noatime                                                  wait
+/dev/block/mmcblk0p3    /cache         ext4      noatime,nosuid,nodev,journal_async_commit,nodelalloc,errors=panic    wait
+
+# data partition must be located at the bottom for supporting device encryption
+/dev/block/mmcblk0p6    /data          ext4      noatime,nosuid,nodev,journal_async_commit,nodelalloc,errors=panic    wait,check,encryptable=footer
+
+/dev/block/mmcblk0p11   /preload       ext4      ro,noatime,nosuid,nodev,journal_async_commit,errors=panic   wait
+/dev/block/mmcblk0p9 /boot emmc defaults defaults
