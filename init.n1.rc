@@ -54,6 +54,7 @@ on boot
     chown dhcp dhcp /data/misc/dhcp
     mkdir /data/wifi 0770 wifi wifi
     mkdir /data/misc/radio 0775 radio system
+    chmod 0644 /proc/cmdline
 
 # external storage emulation
 #    mkdir /data/media 0775 media_rw media_rw

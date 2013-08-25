@@ -52,8 +52,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ueventd.n1.rc:root/ueventd.n1.rc \
 
 # Vold and Storage
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
 
 # Wifi, BT
 PRODUCT_COPY_FILES += \

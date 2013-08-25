@@ -26,13 +26,13 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a
 TARGET_ARCH_VARIANT_CPU := cortex-a9
-# TEGRA 2 has no NEON
-TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT := tegra2
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 # DO NOT change the following line to vfpv3 as it is not really supported on our device!
 TARGET_ARCH_VARIANT_FPU := vfpv3-d16
 ARCH_ARM_HAVE_TLS_REGISTER := true
+ARCH_ARM_USE_NON_NEON_MEMCPY := true
 
 #TARGET_HAVE_TEGRA_ERRATA_657451 := true
 BOARD_VENDOR := samsung
@@ -48,25 +48,22 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
 KERNEL_MODULES_DIR := /system/lib/modules
-TARGET_KERNEL_SOURCE := kernel/samsung/stock
-TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
-
+#TARGET_KERNEL_SOURCE := kernel/samsung/stock
+#TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
+TARGET_PREBUILT_KERNEL := device/samsung/i927/prebuilt/kernel
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 8388608
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 5136896 # 5242880 bytes exactly
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 95136896 # 5242880 bytes exactly
 BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 629145600
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147483648
 BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Required to build a recovery image of 5MB max
-ifeq ($(TARGET_NO_RECOVERY),false)
-    BOARD_CUSTOM_BOOTIMG_MK := device/samsung/i927/recovery/bootimg.mk
-    TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/i927/recovery/kernel-selinux
-endif
-
-RECOVERY_FSTAB_VERSION := 2
-TARGET_RECOVERY_FSTAB := device/samsung/i927/recovery.fstab
+#ifeq ($(TARGET_NO_RECOVERY),false)
+#    BOARD_CUSTOM_BOOTIMG_MK := device/samsung/i927/recovery/bootimg.mk
+#    TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/i927/recovery/kernel-selinux
+#endif
 
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -174,5 +171,9 @@ TW_DEFAULT_EXTERNAL_STORAGE := true
 TW_HAS_DOWNLOAD_MODE := true
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/pwm-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
+
+RECOVERY_FSTAB_VERSION := 2
+TARGET_RECOVERY_FSTAB := device/samsung/i927/fstab.n1
+
 
 -include vendor/samsung/i927/BoardConfigVendor.mk
