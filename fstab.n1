@@ -13,10 +13,10 @@
 
 /dev/block/mmcblk0p8 /recovery         emmc    defaults	recoveryonly
 /dev/block/mmcblk0p9 /boot emmc defaults	recoveryonly
-/dev/block/mmcblk0p4 /storage/sdcard0  vfat    default	recoveryonly
+/dev/block/mmcblk0p4 /storage/sdcard0  vfat    defaults	recoveryonly
 /devices/platform/sdhci-tegra.3/mmc_host/mmc0/mmc0 /storage/sdcard0 auto defaults	voldmanaged=emmc:4,nonremovable
 /dev/block/mmcblk1p1                           /storage/sdcard1      vfat    defaults	recoveryonly
 /devices/platform/sdhci-tegra.2/mmc_host/mmc1 /storage/sdcard1 vfat	defaults	voldmanaged=sdcard:auto
 
-/dev/block/mmcblk0p11   /preload       ext4      ro,noatime,nosuid,nodev,journal_async_commit,errors=panic   wait
+#/dev/block/mmcblk0p11   /preload       ext4      ro,noatime,nosuid,nodev,journal_async_commit,errors=panic   wait
 
