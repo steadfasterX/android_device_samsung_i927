@@ -197,5 +197,5 @@ BOARD_SEPOLICY_UNION := \
 endif
 
 MINI_GAPPS := true
-
+-include vendor/google/tiny_gapps_nonneon_tonyp.mk
 -include vendor/samsung/i927/BoardConfigVendor.mk
