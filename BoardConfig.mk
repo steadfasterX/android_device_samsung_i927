@@ -171,9 +171,31 @@ TW_DEFAULT_EXTERNAL_STORAGE := true
 TW_HAS_DOWNLOAD_MODE := true
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/pwm-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
+TW_NO_SCREEN_BLANK := true
 
 RECOVERY_FSTAB_VERSION := 2
 TARGET_RECOVERY_FSTAB := device/samsung/i927/fstab.n1
+# SElinux
+ifeq ($(HAVE_SELINUX),true)
+BOARD_SEPOLICY_DIRS := \
+    device/samsung/i9103/selinux
 
+BOARD_SEPOLICY_UNION := \
+    file_contexts \
+    file.te \
+    init.te \
+    rild.te \
+    system.te \
+    device.te \
+    domain.te \
+    zygote.te \
+    app.te \
+    surfaceflinger.te \
+    sensors_config.te \
+    compatibility.te
+
+endif
+
+MINI_GAPPS := true
 
 -include vendor/samsung/i927/BoardConfigVendor.mk

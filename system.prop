@@ -51,6 +51,9 @@ ro.telephony.call_ring.multiple=false
 # Render UI with GPU
 debug.sf.hw=1
 
+# Screenshot fix
+ro.bq.gpu_to_cpu_unsupported=1
+
 # Battery Tweaks
 pm.sleep_mode=1
 ro.ril.disable.power.collapse=0

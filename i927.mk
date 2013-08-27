@@ -51,9 +51,16 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.n1.usb.rc:root/init.n1.usb.rc \
     $(LOCAL_PATH)/ueventd.n1.rc:root/ueventd.n1.rc \
 
-# Vold and Storage
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
+# SELinux
+ifeq ($(HAVE_SELINUX),true)
+PRODUCT_PACKAGES += \
+    libselinux libsepol
+endif
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/dhd.ko:system/lib/modules/dhd.ko \
+    $(LOCAL_PATH)/prebuilt/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
+    $(LOCAL_PATH)/prebuilt/modules.dep:root/lib/modules/modules.dep 
 
 # Wifi, BT
 PRODUCT_COPY_FILES += \
