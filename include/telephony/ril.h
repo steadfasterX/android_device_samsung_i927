@@ -516,11 +516,6 @@ typedef struct
   int              pin1_replaced;   /* applicable to USIM, CSIM & ISIM */
   RIL_PinState     pin1;
   RIL_PinState     pin2;
-  int              foo1;            /* Samsung */
-  int              foo2;            /* Samsung */
-  int              foo3;            /* Samsung */
-  int              foo4;            /* Samsung */
-  int              foo5;            /* Samsung */
 } RIL_AppStatus;
 
 /* Deprecated, use RIL_CardStatus_v6 */
@@ -4222,7 +4217,7 @@ void RIL_onRequestComplete(RIL_Token t, RIL_Errno e,
  * @param datalen the length of data in byte
  */
 
-void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
+void RIL_onUnsolicitedResponse(int unsolResponse, void *data,
                                 size_t datalen);
 
 
