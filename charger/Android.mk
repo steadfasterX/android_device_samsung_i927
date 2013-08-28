@@ -11,7 +11,7 @@ LOCAL_SRC_FILES:= \
 	screen.c \
 	main.c
 
-LOCAL_STATIC_LIBRARIES := libunz libcutils libc
+LOCAL_STATIC_LIBRARIES := libunz libcutils libc liblog
 
 # LOCAL_SHARED_LIBRARIES := libhardware libpower
 
