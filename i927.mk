@@ -60,10 +60,10 @@ PRODUCT_PACKAGES += \
     libselinux libsepol
 endif
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/dhd.ko:system/lib/modules/dhd.ko \
-    $(LOCAL_PATH)/prebuilt/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
-    $(LOCAL_PATH)/prebuilt/modules.dep:root/lib/modules/modules.dep 
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/prebuilt/dhd.ko:system/lib/modules/dhd.ko \
+#    $(LOCAL_PATH)/prebuilt/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
+#    $(LOCAL_PATH)/prebuilt/modules.dep:root/lib/modules/modules.dep 
 
 # Wifi, BT
 PRODUCT_COPY_FILES += \
