@@ -55,10 +55,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sysctl.conf:system/etc/sysctl.conf
 
 # SELinux
-ifeq ($(HAVE_SELINUX),true)
 PRODUCT_PACKAGES += \
     libselinux libsepol
-endif
 
 #PRODUCT_COPY_FILES += \
 #    $(LOCAL_PATH)/prebuilt/dhd.ko:system/lib/modules/dhd.ko \

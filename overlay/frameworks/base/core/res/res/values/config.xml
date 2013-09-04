@@ -325,7 +325,7 @@
 	<item>0</item>
 	<item>0</item>
     </integer-array>
-
+     <integer name="config_keyboardBrightnessSettingDefault">1</integer>
     <!-- Minimum screen brightness allowed by the power manager. -->
     <integer name="config_screenBrightnessDim">1</integer>
 

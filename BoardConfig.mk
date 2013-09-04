@@ -175,8 +175,7 @@ TW_NO_SCREEN_BLANK := true
 
 RECOVERY_FSTAB_VERSION := 2
 TARGET_RECOVERY_FSTAB := device/samsung/i927/fstab.n1
-# SElinux
-ifeq ($(HAVE_SELINUX),true)
+
 BOARD_SEPOLICY_DIRS := \
     device/samsung/i927/selinux
 
@@ -193,8 +192,6 @@ BOARD_SEPOLICY_UNION := \
     surfaceflinger.te \
     sensors_config.te \
     compatibility.te
-
-endif
 
 MINI_GAPPS := true
 -include vendor/google/tiny_gapps_nonneon_tonyp.mk
