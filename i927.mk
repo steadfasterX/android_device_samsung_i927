@@ -103,6 +103,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/mkshrc:system/etc/mkshrc \
     $(LOCAL_PATH)/configs/busybox.fstab:system/etc/fstab
 
+# Vold and Storage need total commander
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
+
 # Keylayout
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/usr/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \
