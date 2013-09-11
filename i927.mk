@@ -58,11 +58,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libselinux libsepol
 
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/prebuilt/dhd.ko:system/lib/modules/dhd.ko \
-#    $(LOCAL_PATH)/prebuilt/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
-#    $(LOCAL_PATH)/prebuilt/modules.dep:root/lib/modules/modules.dep 
-
 # Wifi, BT
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
@@ -106,6 +101,11 @@ PRODUCT_COPY_FILES += \
 # Vold and Storage need total commander
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
+
+# twrp compatibility
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/twrp.fstab:system/etc/twrp.fstab
+
 
 # Keylayout
 PRODUCT_COPY_FILES += \
