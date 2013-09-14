@@ -176,6 +176,14 @@ TW_HAS_DOWNLOAD_MODE := true
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/pwm-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
 TW_NO_SCREEN_BLANK := true
+TW_INCLUDE_CRYPTO := true
+TW_CRYPTO_MNT_POINT := "/data"
+TW_CRYPTO_KEY_LOC := "/efs/metadata"
+TW_CRYPTO_FS_TYPE := "ext4"
+TW_INCLUDE_CRYPTO_SAMSUNG := true
+TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,noauto_da_alloc,discard,journal_async_commit,errors=panic      wait,check,encryptable=/efs/metadata"
+TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p6"
+TW_CRYPTO_FS_FLAGS := "0x00000406"
 
 BOARD_SEPOLICY_DIRS := \
     device/samsung/i927/selinux

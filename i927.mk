@@ -102,11 +102,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
 
-# twrp compatibility
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/twrp.fstab:system/etc/twrp.fstab
-
-
 # Keylayout
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/usr/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \
