@@ -8,19 +8,13 @@ LOCAL_PATH := device/samsung/i927
 
 PRODUCT_PACKAGES += \
     libnetcmdiface \
-    libOmxCore \
-    libOmxVidEnc \
-    sec_touchscreen.kcm \
-    dexpreopt \
     com.android.future.usb.accessory \
     SamsungServiceMode \
-    Camera \
     Torch \
-    FM \
-    librs_jni
+    FM
 
 # Charger
-PRODUCT_PACKAGES += motocharger
+PRODUCT_PACKAGES += anicharger
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
