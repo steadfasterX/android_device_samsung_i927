@@ -267,7 +267,7 @@ gr_pixel *gr_fb_data(void)
 void gr_fb_blank(bool blank)
 {
     int ret;
-    ret = ioctl(gr_fb_fd, FBIOBLANK, blank ? FB_BLANK_POWERDOWN : FB_BLANK_UNBLANK);
+    ret = ioctl(gr_fb_fd, FBIOBLANK, blank ? FB_BLANK_NORMAL : FB_BLANK_UNBLANK);
     if (ret < 0)
         perror("ioctl(): blank");
 }

@@ -219,7 +219,7 @@ void screen_uninit(void)
 
 void display_blank(void)
 {
-   if (ioctl(fb->fd, FBIOBLANK, FB_BLANK_POWERDOWN) < 0)
+   if (ioctl(fb->fd, FBIOBLANK, FB_BLANK_NORMAL) < 0)
        ALOGE("display blank failed, fb.fd %d\n", fb->fd);
 }
 

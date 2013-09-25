@@ -184,6 +184,9 @@ TW_INCLUDE_CRYPTO_SAMSUNG := true
 TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,noauto_da_alloc,discard,journal_async_commit,errors=panic      wait,check,encryptable=/efs/metadata"
 TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p6"
 TW_CRYPTO_FS_FLAGS := "0x00000406"
+TW_EXCLUDE_SUPERSU := true
+HAVE_SELINUX := true
+
 
 BOARD_SEPOLICY_DIRS := \
     device/samsung/i927/selinux
