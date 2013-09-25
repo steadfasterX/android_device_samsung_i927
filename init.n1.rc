@@ -329,9 +329,9 @@ on boot
     chown system root /dev/min_online_cpus
     chown system root /dev/cpu_freq_min
     chown system root /dev/cpu_freq_max
-    setprop nvcpud.enabled true
+    setprop nvcpud.enabled false
     setprop nvcpud.config_refresh_ms 30000
-    start nvcpud
+#    start nvcpud
 
 service cpboot-daemon /sbin/cbd -d -o t -p 7
     class main
@@ -423,5 +423,5 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpufreq/interactive/boost_factor 2
     write /sys/devices/system/cpu/cpufreq/interactive/sustain_load 80
     write /sys/module/cpuidle/parameters/lp2_in_idle 1
-    stop nvcpud
+#    stop nvcpud
 
