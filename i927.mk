@@ -74,10 +74,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
 
-# OMX
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/somxreg.conf:system/etc/somxreg.conf
-
 # Camera
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nvcamera.conf:system/etc/nvcamera.conf
