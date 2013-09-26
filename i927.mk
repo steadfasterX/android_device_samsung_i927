@@ -14,7 +14,9 @@ PRODUCT_PACKAGES += \
     FM
 
 # Charger
-PRODUCT_PACKAGES += anicharger
+PRODUCT_PACKAGES += \
+    charger \
+    charger_res_images
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
