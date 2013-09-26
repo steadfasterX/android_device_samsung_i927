@@ -40,7 +40,7 @@ service console /system/bin/sh
     class core
     console
 
-service charger charger
+service charger /charger
     class charger
     user root
     disabled
