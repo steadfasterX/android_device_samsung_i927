@@ -308,3 +308,12 @@ key BUTTON_16 {
     alt:                                '\u263a'
     shift+alt:                          '\uEF03'
 }
+
+key BUTTON_15 {
+    label:                              '\uEF03'
+    number:                             '\uEF03'
+    base:                               '\uEF03'
+    shift:                              '\uEF03'
+    alt:                                '\uEF03'
+    shift+alt:                          '\uEF03'
+}
