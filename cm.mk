@@ -28,7 +28,7 @@ $(call inherit-product, device/samsung/i927/full_i927.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := i927
-PRODUCT_NAME := cm_i927
+PRODUCT_NAME := manta_i927
 PRODUCT_BRAND := Samsung
 PRODUCT_MODEL := SGH-I927
 
