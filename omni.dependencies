@@ -4,10 +4,6 @@
             "target_path": "hardware/samsung"
     },
     {
-        "repository": "android_packages_apps_SamsungServiceMode",
-        "target_path": "packages/apps/SamsungServiceMode"
-    },
-    {
         "repository": "kernel_samsung_i927",
         "target_path": "kernel/samsung/i927",
         "account": "buborh",
