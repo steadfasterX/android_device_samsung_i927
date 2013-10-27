@@ -4,15 +4,15 @@
             "target_path": "hardware/samsung"
     },
     {
-        "repository": "kernel_samsung_i927",
+	"remote":       "github",
+        "repository": "buborh/kernel_samsung_i927",
         "target_path": "kernel/samsung/i927",
-        "account": "buborh",
         "revision":     "stock"
     },
     {
-        "remote":       "github",
-        "account":      "buborh",
-        "repository":   "android_vendor_samsung_i927",
-        "target_path":  "vendor/samsung/i927"
+        "remote":      "github",
+        "repository":   "buborh/android_vendor_samsung_i927",
+        "target_path":  "vendor/samsung/i927",
+	"revision":     "master"
     }
 ]
