@@ -187,6 +187,7 @@ TW_INCLUDE_CRYPTO := true
 #TW_EXCLUDE_SUPERSU := true
 HAVE_SELINUX := true
 
+BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 
 BOARD_SEPOLICY_DIRS := \
     device/samsung/i927/selinux
