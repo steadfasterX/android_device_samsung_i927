@@ -40,9 +40,6 @@ on fs
     mkdir /mnt/modem 0770 radio system
 
 on post-fs-data
-    # sysctl.conf
-    exec /system/xbin/sysctl -p
-
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
