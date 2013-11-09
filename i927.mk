@@ -47,9 +47,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.n1.usb.rc:root/init.n1.usb.rc \
     $(LOCAL_PATH)/ueventd.n1.rc:root/ueventd.n1.rc \
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/sysctl.conf:system/etc/sysctl.conf
-
 # SELinux
 PRODUCT_PACKAGES += \
     libselinux libsepol
