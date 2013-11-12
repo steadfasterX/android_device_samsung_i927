@@ -209,7 +209,7 @@ BOARD_SEPOLICY_UNION := \
     sensors_config.te \
     compatibility.te
 
-#MINI_GAPPS := true
-#GAPPS_INCLUDE_FACELOCK := true
-#-include vendor/google/tiny_gapps_nonneon_tonyp.mk
+MINI_GAPPS := true
+GAPPS_INCLUDE_FACELOCK := true
+-include vendor/google/tiny_gapps_nonneon_tonyp.mk
 -include vendor/samsung/i927/BoardConfigVendor.mk
