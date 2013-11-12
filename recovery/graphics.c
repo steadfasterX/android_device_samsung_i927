@@ -136,7 +136,7 @@ void gr_font_size(int *x, int *y)
     *x = gr_font->cwidth;
     *y = gr_font->cheight;
 }
-int gr_text(int x, int y, const char *s)
+int gr_text(int x, int y, const char *s, int bold)
 {
     GGLContext *gl = gr_context;
     GRFont *font = gr_font;
