@@ -26,7 +26,7 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a
 TARGET_ARCH_VARIANT_CPU := cortex-a9
-TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT := tegra2
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 # DO NOT change the following line to vfpv3 as it is not really supported on our device!
@@ -189,4 +189,24 @@ HAVE_SELINUX := true
 
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 
+BOARD_SEPOLICY_DIRS := \
+    device/samsung/i927/selinux
+
+BOARD_SEPOLICY_UNION := \
+    file_contexts \
+    file.te \
+    init.te \
+    rild.te \
+    system.te \
+    device.te \
+    domain.te \
+    zygote.te \
+    app.te \
+    surfaceflinger.te \
+    sensors_config.te \
+    compatibility.te
+
+MINI_GAPPS := true
+GAPPS_INCLUDE_FACELOCK := true
+-include vendor/google/tiny_gapps_nonneon_tonyp.mk
 -include vendor/samsung/i927/BoardConfigVendor.mk
