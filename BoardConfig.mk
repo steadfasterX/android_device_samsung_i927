@@ -185,6 +185,8 @@ TW_INCLUDE_CRYPTO := true
 #TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p6"
 #TW_CRYPTO_FS_FLAGS := "0x00000406"
 #TW_EXCLUDE_SUPERSU := true
+TWHAVE_SELINUX := true
+
 HAVE_SELINUX := true
 
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
