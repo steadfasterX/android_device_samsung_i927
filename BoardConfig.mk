@@ -46,7 +46,7 @@ BOARD_NAND_PAGE_SIZE := 4096
 BOARD_NAND_SPARE_SIZE := 128
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE := 0x10000000
-BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
+BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ttyUSB0,115200 console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
 KERNEL_MODULES_DIR := /system/lib/modules
 TARGET_KERNEL_SOURCE := kernel/samsung/i927
 TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
@@ -95,6 +95,7 @@ COMMON_GLOBAL_CFLAGS += -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK
 # Graphics
 BOARD_EGL_CFG := device/samsung/i927/configs/egl.cfg
 USE_OPENGL_RENDERER := true
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # Enable WEBGL in WebKit
 ENABLE_WEBGL := true
@@ -185,10 +186,30 @@ TW_INCLUDE_CRYPTO := true
 #TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p6"
 #TW_CRYPTO_FS_FLAGS := "0x00000406"
 #TW_EXCLUDE_SUPERSU := true
-TWHAVE_SELINUX := true
-
 HAVE_SELINUX := true
 
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
+
+
+# SElinux
+ifeq ($(HAVE_SELINUX),true)
+BOARD_SEPOLICY_DIRS := \
+    device/samsung/i9103/selinux
+
+BOARD_SEPOLICY_UNION := \
+    file_contexts \
+    file.te \
+    init.te \
+    rild.te \
+    system.te \
+    device.te \
+    domain.te \
+    zygote.te \
+    app.te \
+    surfaceflinger.te \
+    sensors_config.te \
+    compatibility.te
+
+endif
 
 -include vendor/samsung/i927/BoardConfigVendor.mk
