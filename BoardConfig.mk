@@ -187,6 +187,8 @@ TW_NO_SCREEN_BLANK := true
 #TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p6"
 #TW_CRYPTO_FS_FLAGS := "0x00000406"
 #TW_EXCLUDE_SUPERSU := true
+TWHAVE_SELINUX := true
+
 HAVE_SELINUX := true
 
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
@@ -194,7 +196,7 @@ BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 # SElinux
 ifeq ($(HAVE_SELINUX),true)
 BOARD_SEPOLICY_DIRS := \
-    device/samsung/i9103/selinux
+    device/samsung/i927/selinux
 
 BOARD_SEPOLICY_UNION := \
     file_contexts \
