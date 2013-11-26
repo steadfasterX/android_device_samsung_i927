@@ -146,9 +146,9 @@ BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p2
 # LPM charge mode, should be /sys/module/kernel/parameters/lpm_boot but doesnt works
 # /sys/class/power_supply/battery/batt_charging_source equals 2 when a branded charger is connected
 #
-BOARD_CHARGING_MODE_BOOTING_LPM := "/sys/class/power_supply/ac/online"
-BOARD_BATTERY_DEVICE_NAME := "battery"
-BOARD_CHARGER_RES := $(LOCAL_PATH)/res/charger
+#BOARD_CHARGING_MODE_BOOTING_LPM := "/sys/class/power_supply/ac/online"
+#BOARD_BATTERY_DEVICE_NAME := "battery"
+#BOARD_CHARGER_RES := $(LOCAL_PATH)/res/charger
 
 # EMMC brickbug is removed in the kernel, but be better safe than sorry.
 BOARD_SUPPRESS_EMMC_WIPE := true

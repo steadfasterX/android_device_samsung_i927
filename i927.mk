@@ -13,11 +13,6 @@ PRODUCT_PACKAGES += \
     Torch \
     FM
 
-# Charger
-PRODUCT_PACKAGES += \
-    charger \
-    charger_res_images
-
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     static_busybox \
@@ -42,7 +37,6 @@ DISABLE_DEXPREOPT := false
 # INIT-scripts
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/fstab.n1:root/fstab.n1 \
-    $(LOCAL_PATH)/lpm.rc:root/lpm.rc \
     $(LOCAL_PATH)/init.n1.rc:root/init.n1.rc \
     $(LOCAL_PATH)/init.n1.usb.rc:root/init.n1.usb.rc \
     $(LOCAL_PATH)/ueventd.n1.rc:root/ueventd.n1.rc \
