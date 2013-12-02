@@ -15,13 +15,13 @@
 /dev/block/mmcblk0p11   /preload       ext4      ro,noatime,nosuid,nodev,journal_async_commit                wait
 
 # internal sdcard (:4 means 179:4 inode)
-/devices/platform/sdhci-tegra.3/mmc_host/mmc0 /storage/sdcard0  auto default                                 voldmanaged=sdcard0:4,nonremovable,encryptable
+/devices/platform/sdhci-tegra.3/mmc_host/mmc0 /storage/sdcard0  auto default                                 voldmanaged=sdcard0:4,nonremovable,encryptable,noemulatedsd
 
 # external sdcard
-/devices/platform/sdhci-tegra.2/mmc_host/mmc1 /storage/sdcard1  auto default                                 voldmanaged=sdcard1:auto
+/devices/platform/sdhci-tegra.2/mmc_host/mmc1 /storage/sdcard1  auto default                                 voldmanaged=sdcard1:auto,noemulatedsd
 
 # USB storage device
-/devices/platform/tegra-ehci.0/usb            /storage/usbdisk0 auto default                                 voldmanaged=usbdisk0:auto
+/devices/platform/tegra-ehci.0/usb            /storage/usbdisk0 auto default                                 voldmanaged=usbdisk0:auto,noemulatedsd
 
 # recovery
 /dev/block/mmcblk0p9    /boot          emmc      defaults      recoveryonly

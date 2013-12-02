@@ -104,4 +104,4 @@ allow wpa init:unix_dgram_socket sendto;
 allow wpa wifi_data_file:sock_file write;
 
 #============= zygote ==============
-allow zygote security_file:lnk_file read;
+#allow zygote security_file:lnk_file read;

@@ -94,6 +94,8 @@ COMMON_GLOBAL_CFLAGS += -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK
 
 # Graphics
 BOARD_EGL_CFG := device/samsung/i927/configs/egl.cfg
+BOARD_EGL_NEEDS_LEGACY_FB := true
+#EGL_NEEDS_FNW := true
 USE_OPENGL_RENDERER := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
@@ -102,7 +104,6 @@ ENABLE_WEBGL := true
 
 # HWComposer
 BOARD_USES_HWCOMPOSER := true
-BOARD_EGL_NEEDS_LEGACY_FB := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -194,7 +195,7 @@ BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 # SElinux
 ifeq ($(HAVE_SELINUX),true)
 BOARD_SEPOLICY_DIRS := \
-    device/samsung/i9103/selinux
+    device/samsung/i927/selinux
 
 BOARD_SEPOLICY_UNION := \
     file_contexts \
