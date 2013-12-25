@@ -52,6 +52,8 @@ TARGET_KERNEL_SOURCE := kernel/samsung/i927
 TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
 #TARGET_PREBUILT_KERNEL := device/samsung/i927/prebuilt/kernel
 
+BOARD_HAL_STATIC_LIBRARIES := libhealthd.n1
+
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 8388608
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 5136896 # 5242880 bytes exactly
@@ -90,19 +92,25 @@ TARGET_PROVIDES_LIBAUDIO := false
 BOARD_USES_PROPRIETARY_LIBCAMERA := true
 BOARD_SECOND_CAMERA_DEVICE := true
 BOARD_CAMERA_HAVE_ISO := true
-COMMON_GLOBAL_CFLAGS += -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK
+COMMON_GLOBAL_CFLAGS += -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK -DNEEDS_VECTORIMPL_SYMBOLS
 
 # Graphics
 BOARD_EGL_CFG := device/samsung/i927/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
+SKIP_SET_METADATA := true
+BOARD_USE_MHEAP_SCREENSHOT := true
+BOARD_USES_HWCOMPOSER := true
+BOARD_EGL_NEEDS_LEGACY_FB := true
+
 
 # Enable WEBGL in WebKit
 ENABLE_WEBGL := true
 
 # HWComposer
 BOARD_USES_HWCOMPOSER := true
-BOARD_EGL_NEEDS_LEGACY_FB := true
+SENSORS_NEED_SETRATE_ON_ENABLE := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -143,13 +151,6 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/l
 
 BOARD_HAS_SDCARD_INTERNAL := true
 BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p2
-
-# LPM charge mode, should be /sys/module/kernel/parameters/lpm_boot but doesnt works
-# /sys/class/power_supply/battery/batt_charging_source equals 2 when a branded charger is connected
-#
-BOARD_CHARGING_MODE_BOOTING_LPM := "/sys/class/power_supply/ac/online"
-BOARD_BATTERY_DEVICE_NAME := "battery"
-BOARD_CHARGER_RES := $(LOCAL_PATH)/res/charger
 
 # EMMC brickbug is removed in the kernel, but be better safe than sorry.
 BOARD_SUPPRESS_EMMC_WIPE := true

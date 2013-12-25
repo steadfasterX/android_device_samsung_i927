@@ -71,6 +71,7 @@ on boot
     mkdir /efs/imei 0775 radio system
     chown radio system /efs/imei
     chmod 775 /efs/imei
+    chmod 775 /proc/cmdline
 
 # OTG Test
     chown system radio /sys/class/host_notify/usb_otg/booster
@@ -430,6 +431,10 @@ service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/sdcard0 /s
     disabled
 
 service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/sdcard1 /storage/sdcard1
+    class late_start
+    disabled
+
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/usbdisk1 /storage/usbdisk1
     class late_start
     disabled
 

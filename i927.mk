@@ -13,10 +13,6 @@ PRODUCT_PACKAGES += \
     Torch \
     FM
 
-# Charger
-PRODUCT_PACKAGES += \
-    charger \
-    charger_res_images
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -32,6 +28,7 @@ PRODUCT_PACKAGES += \
     camera.tegra \
     gralloc.tegra \
     hwcomposer.tegra \
+    power.tegra \
     audio.primary.n1 \
     audio_policy.n1 \
     audio.a2dp.default
@@ -42,7 +39,6 @@ DISABLE_DEXPREOPT := false
 # INIT-scripts
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/fstab.n1:root/fstab.n1 \
-    $(LOCAL_PATH)/lpm.rc:root/lpm.rc \
     $(LOCAL_PATH)/init.n1.rc:root/init.n1.rc \
     $(LOCAL_PATH)/init.n1.usb.rc:root/init.n1.usb.rc \
     $(LOCAL_PATH)/ueventd.n1.rc:root/ueventd.n1.rc \
@@ -194,6 +190,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.execution-mode=int:jit \
     dalvik.vm.dexopt-data-only=1 \
     hwui.render_dirty_regions=false \
+    debug.hwui.render_dirty_regions=false \
     ro.compcache.default=0 \
     media.stagefright.enable-player=true \
     media.stagefright.enable-meta=true \
