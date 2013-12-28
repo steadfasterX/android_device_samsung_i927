@@ -46,11 +46,13 @@ BOARD_NAND_PAGE_SIZE := 4096
 BOARD_NAND_SPARE_SIZE := 128
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE := 0x10000000
-BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ttyUSB0,115200 console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ttyUSB0,115200 console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
 KERNEL_MODULES_DIR := /system/lib/modules
 TARGET_KERNEL_SOURCE := kernel/samsung/i927
 TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
 #TARGET_PREBUILT_KERNEL := device/samsung/i927/prebuilt/kernel
+
+BOARD_HAL_STATIC_LIBRARIES := libhealthd.n1
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 8388608
@@ -87,23 +89,26 @@ BOARD_USES_GENERIC_AUDIO := false
 TARGET_PROVIDES_LIBAUDIO := false
 
 # Camera
-BOARD_USES_PROPRIETARY_LIBCAMERA := true
 BOARD_SECOND_CAMERA_DEVICE := true
-BOARD_CAMERA_HAVE_ISO := true
-COMMON_GLOBAL_CFLAGS += -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DDICS_CAMERA_BLOB
 
 # Graphics
 BOARD_EGL_CFG := device/samsung/i927/configs/egl.cfg
-BOARD_EGL_NEEDS_LEGACY_FB := true
-#EGL_NEEDS_FNW := true
 USE_OPENGL_RENDERER := true
-TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
+BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
+SKIP_SET_METADATA := true
+BOARD_USE_MHEAP_SCREENSHOT := true
+BOARD_USES_HWCOMPOSER := true
+#BOARD_EGL_NEEDS_LEGACY_FB := true
+BOARD_EGL_NEEDS_FNW := true
 
 # Enable WEBGL in WebKit
 ENABLE_WEBGL := true
 
 # HWComposer
 BOARD_USES_HWCOMPOSER := true
+SENSORS_NEED_SETRATE_ON_ENABLE := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -145,13 +150,6 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/l
 BOARD_HAS_SDCARD_INTERNAL := true
 BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p2
 
-# LPM charge mode, should be /sys/module/kernel/parameters/lpm_boot but doesnt works
-# /sys/class/power_supply/battery/batt_charging_source equals 2 when a branded charger is connected
-#
-BOARD_CHARGING_MODE_BOOTING_LPM := "/sys/class/power_supply/ac/online"
-BOARD_BATTERY_DEVICE_NAME := "battery"
-BOARD_CHARGER_RES := $(LOCAL_PATH)/res/charger
-
 # EMMC brickbug is removed in the kernel, but be better safe than sorry.
 BOARD_SUPPRESS_EMMC_WIPE := true
 
@@ -175,6 +173,7 @@ TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 TW_NO_REBOOT_BOOTLOADER := true
 TW_DEFAULT_EXTERNAL_STORAGE := true
 TW_HAS_DOWNLOAD_MODE := true
+TW_NO_SCREEN_BLANK := true
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/pwm-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
 TW_NO_SCREEN_BLANK := true
@@ -187,14 +186,15 @@ TW_NO_SCREEN_BLANK := true
 #TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p6"
 #TW_CRYPTO_FS_FLAGS := "0x00000406"
 #TW_EXCLUDE_SUPERSU := true
+TWHAVE_SELINUX := true
+
 HAVE_SELINUX := true
 
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 
-
 # SElinux
 ifeq ($(HAVE_SELINUX),true)
-BOARD_SEPOLICY_DIRS := \
+BOARD_SEPOLICY_DIRS += \
     device/samsung/i927/selinux
 
 BOARD_SEPOLICY_UNION += \
@@ -212,5 +212,6 @@ BOARD_SEPOLICY_UNION += \
     compatibility.te
 
 endif
-
+MINI_GAPPS := true
+-include vendor/google/tiny_gapps_nonneon_tonyp.mk
 -include vendor/samsung/i927/BoardConfigVendor.mk
