@@ -191,7 +191,7 @@ HAVE_SELINUX := true
 
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 
-BOARD_SEPOLICY_DIRS := \
+BOARD_SEPOLICY_DIRS += \
     device/samsung/i927/selinux
 
 BOARD_SEPOLICY_UNION += \
