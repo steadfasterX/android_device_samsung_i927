@@ -24,6 +24,7 @@ PRODUCT_PACKAGES += \
     sensors.n1 \
     lights.n1 \
     gps.tegra \
+    camera.tegra \
     power.tegra \
     gralloc.tegra \
     hwcomposer.tegra \
