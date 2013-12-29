@@ -196,6 +196,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dexopt-data-only=1 \
     hwui.render_dirty_regions=false \
     debug.hwui.render_dirty_regions=false \
+    ro.bq.gpu_to_cpu_unsupported=1 \
     ro.compcache.default=0 \
     media.stagefright.enable-player=true \
     media.stagefright.enable-meta=true \

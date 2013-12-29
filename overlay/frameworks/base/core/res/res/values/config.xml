@@ -383,5 +383,8 @@
          when the lid is open, 2 means it is accessible when the lid is
          closed.  The default is 0. -->
     <integer name="config_lidKeyboardAccessibility">1</integer>
-    
+
+    <!-- Boolean indicating whether we want button brightness support -->
+    <bool name="config_button_brightness_support">true</bool>
+
 </resources>
