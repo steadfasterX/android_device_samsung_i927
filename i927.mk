@@ -199,6 +199,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.tether.denied=false \
     ro.flash.resolution=1080
 
+#selinux set to permissive
+PRODUCT_PROPERTY_OVERRIDES += ro.boot.selinux=permissive 
+
+
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
