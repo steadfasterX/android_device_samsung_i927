@@ -52,8 +52,8 @@ else
 fi
 
 
-echo -n "Apply patch 0001-Revert-skia-NEON-blit-optimizations-from-Samsung.patch"
-(cd external/skia; git am ../../device/samsung/i927/patches/0001-Revert-skia-NEON-blit-optimizations-from-Samsung.patch) > /dev/null 2>&1
+echo -n "Apply patch 0001-external-skia-patch.patch"
+(cd external/skia; git am ../../device/samsung/i927/patches/0001-external-skia-patch.patch) > /dev/null 2>&1
 if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
