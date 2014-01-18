@@ -19,7 +19,7 @@
  */
 
 #define LOG_TAG "TinyALSA-Audio Mixer"
-
+#define DD ALOGE( "tinyalsa:%s:%d %s\n" , __FILE__, __LINE__ , __func__);
 #include <fcntl.h>
 #include <errno.h>
 #include <pthread.h>
@@ -40,7 +40,7 @@
  */
 
 struct list_head *list_head_alloc(void)
-{
+{DD
 	struct list_head *list = (struct list_head *)
 		calloc(1, sizeof(struct list_head));
 
@@ -48,7 +48,7 @@ struct list_head *list_head_alloc(void)
 }
 
 void list_head_free(struct list_head *list)
-{
+{DD
 	struct list_head *list_prev;
 
 	while(list != NULL) {
@@ -64,7 +64,7 @@ void list_head_free(struct list_head *list)
  */
 
 struct tinyalsa_mixer_data *tinyalsa_mixer_data_alloc(void)
-{
+{DD
 	struct tinyalsa_mixer_data *mixer_data = (struct tinyalsa_mixer_data *)
 		calloc(1, sizeof(struct tinyalsa_mixer_data));
 
@@ -75,17 +75,17 @@ void tinyalsa_mixer_data_free(struct tinyalsa_mixer_data *mixer_data)
 {
 	if(mixer_data == NULL)
 		return;
-
+DD
 	if(mixer_data->name != NULL) {
 		free(mixer_data->name);
 		mixer_data->name = NULL;
 	}
-
+DD
 	if(mixer_data->value != NULL) {
 		free(mixer_data->value);
 		mixer_data->value = NULL;
 	}
-
+DD
 	if(mixer_data->attr != NULL) {
 		free(mixer_data->attr);
 		mixer_data->attr = NULL;
@@ -98,7 +98,7 @@ struct tinyalsa_mixer_data *tinyalsa_mixer_get_data_with_attr(
 	struct list_head *list_data, char *attr)
 {
 	struct tinyalsa_mixer_data *mixer_data = NULL;
-
+DD
 	while(list_data != NULL) {
 		mixer_data = (struct tinyalsa_mixer_data *) list_data->data;
 
@@ -109,7 +109,7 @@ struct tinyalsa_mixer_data *tinyalsa_mixer_get_data_with_attr(
 			} else {
 				mixer_data = NULL;
 			}
-
+DD
 		}
 
 		if(list_data->next != NULL)
@@ -138,12 +138,12 @@ void tinyalsa_mixer_device_free(struct tinyalsa_mixer_device *mixer_device)
 	struct tinyalsa_mixer_data *mixer_data;
 	struct list_head *list_data;
 	struct list_head *list_prev;
-
+DD
 	if(mixer_device == NULL)
 		return;
 
 	list_data = mixer_device->enable;
-
+DD
 	while(list_data != NULL) {
 		mixer_data = (struct tinyalsa_mixer_data *) list_data->data;
 
@@ -157,7 +157,7 @@ void tinyalsa_mixer_device_free(struct tinyalsa_mixer_device *mixer_device)
 	}
 
 	list_data = mixer_device->disable;
-
+DD
 	while(list_data != NULL) {
 		mixer_data = (struct tinyalsa_mixer_data *) list_data->data;
 
@@ -169,7 +169,7 @@ void tinyalsa_mixer_device_free(struct tinyalsa_mixer_device *mixer_device)
 
 		list_head_free(list_prev);
 	}
-
+DD
 	mixer_device->enable = NULL;
 	mixer_device->disable = NULL;
 
@@ -181,10 +181,10 @@ struct tinyalsa_mixer_device *tinyalsa_mixer_get_device(struct tinyalsa_mixer_io
 {
 	struct tinyalsa_mixer_device *mixer_device = NULL;
 	struct list_head *list = NULL;
-
+DD
 	if(mixer_io == NULL)
 		return NULL;
-
+DD
 	// dump available devices
 	list = mixer_io->devices;
 	while(list != NULL) {
@@ -198,7 +198,7 @@ struct tinyalsa_mixer_device *tinyalsa_mixer_get_device(struct tinyalsa_mixer_io
 		}
 		list = list->next;
 	}
-
+DD
 	list = mixer_io->devices;
 	while(list != NULL) {
 		mixer_device = (struct tinyalsa_mixer_device *) list->data;
@@ -247,12 +247,12 @@ void tinyalsa_mixer_io_free_devices(struct tinyalsa_mixer_io *mixer_io)
 	struct tinyalsa_mixer_device *mixer_device;
 	struct list_head *list_device;
 	struct list_head *list_prev;
-
+DD
 	if(mixer_io == NULL)
 		return;
 
 	list_device = mixer_io->devices;
-
+DD
 	while(list_device != NULL) {
 		mixer_device = (struct tinyalsa_mixer_device *) list_device->data;
 
@@ -277,12 +277,12 @@ void tinyalsa_mixer_config_start(void *data, const XML_Char *elem,
 	struct tinyalsa_mixer_data *mixer_data;
 	struct list_head *list;
 	int i;
-
+DD
 	if(data == NULL || elem == NULL || attr == NULL)
 		return;
 
 	config_data = (struct tinyalsa_mixer_config_data *) data;
-
+DD
 	if(strcmp(elem, "tinyalsa-audio") == 0) {
 		for(i=0 ; attr[i] != NULL && attr[i+1] != NULL ; i++) {
 			if(strcmp(attr[i], "device") == 0) {
@@ -307,19 +307,19 @@ void tinyalsa_mixer_config_start(void *data, const XML_Char *elem,
 				i++;
 				switch(atoi(attr[i])) {
 					case 1:
-						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_MONO;
+						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_MONO;DD
 						break;
 					case 2:
-						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_STEREO;
+						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_STEREO;DD
 						break;
 					case 4:
-						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_SURROUND;
+						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_SURROUND;DD
 						break;
 					case 6:
-						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_5POINT1;
+						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_5POINT1;DD
 						break;
 					case 8:
-						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_7POINT1;
+						config_data->io_props.channel_mask = AUDIO_CHANNEL_OUT_7POINT1;DD
 						break;
 					default:
 						ALOGE("Unknown channel attr: %s", attr[i]);
@@ -402,10 +402,10 @@ void tinyalsa_mixer_config_start(void *data, const XML_Char *elem,
 
 		for(i=0 ; attr[i] != NULL && attr[i+1] ; i++) {
 			if(strcmp(attr[i], "card") == 0) {
-				i++;
+				i++;DD
 				config_data->io_props.card = atoi(attr[i]);
 			} else if(strcmp(attr[i], "device") == 0) {
-				i++;
+				i++;DD
 				config_data->io_props.device = atoi(attr[i]);
 			} else {
 				ALOGE("Unknown modem attr: %s", attr[i]);
@@ -457,7 +457,7 @@ void tinyalsa_mixer_config_start(void *data, const XML_Char *elem,
 						config_data->device_props.type = AUDIO_DEVICE_OUT_FM;
 #endif
 					} else {
-						ALOGE("Unknown device attr: %s", attr[i]);
+						ALOGE("Unknown device attr: %s", attr[i]);DD
 					}
 				} else if(config_data->direction == TINYALSA_MIXER_DIRECTION_INPUT) {
 					if(strcmp(attr[i], "default") == 0) {
@@ -593,24 +593,24 @@ void tinyalsa_mixer_config_end(void *data, const XML_Char *elem)
 	struct tinyalsa_mixer_config_data *config_data;
 	struct list_head *list_prev;
 	struct list_head *list;
-
+DD
 	if(data == NULL || elem == NULL)
 		return;
-
+DD
 	config_data = (struct tinyalsa_mixer_config_data *) data;
 
 	if(strcmp(elem, "output") == 0) {
 		memcpy(&config_data->mixer->output.props, &config_data->io_props, sizeof(config_data->io_props));
-		memset(&config_data->io_props, 0, sizeof(config_data->io_props));
+		memset(&config_data->io_props, 0, sizeof(config_data->io_props));DD
 		config_data->direction = 0;
 	} else if(strcmp(elem, "input") == 0) {
 		memcpy(&config_data->mixer->input.props, &config_data->io_props, sizeof(config_data->io_props));
 		memset(&config_data->io_props, 0, sizeof(config_data->io_props));
-		config_data->direction = 0;
+		config_data->direction = 0;DD
 	} else if(strcmp(elem, "modem") == 0) {
 		memcpy(&config_data->mixer->modem.props, &config_data->io_props, sizeof(config_data->io_props));
 		memset(&config_data->io_props, 0, sizeof(config_data->io_props));
-		config_data->direction = 0;
+		config_data->direction = 0;DD
 	} else if(strcmp(elem, "device") == 0) {
 		// direction == 0 will fallback to out
 		if(config_data->direction == TINYALSA_MIXER_DIRECTION_OUTPUT) {
@@ -624,7 +624,7 @@ void tinyalsa_mixer_config_end(void *data, const XML_Char *elem)
 
 				while(list_prev->next != NULL)
 					list_prev = list_prev->next;
-
+DD
 				list_prev->next = list;
 				list->prev = list_prev;
 			}
@@ -640,7 +640,7 @@ void tinyalsa_mixer_config_end(void *data, const XML_Char *elem)
 				while(list_prev->next != NULL)
 					list_prev = list_prev->next;
 
-				list_prev->next = list;
+				list_prev->next = list;DD
 				list->prev = list_prev;
 			}
 		} else if(config_data->direction == TINYALSA_MIXER_DIRECTION_MODEM) {
@@ -655,7 +655,7 @@ void tinyalsa_mixer_config_end(void *data, const XML_Char *elem)
 				while(list_prev->next != NULL)
 					list_prev = list_prev->next;
 
-				list_prev->next = list;
+				list_prev->next = list;DD
 				list->prev = list_prev;
 			}
 		}
@@ -677,16 +677,16 @@ int tinyalsa_mixer_config_parse(struct tinyalsa_mixer *mixer, char *config_file)
 
 	int eof = 0;
 	int len = 0;
-
+DD
 	if(mixer == NULL || config_file == NULL)
 		return -1;
-
+DD
 	f = fopen(config_file, "r");
 	if(!f) {
 		ALOGE("Failed to open tinyalsa-audio config file!");
 		return -1;
 	}
-
+DD
 	p = XML_ParserCreate(NULL);
 	if(!p) {
 		ALOGE("Failed to create XML parser!");
@@ -695,7 +695,7 @@ int tinyalsa_mixer_config_parse(struct tinyalsa_mixer *mixer, char *config_file)
 
 	memset(&config_data, 0, sizeof(config_data));
 	config_data.mixer = mixer;
-
+DD
 	XML_SetUserData(p, &config_data);
 	XML_SetElementHandler(p, tinyalsa_mixer_config_start, tinyalsa_mixer_config_end);
 
@@ -742,7 +742,7 @@ int tinyalsa_mixer_set_route_ctrl(struct tinyalsa_mixer *mixer,
 	int type;
 	int rc;
 	int i;
-
+DD
 	if(mixer_data->type != MIXER_DATA_TYPE_CTRL)
 		return -1;
 
@@ -754,10 +754,10 @@ int tinyalsa_mixer_set_route_ctrl(struct tinyalsa_mixer *mixer,
 	switch(type) {
 		case MIXER_CTL_TYPE_BOOL:
 			value = strcmp(mixer_data->value, "on") == 0 ?
-				1 : 0;
+				1 : 0;DD
 			break;
 		case MIXER_CTL_TYPE_INT:
-			value = atoi(mixer_data->value);
+			value = atoi(mixer_data->value);DD
 			break;
 		case MIXER_CTL_TYPE_BYTE:
 			value = atoi(mixer_data->value) & 0xff;
@@ -789,7 +789,7 @@ int tinyalsa_mixer_set_route_write(struct tinyalsa_mixer *mixer,
 {
 	char *buffer = NULL;
 	int fd;
-
+DD
 	if(mixer_data->type != MIXER_DATA_TYPE_WRITE)
 		return -1;
 
@@ -806,7 +806,7 @@ int tinyalsa_mixer_set_route_write(struct tinyalsa_mixer *mixer,
 	}
 
 	write(fd, buffer, strlen(buffer) + 1);
-
+DD
 	free(buffer);
 
 	close(fd);
@@ -818,7 +818,7 @@ int tinyalsa_mixer_set_route_list(struct tinyalsa_mixer *mixer, struct list_head
 {
 	struct tinyalsa_mixer_data *mixer_data = NULL;
 	int rc;
-
+DD
 	if(mixer == NULL || mixer->mixer == NULL)
 		return -1;
 
@@ -850,7 +850,7 @@ list_continue:
 		else
 			break;
 	}
-
+DD
 	return 0;
 }
 
@@ -860,7 +860,7 @@ int tinyalsa_mixer_set_route(struct tinyalsa_mixer *mixer,
 	struct tinyalsa_mixer_device *mixer_device = NULL;
 	struct list_head *list = NULL;
 	int rc;
-
+DD
 	if(mixer == NULL || mixer_io == NULL)
 		return -1;
 
@@ -872,7 +872,7 @@ int tinyalsa_mixer_set_route(struct tinyalsa_mixer *mixer,
 		return -1;
 	}
 
-
+DD
 	mixer_device = tinyalsa_mixer_get_device(mixer_io, device);
 	if(mixer_device == NULL) {
 		ALOGE("Unable to find a matching device: 0x%x", device);
@@ -898,7 +898,7 @@ int tinyalsa_mixer_set_route(struct tinyalsa_mixer *mixer,
 		ALOGE("Unable to enable device controls");
 		goto error_mixer;
 	}
-
+DD
 	mixer_io->device_current = mixer_device;
 
 exit_mixer:
@@ -929,7 +929,7 @@ int tinyalsa_mixer_set_device_volume_with_attr(struct tinyalsa_mixer *mixer,
 	int value, value_min, value_max, values_count;
 	char *value_string = NULL;
 	int rc;
-
+DD
 	if(mixer == NULL || attr == NULL)
 		return -1;
 
@@ -937,13 +937,13 @@ int tinyalsa_mixer_set_device_volume_with_attr(struct tinyalsa_mixer *mixer,
 
 	switch(direction) {
 		case TINYALSA_MIXER_DIRECTION_OUTPUT:
-			mixer_io = &mixer->output;
+			mixer_io = &mixer->output;DD
 			break;
 		case TINYALSA_MIXER_DIRECTION_INPUT:
-			mixer_io = &mixer->input;
+			mixer_io = &mixer->input;DD
 			break;
 		case TINYALSA_MIXER_DIRECTION_MODEM:
-			mixer_io = &mixer->modem;
+			mixer_io = &mixer->modem;DD
 			break;
 		default:
 			ALOGE("Invalid diretion: 0x%x", direction);
@@ -997,7 +997,7 @@ int tinyalsa_mixer_set_device_volume_with_attr(struct tinyalsa_mixer *mixer,
 	}
 
 	value = (value_max - value_min) * volume + value_min;
-
+DD
 	// Ugly workaround because a string value is needed
 	value_string = mixer_data->value;
 	asprintf(&mixer_data->value, "%d", value);
@@ -1042,23 +1042,23 @@ int tinyalsa_mixer_set_device_state_with_attr(struct tinyalsa_mixer *mixer,
 	struct tinyalsa_mixer_data *mixer_data = NULL;
 	struct list_head *list = NULL;
 	int rc;
-
+DD
 	if(mixer == NULL || attr == NULL)
 		return -1;
 
 	state = state >= 1 ? 1 : 0;
-
+DD
 	ALOGD("%s(direction=%d, device=%d, attr=%s, state=%d)++",__func__,direction,device,attr,state);
 
 	switch(direction) {
 		case TINYALSA_MIXER_DIRECTION_OUTPUT:
-			mixer_io = &mixer->output;
+			mixer_io = &mixer->output;DD
 			break;
 		case TINYALSA_MIXER_DIRECTION_INPUT:
-			mixer_io = &mixer->input;
+			mixer_io = &mixer->input;DD
 			break;
 		case TINYALSA_MIXER_DIRECTION_MODEM:
-			mixer_io = &mixer->modem;
+			mixer_io = &mixer->modem;DD
 			break;
 		default:
 			ALOGE("Invalid diretion: 0x%x", direction);
@@ -1081,7 +1081,7 @@ int tinyalsa_mixer_set_device_state_with_attr(struct tinyalsa_mixer *mixer,
 		ALOGE("Unable to find a matching device: 0x%x", device);
 		goto error_mixer;
 	}
-
+DD
 	if(state)
 		list = mixer_device->enable;
 	else
@@ -1123,7 +1123,7 @@ int tinyalsa_mixer_set_state(struct tinyalsa_mixer *mixer,
 	struct list_head *list;
 	audio_devices_t default_device;
 	int rc;
-
+DD
 	if(mixer == NULL)
 		return -1;
 
@@ -1148,7 +1148,7 @@ int tinyalsa_mixer_set_state(struct tinyalsa_mixer *mixer,
 			ALOGE("Invalid diretion: 0x%x", direction);
 			return -1;
 	}
-
+DD
 	if(mixer_io->state == state) {
 		ALOGD("Current state is already: %d", state);
 		return 0;
@@ -1195,7 +1195,7 @@ int tinyalsa_mixer_set_state(struct tinyalsa_mixer *mixer,
 
 	mixer_io->device_current = NULL;
 	mixer_io->state = state;
-
+DD
 	mixer_close(mixer->mixer);
 	mixer->mixer = NULL;
 
@@ -1245,7 +1245,7 @@ int tinyalsa_mixer_set_device(struct tinyalsa_mixer *mixer, audio_devices_t devi
 
 	if(mixer == NULL)
 		return -1;
-
+DD
 	if(!audio_is_output_device(device) && !audio_is_input_device(device)) {
 		ALOGE("Invalid device: 0x%x", device);
 		return -1;
@@ -1368,7 +1368,7 @@ void tinyalsa_mixer_close(struct tinyalsa_mixer *mixer)
 	tinyalsa_mixer_set_output_state(mixer, 0);
 	tinyalsa_mixer_set_input_state(mixer, 0);
 	tinyalsa_mixer_set_modem_state(mixer, 0);
-
+DD
 	tinyalsa_mixer_io_free_devices(&mixer->output);
 	tinyalsa_mixer_io_free_devices(&mixer->input);
 	tinyalsa_mixer_io_free_devices(&mixer->modem);
@@ -1387,7 +1387,7 @@ int tinyalsa_mixer_open(struct tinyalsa_mixer **mixer_p, char *config_file)
 		return -1;
 
 	mixer = calloc(1, sizeof(struct tinyalsa_mixer));
-
+DD
 	rc = tinyalsa_mixer_config_parse(mixer, config_file);
 	if(rc < 0) {
 		ALOGE("Unable to parse mixer config!");
@@ -1400,7 +1400,7 @@ int tinyalsa_mixer_open(struct tinyalsa_mixer **mixer_p, char *config_file)
 
 error_mixer:
 	*mixer_p = NULL;
-
+DD
 	free(mixer);
 
 	return -1;

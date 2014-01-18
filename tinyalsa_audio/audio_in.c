@@ -19,7 +19,7 @@
  */
 
 #define LOG_TAG "TinyALSA-Audio Input"
-
+#define DD ALOGE( "tinyalsa:%s:%d %s\n" , __FILE__, __LINE__ , __func__);
 #include <stdlib.h>
 #include <errno.h>
 #include <pthread.h>
@@ -46,21 +46,21 @@ int audio_in_pcm_open(struct tinyalsa_audio_stream_in *stream_in)
 
 	if(stream_in == NULL)
 		return -1;
-
+DD
 	memset(&pcm_config, 0, sizeof(pcm_config));
 	pcm_config.channels = popcount(stream_in->mixer_props->channel_mask);
-	pcm_config.rate = stream_in->mixer_props->rate;
+	pcm_config.rate = stream_in->mixer_props->rate;DD
 	switch(stream_in->mixer_props->format) {
 		case AUDIO_FORMAT_PCM_16_BIT:
-			pcm_config.format = PCM_FORMAT_S16_LE;
+			pcm_config.format = PCM_FORMAT_S16_LE;DD
 			break;
 		case AUDIO_FORMAT_PCM_32_BIT:
-			pcm_config.format = PCM_FORMAT_S32_LE;
+			pcm_config.format = PCM_FORMAT_S32_LE;DD
 			break;
 		default:
 			ALOGE("Invalid format: 0x%x", stream_in->mixer_props->format);
 			return -1;
-	}
+	}DD
 	pcm_config.period_size = stream_in->mixer_props->period_size;
 	pcm_config.period_count = stream_in->mixer_props->period_count;
 
@@ -68,12 +68,12 @@ int audio_in_pcm_open(struct tinyalsa_audio_stream_in *stream_in)
 		stream_in->mixer_props->device, PCM_IN, &pcm_config);
 
 	if(pcm == NULL || !pcm_is_ready(pcm)) {
-		ALOGE("Unable to open pcm device: %s", pcm_get_error(pcm));
+		ALOGE("Unable to open pcm device: %s", pcm_get_error(pcm));DD
 		return -1;
 	}
 
 	stream_in->pcm = pcm;
-
+DD
 	if(stream_in->resampler != NULL)
 		stream_in->resampler->reset(stream_in->resampler);
 
@@ -81,10 +81,10 @@ int audio_in_pcm_open(struct tinyalsa_audio_stream_in *stream_in)
 }
 
 void audio_in_pcm_close(struct tinyalsa_audio_stream_in *stream_in)
-{
+{DD
 	if(stream_in->pcm == NULL)
 		return;
-
+DD
 	pcm_close(stream_in->pcm);
 	stream_in->pcm = NULL;
 }
@@ -93,17 +93,17 @@ int audio_in_set_route(struct tinyalsa_audio_stream_in *stream_in,
 	audio_devices_t device)
 {
 	int rc;
-
+DD
 	if(stream_in == NULL)
 		return -1;
-
+DD
 	stream_in->device_current = device;
 
 	if(device == 0) {
 		pthread_mutex_unlock(&stream_in->lock);
 		return stream_in->stream.common.standby((struct audio_stream *) stream_in);
 	}
-
+DD
 	tinyalsa_mixer_set_device(stream_in->device->mixer, stream_in->device_current);
 
 #ifdef YAMAHA_MC1N2_AUDIO
@@ -120,24 +120,24 @@ int audio_in_set_input_source(struct tinyalsa_audio_stream_in *stream_in,
 	const char *value;
 	struct mixer *mixer;
 	struct mixer_ctl *ctl;
-
+DD
 	if(stream_in == NULL)
 		return -1;
-
+DD
 	switch(input_source) {
 		case AUDIO_SOURCE_CAMCORDER:
-			value = "Camcorder";
+			value = "Camcorder";DD
 			break;
 
 		case AUDIO_SOURCE_VOICE_RECOGNITION:
-			value = "Voice recognition";
+			value = "Voice recognition";DD
 			break;
 
 		default:
 			value = "Default";
 			break;
 	}
-
+DD
 	mixer = mixer_open(0);
 	if (!mixer)
 		return -1;
@@ -147,7 +147,7 @@ int audio_in_set_input_source(struct tinyalsa_audio_stream_in *stream_in,
 		mixer_close(mixer);
 		return -1;
 	}
-
+DD
 	rc = mixer_ctl_set_enum_by_string(ctl, value);
 	if(rc < 0) {
 		mixer_close(mixer);
@@ -165,7 +165,7 @@ int audio_in_resampler_open(struct tinyalsa_audio_stream_in *stream_in)
 
 	if(stream_in == NULL)
 		return -1;
-
+DD
 	rc = create_resampler(stream_in->mixer_props->rate,
 		stream_in->rate,
 		popcount(stream_in->mixer_props->channel_mask),
@@ -176,7 +176,7 @@ int audio_in_resampler_open(struct tinyalsa_audio_stream_in *stream_in)
 		ALOGE("Failed to create resampler");
 		return -1;
 	}
-
+DD
 	stream_in->buffer = malloc(stream_in->mixer_props->period_size *
                                    popcount(stream_in->mixer_props->channel_mask) *
                                    audio_bytes_per_sample(stream_in->mixer_props->format));
@@ -188,15 +188,15 @@ void audio_in_resampler_close(struct tinyalsa_audio_stream_in *stream_in)
 {
 	if(stream_in == NULL)
 		return;
-
+DD
 	if(stream_in->resampler != NULL) {
 		release_resampler(stream_in->resampler);
-		stream_in->resampler = NULL;
+		stream_in->resampler = NULL;DD
 	}
 
 	if(stream_in->buffer != NULL) {
 		free(stream_in->buffer);
-		stream_in->buffer = NULL;
+		stream_in->buffer = NULL;DD
 	}
 }
 
@@ -210,7 +210,7 @@ int audio_in_get_next_buffer(struct resampler_buffer_provider *buffer_provider,
 		return -1;
 
 	stream_in = (struct tinyalsa_audio_stream_in *) ((void *) buffer_provider -
-		offsetof(struct tinyalsa_audio_stream_in, buffer_provider));
+		offsetof(struct tinyalsa_audio_stream_in, buffer_provider));DD
 
 	if(stream_in->frames_left == 0) {
 		if(stream_in->pcm == NULL || !pcm_is_ready(stream_in->pcm)) {
@@ -226,7 +226,7 @@ int audio_in_get_next_buffer(struct resampler_buffer_provider *buffer_provider,
 			ALOGE("pcm read failed!");
 			goto error_pcm;
 		}
-
+DD
 		stream_in->frames_left = stream_in->mixer_props->period_size;
 	}
 
@@ -250,10 +250,10 @@ void audio_in_release_buffer(struct resampler_buffer_provider *buffer_provider,
 	struct resampler_buffer *buffer)
 {
 	struct tinyalsa_audio_stream_in *stream_in;
-
+DD
 	if(buffer_provider == NULL || buffer == NULL)
 		return;
-
+DD
 	stream_in = (struct tinyalsa_audio_stream_in *) ((void *) buffer_provider -
 		offsetof(struct tinyalsa_audio_stream_in, buffer_provider));
 
@@ -263,7 +263,7 @@ void audio_in_release_buffer(struct resampler_buffer_provider *buffer_provider,
 int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buffer, int size)
 {
 	size_t frames_out;
-
+DD
 	size_t frames_in;
 	int size_in;
 	void *buffer_in = NULL;
@@ -275,7 +275,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 	int frames_out_read;
 	int size_out_read;
 	void *buffer_out_read = NULL;
-
+DD
 	int frames_out_channels;
 	int size_out_channels;
 	void *buffer_out_channels = NULL;
@@ -287,7 +287,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 		return -1;
 
 	frames_in = size / audio_stream_frame_size((struct audio_stream *) stream_in);
-
+DD
 	if(stream_in->resampler != NULL) {
 		frames_out_resampler = frames_in;
 		size_out_resampler = frames_out_resampler * popcount(stream_in->mixer_props->channel_mask) * audio_bytes_per_sample(stream_in->mixer_props->format);
@@ -304,7 +304,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 		}
 
 		frames_in = frames_out_resampler;
-		size_in = size_out_resampler;
+		size_in = size_out_resampler;DD
 		buffer_in = buffer_out_resampler;
 	} else {
 		frames_out_read = frames_in;
@@ -312,7 +312,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 		buffer_out_read = calloc(1, size_out_read);
 
 		if(stream_in->pcm == NULL || !pcm_is_ready(stream_in->pcm)) {
-			ALOGE("pcm device is not ready");
+			ALOGE("pcm device is not ready");DD
 			goto error;
 		}
 
@@ -321,7 +321,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 			ALOGE("pcm read failed!");
 			goto error;
 		}
-
+DD
 		frames_in = frames_out_read;
 		size_in = size_out_read;
 		buffer_in = buffer_out_read;
@@ -329,7 +329,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 
 	if(buffer_in == NULL)
 		goto error;
-
+DD
 	//FIXME: This is only for PCM 16
 	if(popcount(stream_in->channel_mask) < popcount(stream_in->mixer_props->channel_mask)) {
 		frames_out_channels = frames_in;
@@ -343,7 +343,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 		int16_t *byte_in = (int16_t *) buffer_in;
 		int16_t *byte_out = (int16_t *) buffer_out_channels;
 		int16_t byte;
-
+DD
 		for(i=0 ; i < frames_out_channels * channels_count_out; i++) {
 			byte = 0;
 			for(j=0 ; j < ratio ; j++) {
@@ -357,7 +357,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 
 		frames_in = frames_out_channels;
 		size_in = size_out_channels;
-		buffer_in = buffer_out_channels;
+		buffer_in = buffer_out_channels;DD
 	} else if(popcount(stream_in->channel_mask) != popcount(stream_in->mixer_props->channel_mask)) {
 		ALOGE("Asked for more channels than hardware can provide!");
 		goto error;
@@ -365,7 +365,7 @@ int audio_in_read_process(struct tinyalsa_audio_stream_in *stream_in, void *buff
 
 	if(buffer_in != NULL)
 		memcpy(buffer, buffer_in, size);
-
+DD
 	if(buffer_out_resampler != NULL)
 		free(buffer_out_resampler);
 	if(buffer_out_read != NULL)
@@ -382,19 +382,19 @@ error:
 		free(buffer_out_read);
 	if(buffer_out_channels != NULL)
 		free(buffer_out_channels);
-
+DD
 	return -1;
 }
 
 static uint32_t audio_in_get_sample_rate(const struct audio_stream *stream)
 {
 	struct tinyalsa_audio_stream_in *stream_in;
-
+DD
 	if(stream == NULL)
 		return 0;
 
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
-
+DD
 	return stream_in->rate;
 }
 
@@ -406,7 +406,7 @@ static int audio_in_set_sample_rate(struct audio_stream *stream, uint32_t rate)
 
 	if(stream == NULL)
 		return -1;
-
+DD
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
 
 	if(stream_in->rate != (int) rate) {
@@ -417,7 +417,7 @@ static int audio_in_set_sample_rate(struct audio_stream *stream, uint32_t rate)
 		if(stream_in->rate != stream_in->mixer_props->rate) {
 			audio_in_resampler_close(stream_in);
 			audio_in_resampler_open(stream_in);
-
+DD
 			stream_in->standby = 1;
 		}
 
@@ -431,10 +431,10 @@ static size_t audio_in_get_buffer_size(const struct audio_stream *stream)
 {
 	struct tinyalsa_audio_stream_in *stream_in;
 	size_t size;
-
+DD
 	if(stream == NULL)
 		return -1;
-
+DD
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
 
 	size = (stream_in->mixer_props->period_size * stream_in->rate) /
@@ -448,24 +448,24 @@ static size_t audio_in_get_buffer_size(const struct audio_stream *stream)
 static audio_channel_mask_t audio_in_get_channels(const struct audio_stream *stream)
 {
 	struct tinyalsa_audio_stream_in *stream_in;
-
+DD
 	if(stream == NULL)
 		return -1;
 
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
-
+DD
 	return stream_in->channel_mask;
 }
 
 static audio_format_t audio_in_get_format(const struct audio_stream *stream)
 {
 	struct tinyalsa_audio_stream_in *stream_in;
-
+DD
 	if(stream == NULL)
 		return -1;
 
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
-
+DD
 	return stream_in->format;
 }
 
@@ -477,7 +477,7 @@ static int audio_in_set_format(struct audio_stream *stream, audio_format_t forma
 
 	if(stream == NULL)
 		return -1;
-
+DD
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
 
 	if(stream_in->format != (audio_format_t) format) {
@@ -505,7 +505,7 @@ static int audio_in_standby(struct audio_stream *stream)
 		return -1;
 
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
-
+DD
 	pthread_mutex_lock(&stream_in->lock);
 
 	if(stream_in->pcm != NULL)
@@ -521,7 +521,7 @@ static int audio_in_standby(struct audio_stream *stream)
 #endif
 
 	stream_in->standby = 1;
-
+DD
 	pthread_mutex_unlock(&stream_in->lock);
 
 	return 0;
@@ -547,14 +547,14 @@ static int audio_in_set_parameters(struct audio_stream *stream, const char *kvpa
 		return -1;
 
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
-
+DD
 	if(stream_in->device == NULL || stream_in->device->mixer == NULL)
 		return -1;
 
 	parms = str_parms_create_str(kvpairs);
 	if(parms == NULL)
 		return -1;
-
+DD
 	rc = str_parms_get_int(parms, AUDIO_PARAMETER_STREAM_INPUT_SOURCE, &value);
 	if(rc == -EINVAL)
 		goto error_params;
@@ -570,7 +570,7 @@ static int audio_in_set_parameters(struct audio_stream *stream, const char *kvpa
 	pthread_mutex_lock(&stream_in->lock);
 	audio_in_set_input_source(stream_in, (audio_source_t) value);
 	pthread_mutex_unlock(&stream_in->lock);
-
+DD
 	pthread_mutex_unlock(&stream_in->device->lock);
 
 	rc = str_parms_get_int(parms, AUDIO_PARAMETER_STREAM_ROUTING, &value);
@@ -580,7 +580,7 @@ static int audio_in_set_parameters(struct audio_stream *stream, const char *kvpa
 		goto other_param;
 
 	pthread_mutex_lock(&stream_in->device->lock);
-
+DD
 	if(stream_in->device_current != (audio_devices_t) value) {
 		pthread_mutex_lock(&stream_in->lock);
 		audio_in_set_route(stream_in, (audio_devices_t) value);
@@ -619,7 +619,7 @@ static int audio_in_set_gain(struct audio_stream_in *stream, float gain)
 		return -1;
 
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
-
+DD
 	if(stream_in->device == NULL || stream_in->device->mixer == NULL)
 		return -1;
 
@@ -641,7 +641,7 @@ static ssize_t audio_in_read(struct audio_stream_in *stream,
 		return -1;
 
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
-
+DD
 	if(stream_in->device == NULL)
 		return -1;
 
@@ -665,7 +665,7 @@ static ssize_t audio_in_read(struct audio_stream_in *stream,
 
 		stream_in->standby = 0;
 	}
-
+DD
 	rc = audio_in_read_process(stream_in, buffer, (int) bytes);
 	if(rc < 0) {
 		ALOGE("Read and process failed!");
@@ -674,19 +674,19 @@ static ssize_t audio_in_read(struct audio_stream_in *stream,
 
 	if(stream_in->device != NULL && stream_in->device->mic_mute)
 		memset(buffer, 0, bytes);
-
+DD
 	pthread_mutex_unlock(&stream_in->lock);
 
 	return bytes;
 
 error:
 	pthread_mutex_unlock(&stream_in->lock);
-
+DD
 	return -1;
 }
 
 static uint32_t audio_in_get_input_frames_lost(struct audio_stream_in *stream)
-{
+{DD
 	return 0;
 }
 
@@ -717,7 +717,7 @@ void audio_hw_close_input_stream(struct audio_hw_device *dev,
 	ALOGD("%s(%p)", __func__, stream);
 
 	stream_in = (struct tinyalsa_audio_stream_in *) stream;
-
+DD
 	if(stream_in != NULL && stream_in->resampler != NULL)
 		audio_in_resampler_close(stream_in);
 
@@ -731,7 +731,7 @@ void audio_hw_close_input_stream(struct audio_hw_device *dev,
 
 	if(dev == NULL)
 		return;
-
+DD
 	tinyalsa_audio_device = (struct tinyalsa_audio_device *) dev;
 
 	pthread_mutex_lock(&tinyalsa_audio_device->lock);
@@ -760,7 +760,7 @@ int audio_hw_open_input_stream(struct audio_hw_device *dev,
 		return -EINVAL;
 
         *stream_in = NULL;
-
+DD
 	tinyalsa_audio_device = (struct tinyalsa_audio_device *) dev;
 	tinyalsa_audio_stream_in = calloc(1, sizeof(struct tinyalsa_audio_stream_in));
 
@@ -786,13 +786,13 @@ int audio_hw_open_input_stream(struct audio_hw_device *dev,
 	stream->set_gain = audio_in_set_gain;
 	stream->read = audio_in_read;
 	stream->get_input_frames_lost = audio_in_get_input_frames_lost;
-
+DD
 	if(tinyalsa_audio_device->mixer == NULL)
 		goto error_stream;
 
 	tinyalsa_audio_stream_in->mixer_props =
 		tinyalsa_mixer_get_input_props(tinyalsa_audio_device->mixer);
-
+DD
 	if(tinyalsa_audio_stream_in->mixer_props == NULL)
 		goto error_stream;
 
@@ -819,7 +819,7 @@ int audio_hw_open_input_stream(struct audio_hw_device *dev,
 			tinyalsa_audio_stream_in->mixer_props->format;
 	else
 		tinyalsa_audio_stream_in->format = config->format;
-
+DD
         tinyalsa_audio_stream_in->buffer_provider.get_next_buffer =
 		audio_in_get_next_buffer;
         tinyalsa_audio_stream_in->buffer_provider.release_buffer =
@@ -836,7 +836,7 @@ int audio_hw_open_input_stream(struct audio_hw_device *dev,
 	config->sample_rate = tinyalsa_audio_stream_in->rate;
 	config->channel_mask = tinyalsa_audio_stream_in->channel_mask;
 	config->format = tinyalsa_audio_stream_in->format;
-
+DD
 	pthread_mutex_lock(&tinyalsa_audio_device->lock);
 
 	rc = tinyalsa_mixer_set_input_state(tinyalsa_audio_device->mixer, 1);
@@ -851,7 +851,7 @@ int audio_hw_open_input_stream(struct audio_hw_device *dev,
 	audio_in_set_route(tinyalsa_audio_stream_in, devices);
 
 	audio_in_set_input_source(tinyalsa_audio_stream_in, AUDIO_SOURCE_DEFAULT);
-
+DD
 	pthread_mutex_unlock(&tinyalsa_audio_device->lock);
 
 	rc = audio_in_pcm_open(tinyalsa_audio_stream_in);
@@ -864,7 +864,7 @@ int audio_hw_open_input_stream(struct audio_hw_device *dev,
 	audio_in_pcm_close(tinyalsa_audio_stream_in);
 
 	tinyalsa_audio_stream_in->standby = 1;
-
+DD
 	pthread_mutex_unlock(&tinyalsa_audio_stream_in->lock);
 
 	*stream_in = stream;
@@ -876,6 +876,6 @@ error_stream:
 		audio_in_resampler_close(tinyalsa_audio_stream_in);
 	free(tinyalsa_audio_stream_in);
 	tinyalsa_audio_device->stream_in = NULL;
-
+DD
 	return -1;
 }

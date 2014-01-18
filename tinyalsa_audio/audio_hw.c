@@ -19,7 +19,7 @@
  */
 
 #define LOG_TAG "TinyALSA-Audio Hardware"
-
+#define DD ALOGE( "tinyalsa:%s:%d %s\n" , __FILE__, __LINE__ , __func__);
 #include <stdlib.h>
 #include <errno.h>
 #include <pthread.h>
@@ -48,7 +48,7 @@ static int audio_hw_init_check(const struct audio_hw_device *dev)
 
 	if(dev == NULL)
 		return -1;
-
+DD
 	device = (struct tinyalsa_audio_device *) dev;
 
 	if(device->mixer == NULL)
@@ -67,14 +67,14 @@ static int audio_hw_set_voice_volume(struct audio_hw_device *dev, float volume)
 	if(dev == NULL)
 		return -1;
 
-	device = (struct tinyalsa_audio_device *) dev;
+	device = (struct tinyalsa_audio_device *) dev;DD
 
 	if(device->mixer == NULL)
 		return -1;
 
 	if(volume != device->voice_volume) {
 		pthread_mutex_lock(&device->lock);
-
+DD
 		if(device->mode == AUDIO_MODE_IN_CALL) {
 			if(device->ril_interface != NULL)
 				device_modem = device->ril_interface->device_current;
@@ -85,7 +85,7 @@ static int audio_hw_set_voice_volume(struct audio_hw_device *dev, float volume)
 
 			tinyalsa_mixer_set_voice_volume(device->mixer,
 				device_modem, volume);
-
+DD
 			if(device->ril_interface != NULL)
 				audio_ril_interface_set_voice_volume(device->ril_interface, device_modem, volume);
 		}
@@ -110,7 +110,7 @@ static int audio_hw_set_master_volume(struct audio_hw_device *dev, float volume)
 		return -1;
 
 	device = (struct tinyalsa_audio_device *) dev;
-
+DD
 	if(device->mixer == NULL)
 		return -1;
 
@@ -136,7 +136,7 @@ static int audio_hw_set_mode(struct audio_hw_device *dev, int mode)
 		return -1;
 
 	device = (struct tinyalsa_audio_device *) dev;
-
+DD
 	if(mode != device->mode) {
 		pthread_mutex_lock(&device->lock);
 
@@ -163,7 +163,7 @@ static int audio_hw_set_mode(struct audio_hw_device *dev, int mode)
 				device->ril_interface = NULL;
 			} else {
 				device->ril_interface = ril_interface;
-
+DD
 				//Only enable dualmic for earpiece.
 				if(device_modem == AUDIO_DEVICE_OUT_EARPIECE)
 					audio_ril_interface_set_twomic(ril_interface,TWO_MIC_SOLUTION_ON);
@@ -173,7 +173,7 @@ static int audio_hw_set_mode(struct audio_hw_device *dev, int mode)
 			}
 		} else if(device->mode == AUDIO_MODE_IN_CALL) {
 			tinyalsa_mixer_set_modem_state(device->mixer, 0);
-
+DD
 			/* 
 			 * Should be safe to ALWAYS disable it on exit
 			 * But we should instrument secril-client to be sure
@@ -209,20 +209,20 @@ static int audio_hw_set_mic_mute(struct audio_hw_device *dev, bool state)
 {
 	struct tinyalsa_audio_device *device;
 	audio_devices_t device_modem;
-
+DD
 	ALOGD("%s(%p, %d)++", __func__, dev, state);
 
 	if(dev == NULL)
 		return -1;
 
 	device = (struct tinyalsa_audio_device *) dev;
-
+DD
 	if(device->mixer == NULL)
 		return -1;
 
 	if(device->mic_mute != state) {
 		pthread_mutex_lock(&device->lock);
-
+DD
 		if(device->mode == AUDIO_MODE_IN_CALL) {
 			if(device->ril_interface != NULL)
 				device_modem = device->ril_interface->device_current;
@@ -230,7 +230,7 @@ static int audio_hw_set_mic_mute(struct audio_hw_device *dev, bool state)
 				device_modem = device->stream_out->device_current;
 			else
 				device_modem = AUDIO_DEVICE_OUT_EARPIECE;
-
+DD
 			tinyalsa_mixer_set_mic_mute(device->mixer,
 				device_modem, state);
 
@@ -244,7 +244,7 @@ static int audio_hw_set_mic_mute(struct audio_hw_device *dev, bool state)
 		}
 
 		device->mic_mute = state;
-
+DD
 		pthread_mutex_unlock(&device->lock);
 	}
 
@@ -263,7 +263,7 @@ static int audio_hw_get_mic_mute(const struct audio_hw_device *dev, bool *state)
 		return -1;
 
 	device = (struct tinyalsa_audio_device *) dev;
-
+DD
 	*state = device->mic_mute;
 
 	return 0;
@@ -281,7 +281,7 @@ static int audio_hw_set_parameters(struct audio_hw_device *dev,
 
 	if(dev == NULL || kvpairs == NULL)
 		return -1;
-
+DD
 	device = (struct tinyalsa_audio_device *) dev;
 
 	if(device->mixer == NULL)
@@ -303,21 +303,21 @@ static int audio_hw_set_parameters(struct audio_hw_device *dev,
 	}
 
 	pthread_mutex_lock(&device->lock);
-
+DD
 	if(audio_is_output_device((audio_devices_t) value)) {
 		if(device->stream_out != NULL && device->stream_out->device_current != (audio_devices_t) value) {
 			pthread_mutex_lock(&device->stream_out->lock);
 			audio_out_set_route(device->stream_out, (audio_devices_t) value);
-			pthread_mutex_unlock(&device->stream_out->lock);
+			pthread_mutex_unlock(&device->stream_out->lock);DD
 		}
 		if(device->ril_interface != NULL && device->ril_interface->device_current != (audio_devices_t) value) {
-			audio_ril_interface_set_route(device->ril_interface, (audio_devices_t) value);
-		}
+			audio_ril_interface_set_route(device->ril_interface, (audio_devices_t) value);DD
+		}DD
 	} else if(audio_is_input_device((audio_devices_t) value)) {
 		if(device->stream_in != NULL && device->stream_in->device_current != (audio_devices_t) value) {
 			pthread_mutex_lock(&device->stream_in->lock);
 			audio_in_set_route(device->stream_in, (audio_devices_t) value);
-			pthread_mutex_unlock(&device->stream_in->lock);
+			pthread_mutex_unlock(&device->stream_in->lock);DD
 		}
 	}
 
@@ -331,9 +331,9 @@ static int audio_hw_set_parameters(struct audio_hw_device *dev,
 
 error_params:
 	ALOGW("%s(%p, %s) PARAMETER ERROR", __func__, dev, kvpairs);
-	str_parms_dump(parms);
+	str_parms_dump(parms);DD
 other_param:
-	str_parms_destroy(parms);
+	str_parms_destroy(parms);DD
 	return -1;
 }
 
@@ -360,10 +360,10 @@ static size_t audio_hw_get_input_buffer_size(const struct audio_hw_device *dev,
 		return -1;
 
 	device = (struct tinyalsa_audio_device *) dev;
-
+DD
 	if(device->mixer == NULL)
 		return -1;
-
+DD
 	mixer_props = tinyalsa_mixer_get_input_props(device->mixer);
 	if(mixer_props == NULL)
 		return -1;
@@ -403,7 +403,7 @@ int audio_hw_close(hw_device_t *device)
 
 		if(tinyalsa_audio_device->mixer != NULL) {
 			tinyalsa_mixer_close(tinyalsa_audio_device->mixer);
-			tinyalsa_audio_device->mixer = NULL;
+			tinyalsa_audio_device->mixer = NULL;DD
 		}
 
 #ifdef YAMAHA_MC1N2_AUDIO
@@ -436,13 +436,13 @@ int audio_hw_open(const hw_module_t *module, const char *name,
 
 	if(strcmp(name, AUDIO_HARDWARE_INTERFACE) != 0)
 		return -EINVAL;
-
+DD
 	tinyalsa_audio_device = calloc(1, sizeof(struct tinyalsa_audio_device));
 	if(tinyalsa_audio_device == NULL)
 		return -ENOMEM;
 
 	dev = &(tinyalsa_audio_device->device);
-
+DD
 	dev->common.tag = HARDWARE_DEVICE_TAG;
 	dev->common.version = AUDIO_DEVICE_API_VERSION_2_0;
 	dev->common.module = (struct hw_module_t *) module;
@@ -455,7 +455,7 @@ int audio_hw_open(const hw_module_t *module, const char *name,
 	dev->set_mic_mute = audio_hw_set_mic_mute;
 	dev->get_mic_mute = audio_hw_get_mic_mute;
 	dev->set_parameters = audio_hw_set_parameters;
-	dev->get_parameters = audio_hw_get_parameters;
+	dev->get_parameters = audio_hw_get_parameters;DD
 	dev->get_input_buffer_size = audio_hw_get_input_buffer_size;
 
 	dev->open_output_stream = audio_hw_open_output_stream;
@@ -483,7 +483,7 @@ int audio_hw_open(const hw_module_t *module, const char *name,
 	rc = tinyalsa_mixer_open(&tinyalsa_mixer, TINYALSA_MIXER_CONFIG_FILE);
 	if(rc < 0 || tinyalsa_mixer == NULL) {
 		ALOGE("Failed to open mixer!");
-		goto error_device;
+		goto error_device;DD
 	}
 
 	tinyalsa_audio_device->mixer = tinyalsa_mixer;

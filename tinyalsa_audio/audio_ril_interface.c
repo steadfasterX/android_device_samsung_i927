@@ -16,7 +16,7 @@
  */
 
 #define LOG_TAG "TinyALSA-Audio RIL Interface"
-
+#define DD ALOGE( "tinyalsa:%s:%d %s\n" , __FILE__, __LINE__ , __func__);
 #include <stdlib.h>
 #include <errno.h>
 #include <pthread.h>
@@ -51,10 +51,10 @@ int (*_ril_get_wb_amr)(void *, void *);
 #define VOLUME_STEPS_PROPERTY "ro.config.vc_call_vol_steps"
 
 static int audio_ril_interface_connect_if_required(struct tinyalsa_audio_ril_interface *ril_interface)
-{
+{DD
     if (_ril_is_connected(ril_interface->interface))
         return 0;
-
+DD
     if (_ril_connect(ril_interface->interface) != RIL_CLIENT_ERR_SUCCESS) {
         ALOGE("ril_connect() failed");
         return -1;
@@ -87,7 +87,7 @@ int audio_ril_interface_set_voice_volume(struct tinyalsa_audio_ril_interface *ri
 	int rc;
 
 	enum ril_sound_type sound_type;
-
+DD
 	if(ril_interface == NULL)
 		return -1;
 
@@ -221,7 +221,7 @@ int audio_ril_interface_set_twomic(struct tinyalsa_audio_ril_interface *ril_inte
 		return -1;
 
 	pthread_mutex_lock(&ril_interface->lock);
-
+DD
 	/* Should this be returning -1 when a failure occurs? */
 	if (audio_ril_interface_connect_if_required(ril_interface))
 	  return 0;
@@ -275,7 +275,7 @@ void audio_ril_interface_close(struct audio_hw_device *dev,
 		return;
 
 	tinyalsa_audio_device = (struct tinyalsa_audio_device *) dev;
-
+DD
 	tinyalsa_audio_device->ril_interface = NULL;
 }
 
@@ -302,7 +302,7 @@ int audio_ril_interface_open(struct audio_hw_device *dev, audio_devices_t device
 
 	if(tinyalsa_audio_ril_interface == NULL)
 		return -ENOMEM;
-
+DD
 	tinyalsa_audio_ril_interface->device = tinyalsa_audio_device;
 	tinyalsa_audio_device->ril_interface = tinyalsa_audio_ril_interface;
 
@@ -341,7 +341,7 @@ int audio_ril_interface_open(struct audio_hw_device *dev, audio_devices_t device
 		ALOGE("Unable to open audio ril interface");
 		goto error_interface;
 	}
-
+DD
 	tinyalsa_audio_ril_interface->interface = interface;
 	tinyalsa_audio_ril_interface->dl_handle = dl_handle;
 
