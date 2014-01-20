@@ -226,7 +226,7 @@ static int set_light_leds_notifications(struct light_device_t *dev,
     	if (state->color & 0x00ffffff) {
     		ALOGV("[LED Notify] set_light_leds_notifications - ENABLE_BL\n");
             	err = write_int (NOTIFICATION_FILE_BLN, ENABLE_BL);
-    	} else {
+    	} else if ( !button_on  ) {
     		ALOGV("[LED Notify] set_light_leds_notifications - DISABLE_BL\n");
     		err = write_int (NOTIFICATION_FILE_BLN, DISABLE_BL);
     	}
