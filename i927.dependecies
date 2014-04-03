@@ -1,0 +1,38 @@
+[
+    {
+	"remote":       "github",
+	"account":      "CyanogenMod",
+        "repository": 	"android_hardware_samsung",
+        "target_path": 	"hardware/samsung",
+	"revision":     "cm-10.2"
+    },
+    {
+	"remote":       "github",
+	"account":      "CyanogenMod",
+        "repository": 	"android_packages_apps_SamsungServiceMode",
+        "target_path": 	"packages/apps/SamsungServiceMode",
+	"revision":     "cm-10.2"
+    },
+    {
+	"remote":       "github",
+        "account": 	"buborh",
+        "repository": 	"kernel_samsung_i927",
+        "target_path": 	"kernel/samsung/i927",
+        "revision":     "stock"
+    },
+    {
+	"remote":       "github",
+        "account": 	"buborh",
+        "repository":   "android_vendor_samsung_i927",
+        "target_path":  "vendor/samsung/i927",
+        "revision":     "omni"
+    },
+    {
+	"remote":       "github",
+        "account": 	"tonyp",
+        "repository":   "android_vendor_google",
+        "target_path":  "vendor/google",
+        "revision":     "cm-11.0"
+    }
+
+]
