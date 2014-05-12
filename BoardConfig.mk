@@ -16,7 +16,7 @@
 
 LOCAL_PATH := device/samsung/i927
 
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/include
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 
 # CPU
@@ -50,7 +50,7 @@ BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fo
 KERNEL_MODULES_DIR := /system/lib/modules
 TARGET_KERNEL_SOURCE := kernel/samsung/i927
 TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
-#TARGET_PREBUILT_KERNEL := device/samsung/i927/prebuilt/kernel
+#TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
 
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.n1
 
@@ -73,8 +73,8 @@ TARGET_NO_RADIOIMAGE := true
 
 # Required to build a recovery image of 5MB max
 ifeq ($(TARGET_NO_RECOVERY),false)
-    BOARD_CUSTOM_BOOTIMG_MK := device/samsung/i927/recovery/bootimg.mk
-    TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/i927/recovery/kernel
+    BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/recovery/bootimg.mk
+    TARGET_PREBUILT_RECOVERY_KERNEL := $(LOCAL_PATH)/recovery/kernel
 endif
 
 
@@ -95,7 +95,7 @@ COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DDICS_CAMERA_BLOB -DHAVE_ISO
 BOARD_CAMERA_HAVE_ISO := true
 
 # Graphics
-BOARD_EGL_CFG := device/samsung/i927/configs/egl.cfg
+BOARD_EGL_CFG := $(LOCAL_PATH)/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
@@ -160,10 +160,10 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 
 # Recovery
 TARGET_RECOVERY_INITRC := $(LOCAL_PATH)/recovery/init.recovery.n1.rc
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/i927/recovery/recovery_keys.c
-BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/i927/recovery/graphics.c
+BOARD_CUSTOM_RECOVERY_KEYMAPPING := $(LOCAL_PATH)/recovery/recovery_keys.c
+BOARD_CUSTOM_GRAPHICS := $(LOCAL_PATH)/recovery/graphics.c
 RECOVERY_FSTAB_VERSION := 2
-TARGET_RECOVERY_FSTAB := device/samsung/i927/fstab.n1
+TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/fstab.n1
 
 BOARD_UMS_LUNFILE := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 BOARD_USES_MMCUTILS := true
@@ -200,7 +200,7 @@ BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 # SElinux
 ifeq ($(HAVE_SELINUX),true)
 BOARD_SEPOLICY_DIRS += \
-    device/samsung/i927/selinux
+    $(LOCAL_PATH)/selinux
 
 BOARD_SEPOLICY_UNION += \
     file_contexts \
