@@ -157,8 +157,8 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 
 # Recovery
 TARGET_RECOVERY_INITRC := $(LOCAL_PATH)/recovery/init.recovery.n1.rc
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := $(LOCAL_PATH)/recovery/recovery_keys.c
-BOARD_CUSTOM_GRAPHICS := $(LOCAL_PATH)/recovery/graphics.c
+BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../$(LOCAL_PATH)/recovery/recovery_keys.c
+BOARD_CUSTOM_GRAPHICS := ../../$(LOCAL_PATH)/recovery/graphics.c
 RECOVERY_FSTAB_VERSION := 2
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/fstab.n1
 
