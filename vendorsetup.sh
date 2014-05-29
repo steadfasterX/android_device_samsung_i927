@@ -87,7 +87,7 @@ fi
 
 echo "Apply patch to vendor/pac"
 echo -n "Apply patch 0001-add-samsung-i927.patch"
-(cd vendor/pac; git am ../device/samsung/i927/patches/0003-Add-tegra2-to-bionic.patch) > /dev/null 2>&1
+(cd vendor/pac; git am ../../device/samsung/i927/patches/0001-add-samsung-i927.patch) > /dev/null 2>&1
 if [ $? == 0 ]; then
     echo "     [DONE]"
 else
