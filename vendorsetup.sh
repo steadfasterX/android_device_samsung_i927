@@ -63,3 +63,24 @@ else
   (cd external/chromium_org; git am --abort)
   echo "     [FAIL]"
 fi
+
+echo "Apply patch to frameworks/native"
+echo -n "Apply patch 0001-Fix-layer-dump-for-tegra2.patch"
+(cd frameworks/native; git am ../../device/samsung/i927/patches/0001-Fix-layer-dump-for-tegra2.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+       echo "     [DONE]"
+else
+       (cd frameworks/native; git am --abort)
+       echo "     [FAIL]"
+fi
+
+echo "Apply patch to bionic"
+echo -n "Apply patch 0003-Add-tegra2-to-bionic.patch"
+(cd bionic; git am ../device/samsung/i927/patches/0003-Add-tegra2-to-bionic.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+    echo "     [DONE]"
+else
+    (cd bionic; git am --abort)
+    echo "     [FAIL]"
+fi
+
