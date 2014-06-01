@@ -26,6 +26,8 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 # Inherit device configuration
 $(call inherit-product, device/samsung/i927/full_i927.mk)
 
+TARGET_BOOTANIMATION_HALF_RES := true
+
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := i927
 PRODUCT_NAME := cm_i927
