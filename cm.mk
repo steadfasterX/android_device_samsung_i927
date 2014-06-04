@@ -34,5 +34,7 @@ PRODUCT_MODEL := SGH-I927
 
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=SGH-I927 TARGET_DEVICE=SGH-I927
 
+TARGET_BOOTANIMATION_HALF_RES := true
+
 # Allow ADB (to access dev settings)
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.debuggable=1 persist.sys.usb.config=mtp persist.service.adb.enable=1
