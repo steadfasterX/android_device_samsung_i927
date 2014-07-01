@@ -29,6 +29,7 @@ PRODUCT_PACKAGES += \
     gralloc.tegra \
     hwcomposer.tegra \
     audio.primary.n1 \
+    audio.primary.n1-alsa \
     audio_policy.n1 \
     audio.a2dp.default
 
@@ -67,7 +68,11 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
+    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
+    $(LOCAL_PATH)/configs/audio_policy.conf.alsa:system/etc/audio_policy.conf.alsa \
+    $(LOCAL_PATH)/tinyalsa_audio/alsas:system/xbin/alsas \
+    $(LOCAL_PATH)/configs/tinyalsa-audio.xml:system/etc/tinyalsa-audio.xml
+
 
 # Camera
 PRODUCT_COPY_FILES += \

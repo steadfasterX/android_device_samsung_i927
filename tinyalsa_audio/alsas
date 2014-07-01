@@ -1,0 +1,103 @@
+#!/system/bin/sh
+# source : http://forum.xda-developers.com/showpost.php?p=53743997&postcount=474
+
+remount() {
+if [ "false" == "$remounted" ] ; then
+  if mount | grep system | grep -q ro ; then 
+    echo "Remounting /system/ read-write"
+    if ! mount -o remount,rw /system ; then echo "Unable to remount /system/, break"; echo "Nothing changed yet."; exit 16 ; fi
+    remounted=true
+  fi
+else 
+  if [[ "true" == "$remounted" ]] ; then 
+    echo "Remounting /system/ read-only again"
+    if ! mount -o remount,ro /system ; then echo "Unable to remount /system/"; fi
+  fi
+fi
+}
+
+current_stack_is_stock() {
+if [[ -f /system/etc/audio_policy.conf.stock ]] ; then
+  return 1
+else
+  return 0
+fi
+}
+
+restart_mediaserver(){
+echo "Restarting mediaserver!"
+stop media
+start media
+}
+
+switch_to_stock(){
+if ! current_stack_is_stock ; then
+  remounted=false
+  remount
+  echo "Current audio stack is tinyalsa, switching to stock"
+  
+  if [[ -f /system/etc/audio_policy.conf.stock ]] ; then
+    echo "Replacing tinyalsa audio_policy.conf by stock version"
+    if ! mv /system/etc/audio_policy.conf /system/etc/audio_policy.conf.alsa; then echo "Unable to move current audio_policy.conf to audio_policy.conf.alsa, break!"; exit 5; fi
+    if ! mv /system/etc/audio_policy.conf.stock /system/etc/audio_policy.conf  ; then echo "Unable to restore stock audio_policy.conf, break!"; echo "Your system is broken now!!"; exit 6; fi
+  else 
+    echo "Stock audio_policy.conf not found, break!"; echo "Nothing changed yet, still using tinyalsa audio stack."; exit 6
+  fi
+  
+  if [[ -f /system/lib/hw/audio.primary.n1.so.stock ]] ; then
+    echo "Replacing tinyalsa audio.primary.n1.so by stock version"
+    if ! mv /system/lib/hw/audio.primary.n1.so /system/lib/hw/audio.primary.n1-alsa.so ; then echo "Unable to move current audio.primary.n1.so to audio.primary.n1-alsa.so, break!"; exit 6; fi
+    if ! mv /system/lib/hw/audio.primary.n1.so.stock /system/lib/hw/audio.primary.n1.so  ; then  echo "Unable to restore stock audio.primary.n1.so, break!"; echo "Your system is broken now!!"; exit 7; fi
+  else 
+    echo "Stock audio.primary.n1.so not found, break!"; echo "Your system is broken now!!"; exit 6
+  fi
+  echo "Stock audio libs installed, GSM calls engaged!"
+  remount
+  restart_mediaserver
+  echo "Successfully done!"
+else
+  echo "Stock audio libs alresdy installed, nothing to do"
+fi
+}
+
+switch_to_tinyalsa(){
+if current_stack_is_stock ; then
+  remounted=false
+  remount
+  echo "Current audio stack is stock, switching to tinyalsa"
+  if [[ -f /system/etc/audio_policy.conf.alsa ]] ; then  echo "Replacing stock audio_policy.conf by tinyalsa version"; else echo "Tinyalsa audio_policy.conf not found, break!"; echo "Nothing changed yet, still using stock audio stack."; exit 9; fi
+  if ! mv /system/etc/audio_policy.conf /system/etc/audio_policy.conf.stock  ; then echo "Unable to make backup of stock audio_policy.conf, break!"; exit 8; fi
+  if ! mv /system/etc/audio_policy.conf.alsa /system/etc/audio_policy.conf  ; then echo "Unable to move audio_policy.conf.alsa to audio_policy.conf, break!"; echo "Your system is broken now!!"; exit 8; fi
+  echo "Replacing stock audio.primary.n1.so by tinyalsa version"
+  if ! mv /system/lib/hw/audio.primary.n1.so /system/lib/hw/audio.primary.n1.so.stock ; then echo "Unable to make backup of stock audio.primary.n1.so, break!"; echo "Your system is broken now!!"; exit 10; fi
+  if [[ -f /system/lib/hw/audio.primary.n1-alsa.so ]] ; then echo "Tinyalsa audio.primary.n1.so found"; else  echo "Tinyalsa audio.primary.n1.so not found, break!"; echo "Your system is broken now!!"; exit 11; fi
+  if ! mv /system/lib/hw/audio.primary.n1-alsa.so  /system/lib/hw/audio.primary.n1.so; then echo "Unable to move audio.primary.n1-alsa.so to audio.primary.n1.so, break!"; echo "Your system is broken now!!"; exit 10; fi
+  echo "Tinyalsa audio libs installed, VoIP calls engaged!"
+  remount
+  restart_mediaserver
+  echo "Successfully done!"
+else
+  echo "Tinyalsa audio libs alresdy installed, nothing to do"
+fi
+}
+
+case $1 in
+stock)
+  switch_to_stock
+;;
+
+tinyalsa)
+  switch_to_tinyalsa
+;;
+
+*)
+  if current_stack_is_stock 
+  then
+    switch_to_tinyalsa
+  else
+    switch_to_stock
+  fi
+;;
+
+esac
+exit 0
