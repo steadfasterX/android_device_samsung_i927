@@ -157,7 +157,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # This is a 16.16 fixed point number
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.zygote.disable_gl_preload=1 \
-    ro.opengles.version=196608
+    ro.opengles.version=131072
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
