@@ -95,3 +95,12 @@ else
     echo "     [FAIL]"
 fi
 
+echo -n "Apply patch 0002-DisplayDevice-Backwards-compatibility-with-old-EGL.patch"
+(cd frameworks/native; git am ../../device/samsung/i927/patches/0002-DisplayDevice-Backwards-compatibility-with-old-EGL.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+        echo "     [DONE]"
+else
+        (cd frameworks/native; git am --abort)
+        echo "     [FAIL]"
+fi
+
