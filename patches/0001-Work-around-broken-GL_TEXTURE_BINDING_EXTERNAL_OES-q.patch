@@ -1,24 +1,21 @@
-From 70160a45ed2bc34ca9516382179af3cbc64f0d24 Mon Sep 17 00:00:00 2001
-From: hjunii <hjunii@gmail.com>
-Date: Wed, 8 Jan 2014 16:57:58 +0900
-Subject: [PATCH 1/1] Work around broken GL_TEXTURE_BINDING_EXTERNAL_OES query
+From 25b8b3593710df17f046b2e5aac1d7cc75be3689 Mon Sep 17 00:00:00 2001
+From: bubor <bubor@dualhoki.vim.hu>
+Date: Thu, 18 Sep 2014 18:26:35 +0200
+Subject: [PATCH 2/2] Work around broken GL_TEXTURE_BINDING_EXTERNAL_OES query
 
-glGetIntegerv(GL_TEXTURE_BINDING_EXTERNAL_OES, &texture_id) returns
-GL_INVALID_ENUM on older Android NVIDIA drivers.
-
-Change-Id: I36e63a674dcb6651e295cd5ef7e78e93816dc24e
+Change-Id: I15886fa200b12c36a1feba9e4b73294bc54a8a01
 ---
- android_webview/browser/scoped_app_gl_state_restore.cc             | 3 ---
- .../service/stream_texture_manager_in_process_android.cc           | 3 ---
- ui/gl/android/surface_texture_bridge.cc                            | 7 +++----
- ui/gl/android/surface_texture_bridge.h                             | 1 +
+ .../browser/scoped_app_gl_state_restore.cc         |    3 ---
+ .../stream_texture_manager_in_process_android.cc   |    3 ---
+ ui/gl/android/surface_texture.cc                   |    7 +++----
+ ui/gl/android/surface_texture.h                    |    1 +
  4 files changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/android_webview/browser/scoped_app_gl_state_restore.cc b/android_webview/browser/scoped_app_gl_state_restore.cc
-index 88f6bf9..a8359e5 100644
+index 6f71eee..dfa4646 100644
 --- a/android_webview/browser/scoped_app_gl_state_restore.cc
 +++ b/android_webview/browser/scoped_app_gl_state_restore.cc
-@@ -147,8 +147,6 @@ ScopedAppGLStateRestore::ScopedAppGLStateRestore(CallMode mode) : mode_(mode) {
+@@ -137,8 +137,6 @@ ScopedAppGLStateRestore::ScopedAppGLStateRestore(CallMode mode) : mode_(mode) {
      TextureBindings& bindings = texture_bindings_[ii];
      glGetIntegerv(GL_TEXTURE_BINDING_2D, &bindings.texture_2d);
      glGetIntegerv(GL_TEXTURE_BINDING_CUBE_MAP, &bindings.texture_cube_map);
@@ -27,7 +24,7 @@ index 88f6bf9..a8359e5 100644
    }
  }
  
-@@ -165,7 +163,6 @@ ScopedAppGLStateRestore::~ScopedAppGLStateRestore() {
+@@ -155,7 +153,6 @@ ScopedAppGLStateRestore::~ScopedAppGLStateRestore() {
      TextureBindings& bindings = texture_bindings_[ii];
      glBindTexture(GL_TEXTURE_2D, bindings.texture_2d);
      glBindTexture(GL_TEXTURE_CUBE_MAP, bindings.texture_cube_map);
@@ -36,7 +33,7 @@ index 88f6bf9..a8359e5 100644
    glActiveTexture(active_texture_);
  
 diff --git a/gpu/command_buffer/service/stream_texture_manager_in_process_android.cc b/gpu/command_buffer/service/stream_texture_manager_in_process_android.cc
-index 11483df..9ad3fbd 100644
+index 2fd5535..8988f02 100644
 --- a/gpu/command_buffer/service/stream_texture_manager_in_process_android.cc
 +++ b/gpu/command_buffer/service/stream_texture_manager_in_process_android.cc
 @@ -20,10 +20,7 @@ StreamTextureManagerInProcess::StreamTextureImpl::StreamTextureImpl(
@@ -45,50 +42,50 @@ index 11483df..9ad3fbd 100644
  void StreamTextureManagerInProcess::StreamTextureImpl::Update() {
 -  GLint texture_id = 0;
 -  glGetIntegerv(GL_TEXTURE_BINDING_EXTERNAL_OES, &texture_id);
-   surface_texture_bridge_->UpdateTexImage();
+   surface_texture_->UpdateTexImage();
 -  glBindTexture(GL_TEXTURE_EXTERNAL_OES, texture_id);
  }
  
  gfx::Size StreamTextureManagerInProcess::StreamTextureImpl::GetSize() {
-diff --git a/ui/gl/android/surface_texture_bridge.cc b/ui/gl/android/surface_texture_bridge.cc
-index 9f2a337..37de404 100644
---- a/ui/gl/android/surface_texture_bridge.cc
-+++ b/ui/gl/android/surface_texture_bridge.cc
-@@ -29,6 +29,7 @@ namespace gfx {
- SurfaceTextureBridge::SurfaceTextureBridge(int texture_id) {
+diff --git a/ui/gl/android/surface_texture.cc b/ui/gl/android/surface_texture.cc
+index 35f9b47..4109efd 100644
+--- a/ui/gl/android/surface_texture.cc
++++ b/ui/gl/android/surface_texture.cc
+@@ -30,6 +30,7 @@ SurfaceTexture::SurfaceTexture(int texture_id) {
    JNIEnv* env = base::android::AttachCurrentThread();
-   j_surface_texture_.Reset(Java_SurfaceTextureBridge_create(env, texture_id));
+   j_surface_texture_.Reset(
+       Java_SurfaceTexturePlatformWrapper_create(env, texture_id));
 +  j_texture_id_ = texture_id;
  }
  
- SurfaceTextureBridge::~SurfaceTextureBridge() {
-@@ -81,12 +82,10 @@ void SurfaceTextureBridge::SetDefaultBufferSize(int width, int height) {
+ SurfaceTexture::~SurfaceTexture() {
+@@ -83,12 +84,10 @@ void SurfaceTexture::SetDefaultBufferSize(int width, int height) {
  
- void SurfaceTextureBridge::AttachToGLContext() {
+ void SurfaceTexture::AttachToGLContext() {
    if (GlContextMethodsAvailable()) {
 -    int texture_id;
 -    glGetIntegerv(GL_TEXTURE_BINDING_EXTERNAL_OES, &texture_id);
 -    DCHECK(texture_id);
 +    DCHECK(j_texture_id_);
      JNIEnv* env = base::android::AttachCurrentThread();
-     Java_SurfaceTextureBridge_attachToGLContext(
+     Java_SurfaceTexturePlatformWrapper_attachToGLContext(
 -        env, j_surface_texture_.obj(), texture_id);
 +        env, j_surface_texture_.obj(), j_texture_id_);
    }
  }
  
-diff --git a/ui/gl/android/surface_texture_bridge.h b/ui/gl/android/surface_texture_bridge.h
-index 474f0c2..3b77505 100644
---- a/ui/gl/android/surface_texture_bridge.h
-+++ b/ui/gl/android/surface_texture_bridge.h
-@@ -65,6 +65,7 @@ class GL_EXPORT SurfaceTextureBridge
+diff --git a/ui/gl/android/surface_texture.h b/ui/gl/android/surface_texture.h
+index 62e375f..5d71501 100644
+--- a/ui/gl/android/surface_texture.h
++++ b/ui/gl/android/surface_texture.h
+@@ -65,6 +65,7 @@ class GL_EXPORT SurfaceTexture
  
    // Java SurfaceTexture instance.
    base::android::ScopedJavaGlobalRef<jobject> j_surface_texture_;
 +  int j_texture_id_;
  
-   DISALLOW_COPY_AND_ASSIGN(SurfaceTextureBridge);
+   DISALLOW_COPY_AND_ASSIGN(SurfaceTexture);
  };
 -- 
-1.8.3.2
+1.7.9.5
 
