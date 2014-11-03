@@ -299,3 +299,40 @@ key APOSTROPHE {
     alt:                                '/'
     shift+alt:                          '/'
 }
+
+# ace - add special keys here BUTTON_1
+# \uef01 = symbol picker
+# \uef03 = www.
+# \uef04 = .com ?
+# things found in source KeyEvent.java KeyCharacterMap.java (need testing)
+# SYM - should be the SYMBOL picker, but its the Input picker
+# PICTSYMBOLS - should be the EMOJI picker
+
+# SYMBOL
+# ace - untill there is a EMOJI picker unicode, fallback is APP_SWITCH/EXPLORER shortcut
+# ace - SYM seems
+key BUTTON_1 {
+    label:                              '\uef01'
+    base:                               '\uef01'
+    shift, capslock, alt:				fallback PICTSYMBOLS
+    shift+alt, capslock+alt:			fallback SCREENSHOT
+}
+
+# DOT_COM
+# no number, label field
+key BUTTON_2 {
+	label:								'\uef04'
+	base:                               '\uef04'
+    shift, capslock:                    '\uef04'
+    alt:                                '\uef03'
+    shift+alt, capslock+alt:            '\uef03'
+}
+
+# VOICESEARCH
+# unicode \uef06 (?), VOICE and VOICESEARCH won't work in AOSP it seems
+key BUTTON_3 {
+	base:								fallback SYM
+    shift, capslock:                    fallback MEDIA_RECORD
+    alt:                                fallback SEARCH
+    shift+alt, capslock+alt:            fallback SEARCH
+}

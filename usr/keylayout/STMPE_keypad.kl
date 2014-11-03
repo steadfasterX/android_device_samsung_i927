@@ -36,17 +36,19 @@ key 105   DPAD_LEFT         WAKE_DROPPED
 key 106   DPAD_RIGHT        WAKE_DROPPED
 key 103   DPAD_UP           WAKE_DROPPED
 key 108   DPAD_DOWN         WAKE_DROPPED
-key 352   DPAD_CENTER       WAKE_DROPPED
+key 352   DPAD_CENTER     WAKE_DROPPED
 key 158   BACK              WAKE_DROPPED
 key 217   SEARCH            WAKE_DROPPED
 key 111   DEL               WAKE_DROPPED
 key 28    ENTER
 key 42    SHIFT_LEFT
+# ace - 464 was FUNCTION
 key 464   ALT_LEFT
 key 214   APOSTROPHE
 # ace - need to double check these, DOT_COM seems custom (there is an AOSP workaround) as does VOICESEARCH
-# [ NAGSM_ANDROID_TELECA_FW_ruindmme_20110318 P110308-0874
-key 125   BUTTON_1 # SYMBOL
-key 150   BUTTON_2 # DOT_COM
-key 126   BUTTON_3 # VOICESEARCH
-# ] NAGSM_ANDROID_TELECA_FW_ruindmme_20110318 P110308-0874
+# SYMBOL
+key 125   BUTTON_1
+# DOT_COM
+key 150   BUTTON_2
+# VOICESEARCH
+key 126   BUTTON_3
