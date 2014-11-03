@@ -24,7 +24,7 @@ What works:
 -Proximity sensor
 -Rotation sensor
 -Front panel touchkey lighting
--Physical keyboard (except a few "special" keys)
+-Physical keyboard
 
 What doesn't (yet):
 -GPS (need to sort out lock issues)
@@ -33,11 +33,11 @@ What doesn't (yet):
 -Probably more, could use more testing.
 
 Notes/TODO:
+-DO NOT RESET APNs, currently bugs out.  Duplicate or enter in new ones.
 -Work on GPS (gps.conf and sirfgps.conf)
--Work on physical keyboard mapping
 -Work on physical keyboard backlighting
 -Look at MTP/UMS
--Work on issues as time permits
+-Work on other issues as time permits
 
 Recent/Significant Changelog:
 -Rewrote/Heavily modified most of the original device tree

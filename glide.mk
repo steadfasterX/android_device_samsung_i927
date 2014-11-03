@@ -4,13 +4,10 @@
 # device-specific aspects (drivers) with a device-agnostic
 # product configuration (apps).
 
-# ace - test here, this should init correctly.
 # proprietary side of the device
 $(call inherit-product-if-exists, vendor/samsung/glide/glide-vendor.mk)
 
 ## Inherit from those products. Most specific first.
-# $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-# $(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
@@ -33,13 +30,11 @@ else
 	LOCAL_KERNEL := $(TARGET_KERNEL_SOURCE)
 endif
 
-# ace - prop files included
-#    libOmxCore \
-#    libOmxVidEnc \
-# ace - streamlined packages
+# ace - add these to local_manifest.xml and then include
+#    SamsungServiceMode \
+#    CMFileManager \
+# Packages
 PRODUCT_PACKAGES += \
-    SamsungServiceMode \
-    CMFileManager \
     Camera \
     Torch \
     Gallery3d \
@@ -81,22 +76,11 @@ PRODUCT_COPY_FILES += \
     device/samsung/glide/scripts/ueventd.n1.rc:root/ueventd.n1.rc \
     device/samsung/glide/scripts/lpm_boot_check.sh:system/bin/lpm_boot_check.sh
 
-# ace - pretty much needed by now, so included it with the normal scripts.  not sure why its being ignored.
-# TARGET_PROVIDES_INIT_RC := true  # setting here SHOULD work, lol
 # debug purpose...
 #ifeq ($(TARGET_PROVIDES_INIT_RC),true)
 	#PRODUCT_COPY_FILES += device/samsung/glide/scripts/init.rc:root/init.rc
 #endif
 
-# ace - legacy audio hack, testing opensource alternative
-#ifeq ($(TARGET_PROVIDES_LIBAUDIO),true)
-#ifeq ($(BOARD_USES_AUDIO_LEGACY),true)
-# PRODUCT_COPY_FILES += \
-#    device/samsung/glide/prebuilt/audio.primary.tegra.so:obj/lib/libaudio.so \
-#    device/samsung/glide/prebuilt/audio_policy.tegra.so:obj/lib/libaudiopolicy.so
-#endif
-
-# ace - added cbd and ua_loader
 # Prebuilt modules
 PRODUCT_COPY_FILES += \
     device/samsung/glide/prebuilt/cbd:root/sbin/cbd \
@@ -105,7 +89,7 @@ PRODUCT_COPY_FILES += \
     device/samsung/glide/prebuilt/scsi_wait_scan.ko:root/lib/modules/scsi_wait_scan.ko \
     device/samsung/glide/prebuilt/modules.dep:root/lib/modules/modules.dep
 
-# ace - start of T9DB
+# T9DB
 PRODUCT_COPY_FILES += \
 	device/samsung/glide/keypad/T9DB/phonepad_cs.kdb:system/T9DB/phonepad_cs.kdb \
 	device/samsung/glide/keypad/T9DB/phonepad_de.kdb:system/T9DB/phonepad_de.kdb \
@@ -163,13 +147,11 @@ PRODUCT_COPY_FILES += \
 	device/samsung/glide/keypad/T9DB/Samsung_400_SKlsUN_xt9.ldb:system/T9DB/Samsung_400_SKlsUN_xt9.ldb \
 	device/samsung/glide/keypad/T9DB/Samsung_400_TRlsUN_xt9.ldb:system/T9DB/Samsung_400_TRlsUN_xt9.ldb \
 	device/samsung/glide/keypad/T9DB/Samsung_400_UKlsUN_xt9.ldb:system/T9DB/Samsung_400_UKlsUN_xt9.ldb
-# ace - end of T9DB
 
 # Vold and Storage
 PRODUCT_COPY_FILES += \
     device/samsung/glide/configs/vold.fstab:system/etc/vold.fstab
 
-# ace - added dhcpcd.conf
 # Wifi, BT, DHCPCD
 PRODUCT_COPY_FILES += \
     device/samsung/glide/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
@@ -180,12 +162,16 @@ PRODUCT_COPY_FILES += \
     device/samsung/glide/configs/gps.conf:system/etc/gps.conf \
     device/samsung/glide/configs/sirfgps.conf:system/etc/sirfgps.conf
 
-# ace - The-Covenant's fix - "backported" to ICS
+# ace - testing extra/updated APNs
+# APNs
+PRODUCT_COPY_FILES += \
+    device/samsung/glide/extras/apns-conf.xml:system/etc/apns-conf.xml
+
+# ace - The-Covenant's libaudio - "backported" to ICS
 # AUDIO 
 PRODUCT_COPY_FILES += \
     device/samsung/glide/libaudio/audio_policy.conf:system/etc/audio_policy.conf
 
-# ace - added some missing configs
 # Media
 PRODUCT_COPY_FILES += \
     device/samsung/glide/configs/media_profiles.xml:system/etc/media_profiles.xml \
@@ -227,7 +213,6 @@ PRODUCT_COPY_FILES += \
     device/samsung/glide/usr/keylayout/Vendor_057e_Product_0306.kl:system/usr/keylayout/Vendor_057e_Product_0306.kl \
     device/samsung/glide/usr/keylayout/Vendor_2378_Product_100a.kl:system/usr/keylayout/Vendor_2378_Product_100a.kl
 
-# ace - sec_touchscreen.kcm gets built?
 # Keychars
 PRODUCT_COPY_FILES += \
     device/samsung/glide/usr/keychars/Generic.kcm:system/usr/keychars/Generic.kcm \
@@ -245,17 +230,6 @@ PRODUCT_COPY_FILES += \
     device/samsung/glide/usr/idc/qwerty.idc:system/usr/idc/qwerty.idc \
     device/samsung/glide/usr/idc/qwerty2.idc:system/usr/idc/qwerty2.idc
 
-# ace - added some "specific" features in tree, cleaned these out as it may be a source of issues
-# - removed android.hardware.telephony.cdma.xml
-# - UCLJ3 missing -
-# - android.hardware.camera.xml (has seccamera)
-# - android.hardware.camera.autofocus.xml
-# - android.hardware.audio.low_latency.xml
-# - android.hardware.location.xml
-# - UCLJ3 has (not requiring add'l framework) -
-# - android.hardware.bluetooth.xml
-# - sec_mdm.xml
-# - samsung.feature.drm.playready.xml
 # ace - Install "additional" features
 PRODUCT_COPY_FILES += \
     device/samsung/glide/configs/permissions/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
@@ -287,21 +261,14 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
-# ACE - moved the build.prop overrides to system.prop and eliminated any duplicates
+# ace - moved the build.prop overrides to system.prop and eliminated any duplicates
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
-# ace - added some things here
 # Set build date
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
-# ace - end
 
-# ace - TEST - limit translations WITH := also, set language first then density
-# PRODUCT_LOCALES += hdpi
-# PRODUCT_LOCALES := en_US hdpi
-
-# ace - for some reason, calling it down here wasn't actually working.  TEST from above!!
 # See comment at the top of this file. This is where the other
 # half of the device-specific product definition file takes care
 # of the aspects that require proprietary drivers that aren't
