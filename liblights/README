@@ -1,0 +1,2 @@
+Modified liblights of CM7.2 with BLN mod for the Samsung Galaxy R (GT-I9103) and Samsung Captivate Glide (SGH-I927) devices.
+Uncomment the line: '#define GLIDE' to build for the I927.

@@ -1,0 +1,141 @@
+#
+# system.prop from device tree
+#
+
+dev.sfbootcomplete=0
+
+# Graphics
+debug.sf.hw=1
+debug.performance.tuning=1
+video.accelerate.hw=1
+ro.flash.resolution=1080
+ro.media.dec.jpeg.memcap=20000000
+ro.media.enc.jpeg.quality=100
+hwui.render_dirty_regions=false
+# ace - was @ 240 set 220 for personal build
+ro.sf.lcd_density=220
+
+# Enable HDMI mirroring
+ro.hdmi.mirror.enable=true
+
+#OpenGL ES version
+ro.opengles.version = 131072
+
+# Dalvik VM Settings
+# ace - increased this a smidge over 64m
+dalvik.vm.heapsize=140m
+dalvik.vm.stack-trace-file=/data/anr/traces.txt
+dalvik.vm.lockprof.threshold=500
+dalvik.vm.heapsize=64m
+dalvik.vm.execution-mode=int:jit
+ro.kernel.android.checkjni=0
+dalvik.vm.checkjni=false
+dalvik.vm.dexopt-data-only=1
+# dalvik.vm.dexopt-flags=m=y
+# Enable detailed GC data and SMP dexopt
+# dalvik.vm.dexopt-flags=m=y,u=n
+
+# Networking Settings
+
+# RIL
+rild.libpath=/system/lib/libsec-ril.so
+rild.libargs=-d /dev/ttyS0
+
+# Default GSM network type.
+ro.telephony.default_network=3
+ro.telephony.sends_barcount=1
+ro.ril.enable.3g.prefix=1
+ro.ril.enable.a53=1
+ro.ril.enable.dtm=1
+ro.ril.hsxpa=2
+ro.ril.hep=1
+# ace - TEST - settings from The-Covenant
+ro.ril.gprsclass=12
+ro.ril.hsdpa.category=14
+ro.ril.hsupa.category=6
+ro.kernel.android.ril=yes
+ro.telephony.ril_class=Smdk4210RIL
+
+# ace - Re-Define TCP buffer sizes for various networks
+# from various xda tweaks, this worked nicely in UCLJ3.
+# uncomment when CM9 build actually works "correctly"
+# ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+# net.tcp.buffersize.default=131072,262144,524288,4096,16384,147456
+# net.tcp.buffersize.wifi=131072,262144,524288,4096,16384,147456
+# net.tcp.buffersize.hspa=131072,262144,524288,4096,16384,147456
+# net.tcp.buffersize.umts=131072,262144,524288,4096,16384,147456
+# net.tcp.buffersize.edge=16384,32768,65536,4096,16384,32768
+# net.tcp.buffersize.gprs=4096,8192,12288,4096,8192,12288
+
+# Wi-Fi/Tethering Settings
+
+# Main wifi network interface
+wifi.interface=wlan0
+
+# Time between scans in seconds. Keep it high to minimize battery drain.
+# This only affects the case in which there are remembered access points,
+# but none are in range.
+wifi.supplicant_scan_interval=90
+
+# To fix the tethering, eth0 should not be listed here
+mobiledata.interfaces=rmnet0
+# mobiledata.interfaces=rmnet0,rmnet1,rmnet2
+ro.tether.denied=false
+softap.interface=wlan0
+ro.wifi-ap.fw-path=/etc/wifi/bcm4330_apsta.bin
+
+# Bluetooth Settings
+
+# File with AOSP format of the bt mac address
+# ace - using UCLJ3 efs path
+ro.bt.bdaddr_path=/efs/bluetooth/bt_addr
+
+# Storage
+persist.sys.storage_preload=1
+
+# Forbid format of these partitions in mount menu :
+ro.cwm.forbid_format=/misc,/radio,/recovery,/efs
+
+# Allow people to exchange sdcard and emmc mountpoints from CMParts
+# Vold switchability
+ro.vold.switchablepair=/mnt/sdcard,/mnt/emmc
+# ace - switch external, off by default.
+persist.sys.vold.switchexternal=0
+
+# Mount the internal SD card, too
+ro.additionalmounts=/mnt/emmc
+
+# Other
+
+# Scrolling cache 0:enable, 1:default enable, 2:default disable, 3:disable
+persist.sys.scrollingcache=1
+
+# Disable strict mod (red border)
+persist.sys.strictmode.disable=1
+
+# Stagefright
+media.stagefright.enable-player=false
+media.stagefright.enable-meta=false
+media.stagefright.enable-scan=false
+media.stagefright.enable-http=true
+media.stagefright.enable-rtsp=false
+
+# Set locale to English (US) by default
+ro.product.locale.language=en
+ro.product.locale.region=US
+
+#
+# ADDITIONAL_DEFAULT_PROPERTIES
+#
+ro.com.google.clientidbase=android-samsung
+ro.com.google.clientidbase.ms=android-att-us
+ro.com.google.clientidbase.am=android-att-us
+ro.com.google.clientidbase.yt=android-samsung
+ro.com.google.clientidbase.gmm=android-samsung
+ro.monkey=0
+ro.com.google.apphider=off
+# ro.setupwizard.mode=OPTIONAL
+ro.com.google.gmsversion=4.0_r5
+ro.kernel.qemu=0
+ro.setupwizard.enable_bypass=1
+ro.compcache.default=0

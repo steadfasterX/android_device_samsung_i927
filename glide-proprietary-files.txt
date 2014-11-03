@@ -1,0 +1,296 @@
+# Add device specific blobs here
+
+# HAL
+# ace - TEST - try opensource where available
+# lib/hw/audio.a2dp.default.so
+# lib/hw/audio_policy.tegra.so
+# lib/hw/audio.primary.tegra.so
+# lib/hw/lights.n1.so
+lib/hw/sensors.n1.so
+lib/hw/camera.tegra.so
+lib/hw/gps.tegra.so
+lib/hw/gralloc.tegra.so
+lib/hw/hwcomposer.tegra.so
+
+# EGL
+lib/egl/libEGL_tegra.so
+lib/egl/libEGL_perfhud.so
+lib/egl/libGLESv1_CM_tegra.so
+lib/egl/libGLESv1_CM_perfhud.so
+lib/egl/libGLESv2_tegra.so
+lib/egl/libGLESv2_perfhud.so
+
+# RIL files
+lib/libril.so
+lib/libsecril-client.so
+lib/libsec-ril.so
+bin/rild
+
+# HDMI
+etc/hdmi/dectable.dat
+etc/hdmi/dectable1.dat
+
+# Camera
+cameradata/datapattern_420sp.yuv
+cameradata/datapattern_front_420sp.yuv
+cameradata/RS_M5LS.bin
+lib/libActionShot.so
+lib/libarccamera.so
+lib/libcaps.so
+lib/libPanoraMax3.so
+lib/libsecjpeginterface.so
+lib/libsecjpegboard.so
+lib/libsecjpegarcsoft.so
+lib/libhdr.so
+lib/libnvcamerahdr.so
+
+# Audio
+# ace - test building tinyalsa
+# lib/libtinyalsa.so
+lib/libaudioeffect_jni.so
+lib/liblvvefs.so
+lib/libSamsungPDLComposer_MD.so
+lib/lib_Samsung_Acoustic_Module_Llite.so
+lib/lib_Samsung_Resampler.so
+lib/lib_Samsung_Sound_Booster.so
+lib/libsamsungAcousticeq.so
+lib/libsamsungSoundbooster.so
+etc/audio/LVVEFS_Rx_Configuration.txt
+etc/audio/LVVEFS_Tx_Configuration.txt
+etc/audio/Rx_ControlParams_BLUETOOTH_HEADSET.txt
+etc/audio/Rx_ControlParams_EARPIECE_WIDEBAND.txt
+etc/audio/Rx_ControlParams_SPEAKER_WIDEBAND.txt
+etc/audio/Rx_ControlParams_WIRED_HEADPHONE_WIDEBAND.txt
+etc/audio/Rx_ControlParams_WIRED_HEADSET_WIDEBAND.txt
+etc/audio/Tx_ControlParams_BLUETOOTH_HEADSET.txt
+etc/audio/Tx_ControlParams_EARPIECE_WIDEBAND.txt
+etc/audio/Tx_ControlParams_SPEAKER_WIDEBAND.txt
+etc/audio/Tx_ControlParams_WIRED_HEADPHONE_WIDEBAND.txt
+etc/audio/Tx_ControlParams_WIRED_HEADSET_WIDEBAND.txt
+
+# Sensors
+lib/libakm.so
+lib/libmpl.so
+lib/libmlplatform.so
+lib/libmllite.so
+
+# Bluetooth
+lib/libbt-aptx-4.0.3.so
+
+# Broadcom Firmware
+etc/firmware/bcm4330.hcd
+
+# WIFI
+etc/wifi/bcm4330_apsta.bin
+etc/wifi/bcm4330_mfg.bin
+etc/wifi/bcm4330_p2p.bin
+etc/wifi/bcm4330_sta.bin
+etc/wifi/nvram_mfg.txt
+etc/wifi/nvram_net.txt
+bin/wlandutservice
+bin/macloader
+bin/mfgloader
+bin/nv_hciattach
+
+# NVIDIA
+lib/libnvos.so
+lib/libnvomx.so
+lib/libnvomxadaptor.so
+lib/libnvomxilclient.so
+lib/libnvrm.so
+lib/libnvrm_graphics.so
+lib/libnvddk_2d_v2.so
+lib/libnvddk_2d.so
+lib/libnvmm_asfparser.so
+lib/libnvmm_audio.so
+lib/libnvmm_aviparser.so
+lib/libnvmm_camera.so
+lib/libnvmm_contentpipe.so
+lib/libnvmm_image.so
+lib/libnvmm_manager.so
+lib/libnvmm_msaudio.so
+lib/libnvmm_parser.so
+lib/libnvmm_service.so
+lib/libnvmm.so
+lib/libnvmm_video.so
+lib/libnvmm_writer.so
+lib/libnvodm_dtvtuner.so
+lib/libnvodm_imager.so
+lib/libnvodm_query.so
+lib/libnvsm.so
+lib/libnvtestio.so
+lib/libnvtestresults.so
+lib/libnvwinsys.so
+lib/libnvwsi.so
+lib/libcgdrv.so
+lib/libardrv_dynamic.so
+lib/libnvapputil.so
+lib/libnvasfparserhal.so
+lib/libnvaviparserhal.so
+lib/libnvavp.so
+lib/libnvcontrol_jni.so
+lib/libnvcpud_client.so
+lib/libnvcpud.so
+lib/libnvmmlite_audio.so
+lib/libnvmmlite.so
+lib/libnvmmlite_utils.so
+lib/libnvmmlite_video.so
+lib/libnvmm_utils.so
+lib/libnvmm_vc1_video.so
+lib/libnvodm_hdmi.so
+lib/libnvodm_misc.so
+lib/libnvparser.so
+lib/libnvtvmr.so
+
+# NVIDIA Hardware Encoding/Decoding
+etc/firmware/nvmm_aacdec.axf
+etc/firmware/nvmm_adtsdec.axf
+etc/firmware/nvmm_h264dec.axf
+etc/firmware/nvmm_jpegdec.axf
+etc/firmware/nvmm_jpegenc.axf
+etc/firmware/nvmm_manager.axf
+etc/firmware/nvmm_mp3dec.axf
+etc/firmware/nvmm_mpeg4dec.axf
+etc/firmware/nvmm_service.axf
+etc/firmware/nvmm_vc1dec_2x.axf
+etc/firmware/nvmm_vc1dec.axf
+etc/firmware/nvmm_wavdec.axf
+etc/firmware/nvmm_wmadec.axf
+etc/firmware/nvmm_wmaprodec.axf
+etc/firmware/nvrm_avp.bin
+
+# TV-out
+lib/libtvoutinterface.so
+lib/libtvout_jni.so
+lib/libtvoutservice.so
+bin/bintvoutservice
+
+# Multimedia CODECS
+lib/libsfextaac.so
+lib/libsfextavi.so
+lib/libsfextcmn.so
+lib/libsfextcp.so
+lib/libsfextflac.so
+lib/libsfextflv.so
+lib/libsfextmkv.so
+lib/libsfextwmf.so
+lib/libwvdrm_L3.so
+
+# OMX
+lib/libsomxaacd.so
+lib/libsomxaace.so
+lib/libsomxac3d.so
+lib/libsomxamrd.so
+lib/libsomxcmn.so
+lib/libsomxcore.so
+lib/libsomxflacd.so
+lib/libsomxmp3d.so
+lib/libsomxmp43d.so
+lib/libsomxsr263d.so
+lib/libsomxwmad.so
+lib/libsomxwmv7d.so
+lib/libsomxwmv8d.so
+lib/omxplayer.so
+
+# DRM/Misc
+lib/libwvm.so
+lib/libWVphoneAPI.so
+lib/libWVStreamControlAPI_L3.so
+lib/libXIVCoder.so
+lib/libXt9core.so
+lib/libsoundalive.so
+lib/libSpeexEncoderJNI_1.0.0.8.so
+lib/libspeexwrapper.so
+lib/libPanoraMax3.so
+lib/libplayready.so
+lib/lib_R2VS_ARM_GA_Library_for_Aries.so
+lib/libQmageDecoder.so
+lib/libsisodrm.so
+
+# Python 2.6
+lib/libpython2.6.so
+lib/python2.6/lib-dynload/array.so
+lib/python2.6/lib-dynload/binascii.so
+lib/python2.6/lib-dynload/cmath.so
+lib/python2.6/lib-dynload/_collections.so
+lib/python2.6/lib-dynload/datetime.so
+lib/python2.6/lib-dynload/fcntl.so
+lib/python2.6/lib-dynload/_fileio.so
+lib/python2.6/lib-dynload/_functools.so
+lib/python2.6/lib-dynload/math.so
+lib/python2.6/lib-dynload/_nvcamera.so
+lib/python2.6/lib-dynload/operator.so
+lib/python2.6/lib-dynload/parser.so
+lib/python2.6/lib-dynload/_random.so
+lib/python2.6/lib-dynload/select.so
+lib/python2.6/lib-dynload/_socket.so
+lib/python2.6/lib-dynload/strop.so
+lib/python2.6/lib-dynload/_struct.so
+lib/python2.6/lib-dynload/time.so
+lib/python2.6/lib-dynload/unicodedata.so
+lib/python2.6/lib-dynload/_weakref.so
+
+# ace - these "features" aren't really supported with AOSP/CyanogenMod, seems more for stock TouchWiz/OEM
+# CSC/VSC
+# CSCFiles.txt
+# CSCVersion.txt
+# csc/contents.db
+# csc/customer.xml
+# csc/feature.xml
+# csc/others.xml
+# csc/sales_code.dat
+# vsc/configfile.cfg
+# vsc/VSCCert.der
+# vsc/VSCe.plf
+# vsc/hatp/libhatp.so
+# vsc/vapps/hatpVApp.plf
+
+# FACELOCK DETECTION
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/left_eye-y0-yi45-p0-pi45-r0-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/left_eye-y0-yi45-p0-pi45-rn7-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/left_eye-y0-yi45-p0-pi45-rp7-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/nose_base-y0-yi45-p0-pi45-r0-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/nose_base-y0-yi45-p0-pi45-rn7-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/nose_base-y0-yi45-p0-pi45-rp7-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/right_eye-y0-yi45-p0-pi45-r0-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/right_eye-y0-yi45-p0-pi45-rn7-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/right_eye-y0-yi45-p0-pi45-rp7-ri20.2d_n2/full_model.bin
+vendor/pittpatt/models/detection/yaw_roll_face_detectors.3/head-y0-yi45-p0-pi45-r0-ri30.4a/full_model.bin
+vendor/pittpatt/models/detection/yaw_roll_face_detectors.3/head-y0-yi45-p0-pi45-rn30-ri30.5/full_model.bin
+vendor/pittpatt/models/detection/yaw_roll_face_detectors.3/head-y0-yi45-p0-pi45-rp30-ri30.5/full_model.bin
+vendor/pittpatt/models/recognition/face.face.y0-y0-22-b-N/full_model.bin
+
+# Other files
+lib/libImmVibeJ.so
+bin/playlpm
+bin/playsound
+bin/immvibed
+bin/drexe
+bin/npsmobex
+bin/nvcpud
+bin/ip
+
+# Offline charger (lpm)
+media/battery_charging_5.qmg
+media/battery_charging_10.qmg
+media/battery_charging_15.qmg
+media/battery_charging_20.qmg
+media/battery_charging_25.qmg
+media/battery_charging_30.qmg
+media/battery_charging_35.qmg
+media/battery_charging_40.qmg
+media/battery_charging_45.qmg
+media/battery_charging_50.qmg
+media/battery_charging_55.qmg
+media/battery_charging_60.qmg
+media/battery_charging_65.qmg
+media/battery_charging_70.qmg
+media/battery_charging_75.qmg
+media/battery_charging_80.qmg
+media/battery_charging_85.qmg
+media/battery_charging_90.qmg
+media/battery_charging_95.qmg
+media/battery_charging_100.qmg
+media/battery_error.qmg
+media/chargingwarning.qmg
+media/Disconnected.qmg
