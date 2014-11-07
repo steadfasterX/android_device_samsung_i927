@@ -44,11 +44,10 @@
 
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>7</item>
-        <item>94</item>
-        <item>208</item>
-        <item>458</item>
-        <item>2223</item>
+        <item>15</item>
+        <item>150</item>
+        <item>1500</item>
+        <item>15000</item>
     </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -56,12 +55,11 @@
          than the size of the config_autoBrightnessLevels array.
     -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>10</item>
-        <item>35</item>
-        <item>55</item>
-        <item>70</item>
-        <item>70</item>
-        <item>250</item>
+        <item>18</item>
+        <item>60</item>
+        <item>110</item>
+        <item>175</item>
+        <item>255</item>
     </integer-array>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
@@ -70,8 +68,7 @@
     -->
     <integer-array name="config_autoBrightnessButtonBacklightValues">
         <item>255</item>
-        <item>255</item>
-        <item>255</item>
+        <item>0</item>
         <item>0</item>
         <item>0</item>
         <item>0</item>
@@ -82,9 +79,9 @@
          than the size of the config_autoBrightnessLevels array.
          Crespo has no keyboard so all values are zero.
     -->
+    <!-- ace - test - try setting lowest to 1 -->
     <integer-array name="config_autoBrightnessKeyboardBacklightValues">
-        <item>0</item>
-        <item>0</item>
+        <item>1</item>
         <item>0</item>
         <item>0</item>
         <item>0</item>
@@ -130,20 +127,20 @@
         <item>"mobile_bluetooth,7,7,1,-1,true"</item>
         <item>"wifi_p2p,13,1,0,-1,true"</item>
     </string-array> -->
-    <!-- ace - testing - The-Covenant settings, some of these may be JB+ only -->
+    <!-- ace - testing - UCLJ3 settings -->
 	<string-array translatable="false" name="networkAttributes">
-		<item>wifi,1,1,1,-1,true</item>
-		<item>mobile,0,0,0,-1,true</item>
-		<item>mobile_mms,2,0,2,60000,true</item>
-		<item>mobile_supl,3,0,2,60000,true</item>
-		<item>mobile_dun,4,0,3,60000,true</item>
-		<item>mobile_hipri,5,0,3,60000,true</item>
-		<item>bluetooth,7,7,0,-1,true</item>
-		<item>mobile_fota,10,0,2,60000,true</item>
-		<item>mobile_ims,11,0,2,60000,true</item>
-		<item>mobile_cbs,12,0,2,60000,true</item>
-		<item>wifi_p2p,13,1,0,-1,true</item>
-		<item>mobile_bip,14,0,2,60000,true</item>
+        <item>wifi,1,1,1,-1,true</item>
+        <item>mobile,0,0,0,-1,true</item>
+        <item>mobile_mms,2,0,2,60000,true</item>
+        <item>mobile_supl,3,0,2,60000,true</item>
+        <item>mobile_dun,4,0,3,60000,true</item>
+        <item>mobile_hipri,5,0,3,300000,true</item>
+        <item>bluetooth,7,7,0,-1,true</item>
+        <item>mobile_fota,10,0,2,60000,true</item>
+        <item>mobile_ims,11,0,2,60000,true</item>
+        <item>mobile_cbs,12,0,2,60000,true</item>
+        <item>wifi_p2p,13,1,0,-1,true</item>
+        <item>mobile_bip,14,0,2,300000,true</item>
 	</string-array>
 
     <!-- An Array of "[ConnectivityManager connectionType],
@@ -172,9 +169,8 @@
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
          USB interfaces.  If the device doesn't want to support tething over USB this should
          be empty.  An example would be "usb.*" -->
-    <!-- ace - added usb0 from The-Covenant -->
+    <!-- ace - UCLJ3 does not have usb0 -->
     <string-array translatable="false" name="config_tether_usb_regexs">
-        <item>"usb0"</item>
         <item>"rndis0"</item>
     </string-array>
 
@@ -188,6 +184,7 @@
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
          bluetooth interfaces.  If the device doesn't want to support tethering over bluetooth this
          should be empty. -->
+<!--    <array name="config_tether_bluetooth_regexs" /> -->
     <string-array translatable="false" name="config_tether_bluetooth_regexs">
         <item>"bnep\\d"</item>
     </string-array>
@@ -198,16 +195,14 @@
     <integer-array translatable="false" name="config_tether_upstream_types">
         <item>0</item>
         <item>1</item>
-        <item>4</item> <!-- ace - added from The-Covenant -->
-        <item>5</item>
-        <item>7</item>
     </integer-array>
 
     <!-- Minimum screen brightness allowed by the power manager. -->
     <integer name="config_screenBrightnessDim">10</integer>
 
+	<!-- ace - match UCLJ3 -->
     <!-- Boolean indicating whether the wifi chipset has p2p support -->
-    <bool translatable="false" name="config_wifi_p2p_support">true</bool>
+    <bool translatable="false" name="config_wifi_p2p_support">false</bool>
 
     <!-- Vibrator pattern for a very short but reliable vibration for soft keyboard tap -->
     <integer-array name="config_keyboardTapVibePattern">
@@ -240,7 +235,8 @@
          speech -->
     <bool name="config_bluetooth_wide_band_speech">false</bool>
 
-    <bool name="config_ui_enableFadingMarquee">false</bool>
+	<!-- ace - match UCLJ3 -->
+    <bool name="config_ui_enableFadingMarquee">true</bool>
 
     <!-- Timeout in MS for how long you have to long-press the back key to
          kill the foreground app. -->
@@ -249,7 +245,19 @@
     <!--Boolean to enable stk functionality on Samsung phones-->
     <bool name="config_samsung_stk">true</bool>
 
-    <!-- ace - test "phablet" mode -->
+	<!-- EXTRAS -->
+	<array name="config_tether_wimax_regexs" />
+	
+    <!-- The duration (in milliseconds) of a short animation. -->
+    <integer name="config_shortAnimTime">150</integer>
+
+    <!-- The duration (in milliseconds) of a medium-length animation. -->
+    <integer name="config_mediumAnimTime">300</integer>
+
+    <!-- The duration (in milliseconds) of a long animation. -->
+    <integer name="config_longAnimTime">400</integer>
+    	
+    <!-- ace - test "phablet" mode by enabling this -->
     <bool name="preferences_prefer_dual_pane">false</bool>
     
 	<!--	ace - UPDATE - Adding some code from The-Covenant device tree overlay  -->
@@ -265,5 +273,26 @@
          when the lid is open, 2 means it is accessible when the lid is
          closed.  The default is 0. -->
     <integer name="config_lidNavigationAccessibility">1</integer>
+
+    <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
+    <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
+
+	<!-- ace - match UCLJ3 -->
+    <bool name="config_wifi_background_scan_support">true</bool>
+
+    <!-- Set and Unsets WiMAX -->
+    <bool name="config_wimaxEnabled">false</bool>
+
+    <!-- Enable lockscreen rotation by default -->
+    <bool name="config_enableLockScreenRotation">true</bool>
+
+    <!-- If true, the screen can be rotated via the accelerometer in all 4
+         rotations as the default behavior. -->
+    <bool name="config_allowAllRotations">true</bool>
+
+    <!-- Flag indicating whether the keyguard should be bypassed when
+         the slider is open.  This can be set or unset depending how easily
+         the slider can be opened (for example, in a pocket or purse). -->
+    <bool name="config_bypass_keyguard_if_slider_open">true</bool>
 
 </resources>
