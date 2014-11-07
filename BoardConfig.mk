@@ -44,7 +44,8 @@ BOARD_KERNEL_BASE := 0x10000000
 # ace - stock kernels don't have a cmdline set, but litekernel does.
 BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false lpm_boot=0 tegra_fbmem=800K@0x18012000 video=tegrafb console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
 
-# kernel modules location (busybox)
+# ace - eventually convert this over
+# kernel modules location
 KERNEL_MODULES_DIR := /lib/modules
 
 # required to remove kernel modules, recovery size is limited to 5MB
@@ -61,8 +62,10 @@ BOARD_FLASH_BLOCK_SIZE := 2048
 BOARD_HAS_LARGE_FILESYSTEM			:= true
 
 # ace - test LiteKernel 4.0 prebuilt
-#TARGET_KERNEL_CONFIG := tegra_bose_defconfig
-#TARGET_KERNEL_SOURCE := kernel/samsung/glide
+# TARGET_KERNEL_CONFIG := tegra_bose_defconfig
+# TARGET_KERNEL_SOURCE := kernel/samsung/glide
+# ace - need to change the output from system/lib/modules to root/lib/modules
+# KERNEL_MODULES_OUT := $(TARGET_OUT)/lib/modules
 TARGET_PREBUILT_KERNEL := device/samsung/glide/prebuilt/kernel
 
 TARGET_NO_KERNEL := false
@@ -88,9 +91,12 @@ BOARD_USES_GENERIC_AUDIO := false # testing Samsung's ICS values (default false)
 
 # Camera
 # USE_CAMERA_STUB := true
-#BOARD_USE_CAF_LIBCAMERA := true
+# ace - try CAF_LibCamera, GB was true but not in ICS.  Camera works without, but TEST as intended.
+BOARD_USE_CAF_LIBCAMERA := true
 BOARD_CAMERA_USE_GETBUFFERINFO := true
-BOARD_USE_CAF_LIBCAMERA_GB_REL := true
+# ace - as per kibuuka, not present in CM9/ICS
+# BOARD_USE_CAF_LIBCAMERA_GB_REL := true
+# ace - BOARD_CAMERA_DEVICE and BOARD_SECOND_CAMERA_DEVICE should point to the /dev/name and not boolean?
 BOARD_SECOND_CAMERA_DEVICE := true
 
 ifeq ($(USE_CAMERA_STUB),false)
@@ -102,24 +108,30 @@ BOARD_EGL_CFG := device/samsung/glide/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
 TARGET_USES_GL_VENDOR_EXTENSIONS := true
-BOARD_USES_HW_MEDIARECORDER := false
-BOARD_USES_HW_MEDIASCANNER := false
+BOARD_USES_HW_MEDIARECORDER := true
+BOARD_USES_HW_MEDIASCANNER := true
 BOARD_USES_HW_MEDIAPLUGINS := true
 BOARD_USE_SKIA_LCDTEXT := true # ace - sharper fonts IIRC
 BOARD_USE_SCREENCAP := true
-TARGET_ELECTRONBEAM_FRAMES := 20
-# 15
+TARGET_ELECTRONBEAM_FRAMES := 15
+# ace - test - some of these are jb+
+# HWComposer
+BOARD_USES_HWCOMPOSER := true
 
-# ace - old sgs2-common OMX config (also a list of what can be removed for AOSP)
+# Enable WEBGL in WebKit
+ENABLE_WEBGL := true
+
 # OMX
+BOARD_USES_PROPRIETARY_OMX		:= samsung
+# ace - TEST - old sgs2-common OMX config (also a list of what can be removed just incase)
 BOARD_USE_SAMSUNG_COLORFORMAT	:= true
 BOARD_NONBLOCK_MODE_PROCESS		:= true
-BOARD_USE_STOREMETADATA			:= false # true
+BOARD_USE_STOREMETADATA			:= false
 BOARD_USE_METADATABUFFERTYPE	:= true
 BOARD_USES_MFC_FPS				:= true
 
 # Bluetooth
-#BOARD_CUSTOM_BLUEDROID := ../../../device/samsung/glide/bluetooth.c
+#BOARD_CUSTOM_BLUEDROID := ../../../device/samsung/glide/bluedroid/bluetooth.c
 #BOARD_HAVE_BLUETOOTH_CSR := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
@@ -188,12 +200,15 @@ TARGET_CUSTOM_RELEASETOOL	:= ./device/samsung/glide/releasetools/squisher
 # Assert
 TARGET_OTA_ASSERT_DEVICE	:= i927,SGHI927,SGH-I927,n1
 
-# Vold
+# Vold / MTP / UMS
 BOARD_VOLD_MAX_PARTITIONS			:= 12
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR	:= true
 BOARD_VOLD_DISC_HAS_MULTIPLE_MAJORS	:= true
 BOARD_USE_USB_MASS_STORAGE_SWITCH	:= true
 TARGET_USE_CUSTOM_LUN_FILE_PATH		:= "/sys/devices/platform/usb_mass_storage/lun%d/file"
+# BOARD_UMS_LUNFILE					:= "/sys/devices/platform/usb_mass_storage/lun0/file"
+BOARD_UMS_LUNFILE					:= "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
+SAMSUNG_USB_MTP_DEVICE := true
 
 BOARD_HAS_SDCARD_INTERNAL			:= true
 # ace - The-Covenant has sdext @ second partition
@@ -204,13 +219,44 @@ BOARD_SDEXT_DEVICE					:= /dev/block/mmcblk1p2
 # BOARD_SDCARD_DEVICE_PRIMARY 		:=
 # BOARD_SDCARD_DEVICE_SECONDARY 	:=
 
+# ace - test - see if this adds battery monitoring
+# LPM
+BOARD_CHARGING_MODE_BOOTING_LPM := "/sys/class/power_supply/battery/batt_lp_charging"
+BOARD_BATTERY_DEVICE_NAME := "battery"
+
 # Recovery
 TARGET_RECOVERY_INITRC := ./device/samsung/glide/recovery/recovery.rc
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/glide/recovery/recovery_keys.c
 BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/glide/recovery/graphics.c
 
-# BOARD_UMS_LUNFILE					:= "/sys/devices/platform/usb_mass_storage/lun0/file"
-BOARD_UMS_LUNFILE					:= "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 BOARD_USES_MMCUTILS					:= true
 BOARD_HAS_NO_SELECT_BUTTON			:= true
 
+# ace - (hroark13) should allow the build to work with current and "legacy" recoveries (CWM/TWRP)
+SKIP_SET_METADATA := true
+
+# TWRP
+# DEVICE_RESOLUTION := 480x800
+# TW_INTERNAL_STORAGE_PATH := "/emmc"
+# TW_INTERNAL_STORAGE_MOUNT_POINT := "emmc"
+# TW_EXTERNAL_STORAGE_PATH := "/sdcard"
+# TW_EXTERNAL_STORAGE_MOUNT_POINT := "sdcard"
+# TW_DEFAULT_EXTERNAL_STORAGE := true
+# ace - extra TWRP flags
+# RECOVERY_SDCARD_ON_DATA := false
+# BOARD_HAS_NO_REAL_SDCARD := false
+# TW_INCLUDE_DUMLOCK := false
+# ace - if any graphic errors, uncomment
+# RECOVERY_GRAPHICS_USE_LINELENGTH := true 
+#TW_NO_BATT_PERCENT := true
+#TW_CUSTOM_POWER_BUTTON := 107
+#TW_NO_REBOOT_BOOTLOADER := true
+#TW_NO_REBOOT_RECOVERY := true
+#TW_NO_USB_STORAGE := true
+#RECOVERY_TOUCHSCREEN_SWAP_XY := true
+#RECOVERY_TOUCHSCREEN_FLIP_Y := true
+#RECOVERY_TOUCHSCREEN_FLIP_X := true
+#TW_ALWAYS_RMRF := true
+#TW_NEVER_UNMOUNT_SYSTEM := true
+#TW_INCLUDE_INJECTTWRP := true
+#TWRP_EVENT_LOGGING := true

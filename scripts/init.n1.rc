@@ -28,6 +28,9 @@ on init
       chown system radio /sys/devices/platform/mhl/MHD_file
       chmod 0644 /sys/devices/platform/mhl/MHD_file
 # ace - end
+# ace - moved from init.rc
+# add booting sound property 
+#    setprop audioflinger.bootsnd 1
 
 on fs
     mount ext4 /dev/block/platform/sdhci-tegra.3/by-num/p2 /system wait ro
@@ -162,6 +165,8 @@ chown system radio /sys/devices/virtual/sec/sec_stmpe_bl/backlight
 # backlight (N1_ICS)
     chown system system /sys/class/backlight/pwm-backlight/brightness
     chown system system /sys/class/misc/melfas_touchkey/brightness
+# ace - referenced in liblights (lights.n1), noted in other device trees also
+	chown system system /sys/class/sec/sec_stmpe_bl/backlight
 # ace - end
 
 # ace - glide does not use CMC623
@@ -205,9 +210,8 @@ chown system radio /sys/devices/virtual/sec/sec_stmpe_bl/backlight
     chmod 666 /sys/class/input/input2/device/rate
     chmod 666 /sys/class/input/input2/device/autosleep
 
-# ace - this gets set in uevent.n1.rc
 # BB UART settings
-#   chown radio system /dev/ttyHS0
+    chown radio system /dev/ttyHS0
 
 # BB remote file system
     mkdir /data/rfs
@@ -254,16 +258,18 @@ chown system radio /sys/devices/virtual/sec/sec_stmpe_bl/backlight
     chmod 0444 /sys/power/cpufreq_table
 
 # Power management settings
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 216000
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1000000
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor smartassV2
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 216000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1000000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor smartassV2
+#    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 216000
+#    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1000000
+#    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor smartassV2
+#    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 216000
+#    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1000000
+#    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor smartassV2
 #    write /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load 80
 #    write /sys/devices/system/cpu/cpufreq/interactive/boost_factor 2
 #    write /sys/devices/system/cpu/cpufreq/interactive/sustain_load 80
-    write /sys/module/cpuidle/parameters/lp2_in_idle 1
+#    write /sys/module/cpuidle/parameters/lp2_in_idle 1
+# ace - test nvcpud
+stop nvcpud
 
 # COM port settings
     symlink /dev/ttyACM3 /dev/log_modem
@@ -330,9 +336,9 @@ chown system radio /sys/devices/virtual/sec/sec_stmpe_bl/backlight
     chown system radio /sys/devices/virtual/misc/level/control
     chmod 664 /sys/devices/virtual/misc/level/control
 
-# ace - not present in UCLJ3 init.n1.rc
+# ace - not present in UCLJ3 init.n1.rc, but present on device.
 # Modem interface
-#   chown system radio /sys/devices/platform/tegra-ehci.1/ehci_power
+	chown system radio /sys/devices/platform/tegra-ehci.1/ehci_power
 
 # battery sysfile
 	chown system radio /sys/class/power_supply/battery/batt_vol
@@ -368,6 +374,12 @@ chown system radio /sys/devices/virtual/sec/sec_stmpe_bl/backlight
 	chown system radio /sys/class/power_supply/battery/batt_booting
 	chown system radio /sys/class/power_supply/battery/batt_charging_source
 	chown system radio /sys/class/power_supply/battery/batt_lp_charging
+
+# ace - test nvcpud
+# nvcpud is not safe, and not linked to the framework
+chown system root /dev/min_online_cpus
+chown system root /dev/cpu_freq_min
+chown system root /dev/cpu_freq_max
 
 # ace - these *should* be required, but seemingly aren't present in UCLJ3 init.n1.rc
 # -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
@@ -435,10 +447,14 @@ service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
     disabled
     oneshot
 
+# ace - test nvcpud
 # Enable NvCpuD, and set it to never poll config again
 on boot
     setprop nvcpud.enabled true
-    setprop nvcpud.config_refresh_ms -1
+    setprop nvcpud.config_refresh_ms 30000
+    start nvcpud
+#   setprop nvcpud.config_refresh_ms 5000
+#   setprop nvcpud.config_refresh_ms -1
 
 service nvcpud /system/bin/nvcpud
     class main

@@ -30,9 +30,6 @@ else
 	LOCAL_KERNEL := $(TARGET_KERNEL_SOURCE)
 endif
 
-# ace - add these to local_manifest.xml and then include
-#    SamsungServiceMode \
-#    CMFileManager \
 # Packages
 PRODUCT_PACKAGES += \
     Camera \
@@ -52,16 +49,42 @@ PRODUCT_PACKAGES += \
     busybox \
     make_ext4fs \
     setup_fs \
-    com.android.future.usb.accessory \
-    libsecril-client-sap
-# ace - testing libsecril-client-sap with updated header used for audio (can change via build.prop)
+    com.android.future.usb.accessory
+
+# see what is alreaedy included in sources, these are present in OEM UCLJ3
+# lib/libnvomx.so
+# lib/libnvomxadaptor.so
+# lib/libnvomxilclient.so
+# lib/libsomxaacd.so
+# lib/libsomxaace.so
+# lib/libsomxac3d.so
+# lib/libsomxamrd.so
+# lib/libsomxcmn.so
+# lib/libsomxcore.so
+# lib/libsomxflacd.so
+# lib/libsomxmp3d.so
+# lib/libsomxmp43d.so
+# lib/libsomxsr263d.so
+# lib/libsomxwmad.so
+# lib/libsomxwmv7d.so
+# lib/libsomxwmv8d.so
+# lib/omxplayer.so
+# OMX Stuff
+PRODUCT_PACKAGES += \
+    SamsungServiceMode \
+
+# Extra Packages
+PRODUCT_PACKAGES += \
+    SamsungServiceMode \
+    CMFileManager \
+    libsecril-client-sap \
+	DeviceSettings
 
 # ace - try using opensource where available
+#	sensors.n1 \
 # HAL
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
-	audio.primary.default \
-	audio_policy.default \
 	audio.primary.n1 \
 	audio_policy.n1 \
 	lights.n1

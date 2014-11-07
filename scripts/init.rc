@@ -32,8 +32,9 @@ loglevel 3
 # but someday that may change.
     symlink /system/vendor /vendor
 
+# ace - move to init.n1.rc
 #add booting sound property 
-    setprop audioflinger.bootsnd 1
+#    setprop audioflinger.bootsnd 1
 
 # Create cgroup mount point for cpu accounting
     mkdir /acct
@@ -481,10 +482,13 @@ service netd /system/bin/netd
 service debuggerd /system/bin/debuggerd
     class main
 
+# ace - test group adjustment
 service cpboot-daemon /sbin/cbd -d -o t -p 7
     class main
     user root
-    group radio cache inet misc audio sdcard_rw log
+	group radio cache inet misc audio log sdcard_rw qcom_oncrpc qcom_diag
+#	group radio cache inet misc audio sdcard_r sdcard_rw qcom_oncrpc qcom_diag log
+#   group radio cache inet misc audio sdcard_rw log
 
 service ril-daemon /system/bin/rild
     class main
