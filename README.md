@@ -3,11 +3,13 @@ android_device_samsung_glide
 
 Experimental device tree for Samsung Captivate "Glide" (SGH-I927) for ICS (CM9)
 
-This device tree is very EXPERIMENTAL with focus on getting CM9 built and functional with the device.
-This revision is based off the AOSP-ZEUS/android_device_samsung_n1 (Galaxy-R i9103) tree by 
-dman3285 (https://github.com/AOSP-ZEUS/android_device_samsung_n1) and used as a "skeleton".  Also uses 
-tidbits from other device trees (namely: The-Covenant, TeamGalaxyR) as well as prebuilt kernel 
-LiteKernel 4.0-ICS by thegreatergood (modified ramdisk).
+This device tree is very EXPERIMENTAL with focus on getting CyanogenMod 9.1 (CM9) built
+and functional with the device.  This is partially based off the device tree by dman3285
+(https://github.com/AOSP-ZEUS/android_device_samsung_n1) for the Galaxy-R i9103 and used
+as a "skeleton".  Also uses tidbits from other device trees (namely: The-Covenant, 
+TeamGalaxyR, BuborH, Kick-Buttowski) and for the kernel kernel running LiteKernel 4.0-ICS
+by thegreatergood.  This is just uploaded to help others who are trying to build ICS for
+the Glide.
 
 What works:
 -Sound, adapted libaudio from The-Covenant
@@ -25,16 +27,19 @@ What works:
 -Rotation sensor
 -Front panel touchkey lighting
 -Physical keyboard
+-GPS (testing US/N. America gps.conf by Kombatant)
 
-What doesn't (yet):
--GPS (need to sort out lock issues)
--MTP/Mass Storage mounting
--Keyboard Backlight
+What doesn't (yet, or fully):
+-MTP/Mass Storage mounting.
+-HW Acceleration (videos), working on getting OMX to work (seems to work fine in Quadrant?).
+-Low power mode (shows quickly then boots).
+-Keyboard Backlight - sometimes inconsistent.
+-Sensor Rotation - sometimes inconsistent.
 -Probably more, could use more testing.
 
 Notes/TODO:
 -DO NOT RESET APNs, currently bugs out.  Duplicate or enter in new ones.
--Work on GPS (gps.conf and sirfgps.conf)
+-Work on proper HW Acceleration in ICS (atleast as good as UCLJ3).
 -Work on physical keyboard backlighting
 -Look at MTP/UMS
 -Work on other issues as time permits
