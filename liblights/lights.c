@@ -4,6 +4,7 @@
  *                    Daniel Hillenbrand <codeworkx@cyanogenmod.com>
  *                    Tanguy Pruvot <tpruvot@github>
  *                    Adam77Root <Adam77Root@github>
+ *                    Bubor <bubor@bubor.hu>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +22,6 @@
 
 #define LOG_TAG "lights"
 //#define LOG_NDEBUG 0
-
-#define GLIDE
 
 #include <cutils/log.h>
 
@@ -48,19 +47,25 @@ static pthread_once_t g_init = PTHREAD_ONCE_INIT;
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 
 char const*const PANEL_FILE = "/sys/class/backlight/pwm-backlight/brightness";
-#ifndef GLIDE
-char const*const BUTTON_FILE = "/sys/class/leds/button-backlight/brightness"; // For Galaxy R
-#else
-char const*const BUTTON_FILE = "/sys/class/misc/melfas_touchkey/brightness"; // For Captivate Glide
-// char const*const KEYBOARD_FILE = "/sys/class/sec/sec_stmpe_bl/backlight";
-char const*const KEYBOARD_FILE = "/sys/devices/virtual/sec/sec_stmpe_bl/backlight";
-#endif
+char const*const BUTTON_FILE = "/sys/class/misc/melfas_touchkey/brightness";
+char const*const KEYBOARD_FILE = "/sys/class/sec/sec_stmpe_bl/backlight";
 char const*const NOTIFICATION_FILE_BLN = "/sys/class/misc/backlightnotification/notification_led";
+char const*const LIGHTSENSOR_FILE= "/sys/devices/virtual/lightsensor/switch_cmd/lightsensor_file_state";
+// ace - was 30
+#define LIGHT_LIMIT 40
+#define SENSOR_LIMIT 100
+
+int keyboard_on = 0;
+int button_on = 0;
+
+// better use panel brightness
+#undef USE_SENSOR
 
 void init_g_lock(void)
 {
     pthread_mutex_init(&g_lock, NULL);
 }
+
 
 static int write_int(char const *path, int value)
 {
@@ -85,12 +90,57 @@ static int write_int(char const *path, int value)
     }
 }
 
-#ifdef GLIDE
+
+static int get_panel_light() {
+    FILE* file = fopen (PANEL_FILE , "r");
+    int i = 0;
+    fscanf (file, "%d", &i); 
+    fclose (file);
+    return i;
+}
+
+
+static int get_sensor_light() {
+    FILE* file = fopen (LIGHTSENSOR_FILE , "r");
+    int i = 0;
+    fscanf (file, "%d", &i); 
+    fclose (file);
+    return i;
+}
+
+
+static int turn_on_light_keyboard() {
+    int err = 0;
+#ifdef USE_SENSOR
+    if ( (get_sensor_light() <= SENSOR_LIMIT ) && keyboard_on )
+#else
+    if ( (get_panel_light() <= LIGHT_LIMIT ) && keyboard_on )
+#endif
+        err = write_int(KEYBOARD_FILE, 1);
+    else 
+        err = write_int(KEYBOARD_FILE, 0);
+    return err;
+}
+
+
+static int turn_on_light_button() {
+    int err = 0;
+#ifdef USE_SENSOR
+    if ( (get_sensor_light() <= SENSOR_LIMIT && button_on ) )
+#else
+    if ( (get_panel_light() <= LIGHT_LIMIT && button_on  ) ) 
+#endif
+        err = write_int(BUTTON_FILE, 255);
+    else 
+        err = write_int(BUTTON_FILE, 0);
+    return err;
+}
+
+
 static int is_lit(struct light_state_t const* state)
 {
     return state->color & 0x00ffffff;
 }
-#endif
 
 static int rgb_to_brightness(struct light_state_t const *state)
 {
@@ -109,6 +159,8 @@ static int set_light_backlight(struct light_device_t *dev,
     pthread_mutex_lock(&g_lock);
     LOGV("%s(%d)", __FUNCTION__, brightness);
     err = write_int(PANEL_FILE, brightness);
+    turn_on_light_keyboard();
+    turn_on_light_button();
     pthread_mutex_unlock(&g_lock);
 
     return err;
@@ -119,33 +171,40 @@ static int set_light_buttons(struct light_device_t *dev,
 {
     int err = 0;
     int brightness = rgb_to_brightness(state);
-    /* Hack for stock Samsung roms. */
+    /* Hack for stock Samsung roms */
     if(brightness != 0)
 	brightness = 255;
 
     pthread_mutex_lock(&g_lock);
     LOGV("%s(%d)", __FUNCTION__, brightness);
-    err = write_int(BUTTON_FILE, brightness);
+    button_on = (brightness ? 1 : 0);
+    if ( brightness )
+		err = turn_on_light_button();
+    else
+		err = write_int(BUTTON_FILE, brightness);
     pthread_mutex_unlock(&g_lock);
 
     return err;
 }
 
-#ifdef GLIDE
 static int set_light_keyboard(struct light_device_t* dev,
         struct light_state_t const* state)
 {
     int err = 0;
     int on = is_lit (state);
 
+    keyboard_on = on ? 1 : 0;
+ 
     pthread_mutex_lock(&g_lock);
     LOGV("%s(%d)", __FUNCTION__, on);
-    err = write_int(KEYBOARD_FILE, on ? 1 : 0);
+    if ( on )
+        err = turn_on_light_keyboard();
+    else 
+        err = write_int(KEYBOARD_FILE, 0);
     pthread_mutex_unlock(&g_lock);
-
+ 
     return err;
 }
-#endif
 
 static int close_lights(struct light_device_t *dev)
 {
@@ -156,7 +215,7 @@ static int close_lights(struct light_device_t *dev)
     return 0;
 }
 
-/* LED functions. */
+/* LED functions */
 static int set_light_leds_notifications(struct light_device_t *dev,
             struct light_state_t const *state)
 {
@@ -207,10 +266,8 @@ static int open_lights(const struct hw_module_t *module, char const *name,
         set_light = set_light_leds_attention;
     else if (0 == strcmp(LIGHT_ID_BATTERY, name))
         set_light = set_light_battery;
-#ifdef GLIDE
     else if (0 == strcmp(LIGHT_ID_KEYBOARD, name))
         set_light = set_light_keyboard;
-#endif
     else
         return -EINVAL;
 
