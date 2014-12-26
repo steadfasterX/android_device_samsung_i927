@@ -186,7 +186,7 @@ TW_NO_SCREEN_BLANK := true
 #TW_CRYPTO_FS_FLAGS := "0x00000406"
 #TW_EXCLUDE_SUPERSU := true
 TWHAVE_SELINUX := true
-
+TW_DISABLE_TTF := true
 HAVE_SELINUX := true
 
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
