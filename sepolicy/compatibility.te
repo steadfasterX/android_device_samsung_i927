@@ -31,8 +31,6 @@ allow keystore init:unix_stream_socket { read write };
 allow mediaserver init:unix_stream_socket { read write };
 allow mediaserver system_data_file:file open;
 
-#============= ping ==============
-allow ping adbd:process sigchld;
 
 #============= platform_app ==============
 allow platform_app init:unix_stream_socket { read write };
@@ -43,14 +41,10 @@ allow platform_app unlabeled:file { read getattr open };
 allow radio init:unix_stream_socket { read write };
 #?allow radio system_data_file:file append;
 
-#============= release_app ==============
-allow release_app init:unix_stream_socket { read write };
-#?allow release_app system_data_file:file append;
-
 #============= shared_app ==============
-allow shared_app init:unix_stream_socket { read write };
+#allow shared_app init:unix_stream_socket { read write };
 #allow shared_app system_data_file:file append;
-allow shared_app unlabeled:file { read getattr open };
+#allow shared_app unlabeled:file { read getattr open };
 
 #============= shell ==============
 allow shell apk_private_data_file:dir getattr;
@@ -73,13 +67,6 @@ allow surfaceflinger adbd:binder call;
 allow surfaceflinger init:unix_stream_socket { read write };
 allow surfaceflinger sysfs:file write;
 
-#============= system ==============
-allow system adbd_socket:sock_file write;
-allow system init:unix_stream_socket { read write };
-allow system proc:file write;
-allow system security_file:lnk_file read;
-allow system unlabeled:file { read getattr open };
-
 #============= system_app ==============
 allow system_app unlabeled:file { read getattr open };
 
@@ -91,7 +78,7 @@ allow untrusted_app kernel:dir { search getattr };
 allow untrusted_app kernel:file { read getattr open };
 allow untrusted_app servicemanager:dir { search getattr };
 allow untrusted_app servicemanager:file { read getattr open };
-allow untrusted_app shared_app:fifo_file write;
+#allow untrusted_app shared_app:fifo_file write;
 #allow untrusted_app system_data_file:file append;
 allow untrusted_app unlabeled:dir getattr;
 allow untrusted_app unlabeled:file { read getattr open };

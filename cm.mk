@@ -14,9 +14,6 @@
 # limitations under the License.
 #
 
-## Specify phone tech before including full_phone
-$(call inherit-product, vendor/cm/config/gsm.mk)
-
 # Release name
 PRODUCT_RELEASE_NAME := SGH-I927
 
@@ -37,4 +34,4 @@ PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=SGH-I927 TARGET_DEVICE=SGH-I927
 TARGET_BOOTANIMATION_HALF_RES := true
 
 # Allow ADB (to access dev settings)
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.debuggable=1 persist.sys.usb.config=mtp persist.service.adb.enable=1
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.debuggable=1 persist.sys.usb.config=mtp persist.service.adb.enable=1 ro.boot.selinux=permissive

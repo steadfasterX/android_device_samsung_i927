@@ -1,0 +1,25 @@
+From 31da628f59b773f09ecb6b81c1e6a1f61892befb Mon Sep 17 00:00:00 2001
+From: bubor <bubor@dualhoki.vim.hu>
+Date: Sun, 11 Jan 2015 07:24:16 +0100
+Subject: [PATCH] always permissive
+
+Change-Id: If09e69a6635c9eab50b863e28f60d8fee7a8a854
+---
+ init/init.c |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/init/init.c b/init/init.c
+index 7a68e62..77a3c5a 100644
+--- a/init/init.c
++++ b/init/init.c
+@@ -919,6 +919,7 @@ static bool selinux_is_disabled(void)
+ 
+ static bool selinux_is_enforcing(void)
+ {
++    return false;
+ #ifdef ALLOW_DISABLE_SELINUX
+     char tmp[PROP_VALUE_MAX];
+ 
+-- 
+1.7.9.5
+

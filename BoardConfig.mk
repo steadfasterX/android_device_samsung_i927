@@ -27,6 +27,7 @@ TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a
 TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_CPU_VARIANT := tegra2
+TARGET_CPU_SMP := true
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 # DO NOT change the following line to vfpv3 as it is not really supported on our device!
@@ -34,11 +35,11 @@ TARGET_ARCH_VARIANT_FPU := vfpv3-d16
 ARCH_ARM_HAVE_TLS_REGISTER := true
 ARCH_ARM_USE_NON_NEON_MEMCPY := true
 ARCH_ARM_HAVE_NEON := false
-
+TARGET_EXTRA_CFLAGS := $(call cc-option,-mtune=cortex-a9) $(call cc-option,-mcpu=cortex-a9)
 #TARGET_HAVE_TEGRA_ERRATA_657451 := true
 BOARD_VENDOR := samsung
 TARGET_BOARD_PLATFORM := tegra
-TARGET_TEGRA_VERSION := ap20
+TARGET_TEGRA_VERSION := t20
 TARGET_BOARD_PLATFORM_GPU := tegra
 TARGET_BOOTLOADER_BOARD_NAME := n1
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -52,12 +53,14 @@ KERNEL_MODULES_DIR := /system/lib/modules
 TARGET_KERNEL_SOURCE := kernel/samsung/i927
 TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
 #TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
+KERNEL_TOOLCHAIN_PREFIX:= ../../arm-eabi-4.7/bin/arm-eabi-
+#/home/bubor/cm12/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin/arm-eabi-gcc: execv 
 
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.n1
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 8388608
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 5136896 # 5242880 bytes exactly
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 15136896 # 5242880 bytes exactly
 BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 629145600
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147483648
 BOARD_FLASH_BLOCK_SIZE := 4096
@@ -77,7 +80,6 @@ ifeq ($(TARGET_NO_RECOVERY),false)
     BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/recovery/bootimg.mk
     TARGET_PREBUILT_RECOVERY_KERNEL := $(LOCAL_PATH)/recovery/kernel
 endif
-
 
 # RIL
 # 3G
@@ -108,6 +110,8 @@ BOARD_EGL_NEEDS_FNW := true
 MAX_EGL_CACHE_KEY_SIZE := 4096
 MAX_EGL_CACHE_SIZE := 2146304
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_32_BIT_SURFACEFLINGER := true
+BOARD_USE_LEGACY_UI := true
 
 # Enable WEBGL in WebKit
 ENABLE_WEBGL := true
@@ -201,7 +205,7 @@ BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 # SElinux
 ifeq ($(HAVE_SELINUX),true)
 BOARD_SEPOLICY_DIRS += \
-    $(LOCAL_PATH)/selinux
+    $(LOCAL_PATH)/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     file_contexts \
@@ -210,7 +214,6 @@ BOARD_SEPOLICY_UNION += \
     rild.te \
     system.te \
     device.te \
-    domain.te \
     zygote.te \
     app.te \
     surfaceflinger.te \
@@ -218,6 +221,5 @@ BOARD_SEPOLICY_UNION += \
     compatibility.te
 
 endif
-MINI_GAPPS := true
--include vendor/google/tiny_gapps_nonneon_tonyp.mk
+
 -include vendor/samsung/i927/BoardConfigVendor.mk

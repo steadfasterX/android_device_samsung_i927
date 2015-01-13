@@ -4,8 +4,6 @@ on early-init
     mount debugfs debugfs /sys/kernel/debug
     write /sys/class/firmware/timeout 5
 
-    #ro.boot.selinux=permissive doesnt work, set permissive here
-    setenforce permissive
     export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
 

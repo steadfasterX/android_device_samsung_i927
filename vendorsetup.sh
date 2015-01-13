@@ -24,51 +24,24 @@
 #add_lunch_combo full_i927-eng
 add_lunch_combo cm_i927-userdebug
 
-echo "Apply patch to frameworks/base"
-echo -n "Apply patch 0001-framework-base-patch.patch"
-(cd frameworks/base; git am ../../device/samsung/i927/patches/0001-framework-base-patch.patch) > /dev/null 2>&1
+echo "Apply patch to build/core"
+echo -n "0001-Don-t-use-Block-based-ota-if-defined-in-the-boardcon.patch"
+(cd build/core; git am ../../device/samsung/i927/patches/0001-Don-t-use-Block-based-ota-if-defined-in-the-boardcon.patch) > /dev/null 2>&1
 if [ $? == 0 ]; then
-	echo "     [DONE]"
+       echo "     [DONE]"
 else
-	(cd frameworks/base; git am --abort)
-	echo "     [FAIL]"
+       (cd build/core; git am --abort)
+       echo "     [FAIL]"
 fi
 
+echo "Apply patch to frameworks/native"
 echo -n "Apply patch 0002-DisplayDevice-Backwards-compatibility-with-old-EGL.patch"
 (cd frameworks/native; git am ../../device/samsung/i927/patches/0002-DisplayDevice-Backwards-compatibility-with-old-EGL.patch) > /dev/null 2>&1
 if [ $? == 0 ]; then
-	echo "     [DONE]"
+       echo "     [DONE]"
 else
-	(cd frameworks/native; git am --abort)
-	echo "     [FAIL]"
-fi
-echo -n "Apply patch 0002-Add-missing-functions-and-signatures-for-older-OMX-v.patch"
-(cd frameworks/av; git am ../../device/samsung/i927/patches/0002-Add-missing-functions-and-signatures-for-older-OMX-v.patch) > /dev/null 2>&1
-if [ $? == 0 ]; then
-	echo "     [DONE]"
-else
-	(cd frameworks/av; git am --abort)
-	echo "     [FAIL]"
-fi
-
-
-echo -n "Apply patch 0001-external-skia-patch.patch"
-(cd external/skia; git am ../../device/samsung/i927/patches/0001-external-skia-patch.patch) > /dev/null 2>&1
-if [ $? == 0 ]; then
-	echo "     [DONE]"
-else
-	(cd frameworks/av; git am --abort)
-	echo "     [FAIL]"
-fi
-
-echo "Apply patch to external/chromium_org"
-echo -n "Apply patch 0001-Work-around-broken-GL_TEXTURE_BINDING_EXTERNAL_OES-q.patch"
-(cd external/chromium_org; git am ../../device/samsung/i927/patches/0001-Work-around-broken-GL_TEXTURE_BINDING_EXTERNAL_OES-q.patch) > /dev/null 2>&1
-if [ $? == 0 ]; then
-  echo "     [DONE]"
-else
-  (cd external/chromium_org; git am --abort)
-  echo "     [FAIL]"
+       (cd frameworks/native; git am --abort)
+       echo "     [FAIL]"
 fi
 
 echo "Apply patch to frameworks/native"
@@ -81,12 +54,44 @@ else
        echo "     [FAIL]"
 fi
 
-echo "Apply patch to bionic"
-echo -n "Apply patch 0003-Add-tegra2-to-bionic.patch"
-(cd bionic; git am ../device/samsung/i927/patches/0003-Add-tegra2-to-bionic.patch) > /dev/null 2>&1
+echo "Apply patch to external/ffmpeg"
+echo -n "Apply patch 0001-FFMPEG-Backwards-compatibility-with-non-neon-devices.patch"
+(cd external/ffmpeg; git checkout 8f08176c02b60accfcecf8fe1462bd2ccebd3844 ; git am ../../device/samsung/i927/patches/0001-FFMPEG-Backwards-compatibility-with-non-neon-devices.patch) > /dev/null 2>&1
 if [ $? == 0 ]; then
-    echo "     [DONE]"
+        echo "     [DONE]"
 else
-    (cd bionic; git am --abort)
-    echo "     [FAIL]"
+        (cd external/ffmpeg; git am --abort)
+        echo "     [FAIL]"
 fi
+
+echo "Apply patch to system/core/init"
+echo -n "Apply patch  0001-always-permissive.patch"
+(cd system/core/init; git am ../../../device/samsung/i927/patches/0001-always-permissive.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+        echo "     [DONE]"
+else
+        (cd system/core/init; git am --abort)
+        echo "     [FAIL]"
+fi
+
+
+echo "Apply patch to bionic"
+echo -n "Apply patch  0001-bionic-for-tegra2.patch"
+(cd bionic; git am ../device/samsung/i927/patches/0001-bionic-for-tegra2.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+        echo "     [DONE]"
+else
+        (cd bionic; git am --abort)
+        echo "     [FAIL]"
+fi
+
+echo "Apply patch to build"
+echo -n "Apply patch  0001-build-tegra.patch"
+(cd build; git am ../device/samsung/i927/patches/0001-build-tegra.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+        echo "     [DONE]"
+else
+        (cd build; git am --abort)
+        echo "     [FAIL]"
+fi
+

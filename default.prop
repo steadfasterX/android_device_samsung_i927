@@ -3,7 +3,7 @@
 #
 ro.adb.secure=0
 ro.secure=1
+ro.boot.selinux=permissive
 ro.allow.mock.location=0
 ro.debuggable=1
 persist.sys.usb.config=adb
-ro.boot.selinux=permissive

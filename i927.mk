@@ -21,16 +21,13 @@ PRODUCT_PACKAGES += \
 
 # HAL
 PRODUCT_PACKAGES += \
-    sensors.n1 \
     lights.n1 \
     gps.tegra \
     camera.tegra \
     power.tegra \
     gralloc.tegra \
     hwcomposer.tegra \
-    audio.primary.n1 \
     audio.primary.n1-alsa \
-    audio_policy.n1 \
     audio.a2dp.default
 
 # Set true if you want .odex files
@@ -50,6 +47,9 @@ PRODUCT_PACKAGES += \
 # Wifi, BT
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+PRODUCT_PACKAGES += wpa_supplicant \
+    hostapd \
+    libwpa_client
 
 
 PRODUCT_PROPERTY_OVERRIDES += \
