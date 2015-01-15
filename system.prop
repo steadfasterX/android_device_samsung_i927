@@ -45,7 +45,7 @@ net.dns1=8.8.8.8
 net.dns2=8.8.4.4  
 
 # No Delay In Making Call
-ro.telephony.call_ring.delay=0
+ro.telephony.call_ring.delay=1500
 ro.telephony.call_ring.multiple=false
 
 # Render UI with GPU
