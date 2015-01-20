@@ -14,8 +14,12 @@ $(recovery_uncompressed_ramdisk): $(MINIGZIP) $(TARGET_RECOVERY_ROOT_TIMESTAMP)
 	@rm -f $(TARGET_RECOVERY_ROOT_OUT)/charger
 	@rm -rf $(TARGET_RECOVERY_ROOT_OUT)/res/images/charger/
 	@rm -f $(TARGET_RECOVERY_ROOT_OUT)/sbin/anicharger
-	cp -f $(LOCAL_PATH)/twrp.fstab $(TARGET_RECOVERY_ROOT_OUT)/etc/
 	cp -f $(LOCAL_PATH)/images/*.png $(TARGET_RECOVERY_ROOT_OUT)/res/images/
+	cp -f $(LOCAL_PATH)/twrp.fstab $(TARGET_RECOVERY_ROOT_OUT)/etc/
+	# Touchwiz CRYPTO support:
+	cp -f vendor/samsung/i927/proprietary/libsec_km.so $(TARGET_RECOVERY_ROOT_OUT)/sbin/
+	cp -f vendor/samsung/i927/proprietary/libsec_ecryptfs.so $(TARGET_RECOVERY_ROOT_OUT)/sbin/
+	cp -f vendor/samsung/i927/proprietary/libkeyutils.so $(TARGET_RECOVERY_ROOT_OUT)/sbin/
 	$(MKBOOTFS) $(TARGET_RECOVERY_ROOT_OUT) > $@
 $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(recovery_ramdisk) $(recovery_kernel) $(INSTALLED_BOOTIMAGE_TARGET)
 	$(hide) $(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@
