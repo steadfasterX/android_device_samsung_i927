@@ -1,6 +1,8 @@
 android_device_samsung_glide
 ============================
 
+SOURCE: https://github.com/acebox/android_device_samsung_glide
+
 Experimental device tree for Samsung Captivate "Glide" (SGH-I927) for ICS (CM9)
 
 This device tree is very EXPERIMENTAL with focus on getting CyanogenMod 9.1 (CM9) built
