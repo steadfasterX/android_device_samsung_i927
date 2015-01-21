@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # inherit from the proprietary version
--include vendor/samsung/glide/BoardConfigVendor.mk
+-include vendor/samsung/i927/BoardConfigVendor.mk
 
 # ace - adjusting settings based on this thread from xda, for the GalaxyR which is *almost* identical to the Glide.
 # ref: http://forum.xda-developers.com/showthread.php?t=1630849
@@ -49,7 +49,7 @@ BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fo
 KERNEL_MODULES_DIR := /lib/modules
 
 # required to remove kernel modules, recovery size is limited to 5MB
-BOARD_RECOVERY_RAMDISK_EXTRA_SCRIPT := device/samsung/glide/releasetools/recovery_ramdisk.sh
+BOARD_RECOVERY_RAMDISK_EXTRA_SCRIPT := device/samsung/i927/releasetools/recovery_ramdisk.sh
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 8388608 # 0x00800000
@@ -63,10 +63,10 @@ BOARD_HAS_LARGE_FILESYSTEM			:= true
 
 # ace - test LiteKernel 4.0 prebuilt
 # TARGET_KERNEL_CONFIG := tegra_bose_defconfig
-# TARGET_KERNEL_SOURCE := kernel/samsung/glide
+# TARGET_KERNEL_SOURCE := kernel/samsung/i927
 # ace - need to change the output from system/lib/modules to root/lib/modules
 # KERNEL_MODULES_OUT := $(TARGET_OUT)/lib/modules
-TARGET_PREBUILT_KERNEL := device/samsung/glide/prebuilt/kernel
+TARGET_PREBUILT_KERNEL := device/samsung/i927/prebuilt/kernel
 
 TARGET_NO_KERNEL := false
 TARGET_NO_RECOVERY := false
@@ -74,7 +74,7 @@ TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
 # Headers
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/glide/include
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/include
 
 # RIL
 BOARD_USES_LIBSECRIL_STUB := true
@@ -104,7 +104,7 @@ BOARD_CAMERA_LIBRARIES := libcamera
 endif
 
 # Graphics
-BOARD_EGL_CFG := device/samsung/glide/configs/egl.cfg
+BOARD_EGL_CFG := device/samsung/i927/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
 TARGET_USES_GL_VENDOR_EXTENSIONS := true
@@ -131,7 +131,7 @@ BOARD_USE_METADATABUFFERTYPE	:= true
 BOARD_USES_MFC_FPS				:= true
 
 # Bluetooth
-#BOARD_CUSTOM_BLUEDROID := ../../../device/samsung/glide/bluedroid/bluetooth.c
+#BOARD_CUSTOM_BLUEDROID := ../../../device/samsung/i927/bluedroid/bluetooth.c
 #BOARD_HAVE_BLUETOOTH_CSR := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
@@ -188,13 +188,13 @@ WIFI_BAND                       	:= 802_11_BGN # ABG
 BOARD_LEGACY_NL80211_STA_EVENTS		:= True
 
 # Releasetools
-#TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/samsung/glide/releasetools/glide_ota_from_target_files
-#TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/samsung/glide/releasetools/glide_img_from_target_files
+#TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/samsung/i927/releasetools/i927_ota_from_target_files
+#TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/samsung/i927/releasetools/i927_img_from_target_files
 
 # Custom squisher, final step script
-TARGET_CUSTOM_RELEASETOOL	:= ./device/samsung/glide/releasetools/squisher
+TARGET_CUSTOM_RELEASETOOL	:= ./device/samsung/i927/releasetools/squisher
 
-# ace - this was being ignored, so hard-wired this into glide.mk
+# ace - this was being ignored, so hard-wired this into i927.mk
 # TARGET_PROVIDES_INIT_RC	:= true
 
 # Assert
@@ -225,9 +225,9 @@ BOARD_CHARGING_MODE_BOOTING_LPM := "/sys/class/power_supply/battery/batt_lp_char
 BOARD_BATTERY_DEVICE_NAME := "battery"
 
 # Recovery
-TARGET_RECOVERY_INITRC := ./device/samsung/glide/recovery/recovery.rc
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/glide/recovery/recovery_keys.c
-BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/glide/recovery/graphics.c
+TARGET_RECOVERY_INITRC := ./device/samsung/i927/recovery/recovery.rc
+BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/i927/recovery/recovery_keys.c
+BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/i927/recovery/graphics.c
 
 BOARD_USES_MMCUTILS					:= true
 BOARD_HAS_NO_SELECT_BUTTON			:= true

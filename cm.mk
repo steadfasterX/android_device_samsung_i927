@@ -22,10 +22,10 @@ CM_BUILDTYPE := EXPERIMENTAL
 $(call inherit-product, vendor/cm/config/gsm.mk)
 
 # Release name
-PRODUCT_RELEASE_NAME := glide
+PRODUCT_RELEASE_NAME := i927
 
 # Inherit device configuration
-$(call inherit-product, device/samsung/glide/full_glide.mk)
+$(call inherit-product, device/samsung/i927/full_i927.mk)
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
@@ -34,8 +34,8 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 PRODUCT_LOCALES := en_US en_GB de_DE es_ES fr_FR it_IT hdpi xhdpi mdpi nodpi
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := glide
-PRODUCT_NAME := cm_glide
+PRODUCT_DEVICE := i927
+PRODUCT_NAME := cm_i927
 PRODUCT_BRAND := samsung
 PRODUCT_MODEL := SGH-I927
 PRODUCT_MANUFACTURER := Samsung

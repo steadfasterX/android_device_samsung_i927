@@ -2,4 +2,4 @@
 LOCAL_PATH := $(call my-dir)
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_glide.mk
+    $(LOCAL_DIR)/full_i927.mk

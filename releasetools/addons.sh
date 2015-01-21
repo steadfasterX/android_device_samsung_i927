@@ -2,9 +2,9 @@
 # It is the final build step (after OTA package)
 
 # To remember :
-# DEVICE_OUT=$ANDROID_BUILD_TOP/out/target/product/glide
-# DEVICE_TOP=$ANDROID_BUILD_TOP/device/samsung/glide
-# VENDOR_TOP=$ANDROID_BUILD_TOP/vendor/samsung/glide
+# DEVICE_OUT=$ANDROID_BUILD_TOP/out/target/product/i927
+# DEVICE_TOP=$ANDROID_BUILD_TOP/device/samsung/i927
+# VENDOR_TOP=$ANDROID_BUILD_TOP/vendor/samsung/i927
 
 echo "addons.sh: $1"
 

@@ -1,12 +1,12 @@
 #!/bin/sh
 # ===================================================================
 # ace - based this off cyanogenmod (team?)skyrocket extract-files.sh
-# with some tweaks for the glide.  Script follows $VENDOR, $DEVICE
+# with some tweaks for the i927.  Script follows $VENDOR, $DEVICE
 # and $OUTDIR.  Also instead of device-proprietary-files.txt, the
 # script is configured to look for $DEVICE-proprietary-files.txt
 # ===================================================================
 VENDOR=samsung
-DEVICE=glide
+DEVICE=i927
 OUTDIR=vendor/$VENDOR/$DEVICE
 MAKEFILE=../../../$OUTDIR/$DEVICE-vendor-blobs.mk
 

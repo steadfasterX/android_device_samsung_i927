@@ -21,11 +21,11 @@
 
 # Inherit from those products. Most specific first.
 # This is where we'd set a backup provider if we had one
-$(call inherit-product, device/samsung/glide/glide.mk)
+$(call inherit-product, device/samsung/i927/i927.mk)
 
 # Discard inherited values and use our own instead.
-PRODUCT_NAME := full_glide
-PRODUCT_DEVICE := glide
+PRODUCT_NAME := full_i927
+PRODUCT_DEVICE := i927
 PRODUCT_BRAND := samsung
 PRODUCT_MANUFACTURER := samsung
 PRODUCT_MODEL := SGH-I927
