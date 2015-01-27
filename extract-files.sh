@@ -21,130 +21,130 @@ MANUFACTURER=samsung
 
 # HAL
 mkdir -p ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
-./adb pull /system/lib/hw/gralloc.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
-./adb pull /system/lib/hw/hwcomposer.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
-./adb pull /system/lib/hw/gps.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
-./adb pull /system/lib/hw/camera.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
-./adb pull /system/lib/hw/sensors.n1.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
+adb pull /system/lib/hw/gralloc.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
+adb pull /system/lib/hw/hwcomposer.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
+adb pull /system/lib/hw/gps.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
+adb pull /system/lib/hw/camera.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
+adb pull /system/lib/hw/sensors.n1.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
 
 # EGL
 mkdir -p ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
-./adb pull /system/lib/egl/libEGL_tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
-./adb pull /system/lib/egl/libEGL_perfhud.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
-./adb pull /system/lib/egl/libGLESv1_CM_tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
-./adb pull /system/lib/egl/libGLESv1_CM_perfhud.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
-./adb pull /system/lib/egl/libGLESv2_tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
-./adb pull /system/lib/egl/libGLESv2_perfhud.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
+adb pull /system/lib/egl/libEGL_tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
+adb pull /system/lib/egl/libEGL_perfhud.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
+adb pull /system/lib/egl/libGLESv1_CM_tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
+adb pull /system/lib/egl/libGLESv1_CM_perfhud.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
+adb pull /system/lib/egl/libGLESv2_tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
+adb pull /system/lib/egl/libGLESv2_perfhud.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/egl/
 
 # RIL files
-./adb pull /system/lib/libsec-ril.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsec-ril.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 
 # Sensors
-./adb pull /system/lib/libakm.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libmpl.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libmllite.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libmlplatform.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libakm.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libmpl.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libmllite.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libmlplatform.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 
 # WIFI
-./adb pull /system/etc/wifi/bcm4330_apsta.bin ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/etc/wifi/bcm4330_mfg.bin ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/etc/wifi/bcm4330_p2p.bin ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/etc/wifi/bcm4330_sta.bin ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/etc/wifi/nvram_mfg.txt ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/etc/wifi/nvram_net.txt ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/bin/nv_hciattach ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/etc/wifi/bcm4330_apsta.bin ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/etc/wifi/bcm4330_mfg.bin ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/etc/wifi/bcm4330_p2p.bin ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/etc/wifi/bcm4330_sta.bin ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/etc/wifi/nvram_mfg.txt ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/etc/wifi/nvram_net.txt ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/bin/nv_hciattach ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 chmod 755 ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/nv_hciattach
 
 # NVIDIA
-./adb pull /system/lib/libnvapputil.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvasfparserhal.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvaviparserhal.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvavp.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvos.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvomx.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvomxadaptor.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvomxilclient.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvrm.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvrm_graphics.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvddk_2d_v2.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvddk_2d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_asfparser.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_audio.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_aviparser.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_camera.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_contentpipe.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_image.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_manager.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_msaudio.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_parser.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_service.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_utils.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_video.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_vc1_video.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmm_writer.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmmlite.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmmlite_audio.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmmlite_utils.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvmmlite_video.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvodm_dtvtuner.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvodm_hdmi.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvodm_imager.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvodm_misc.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvodm_query.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvparser.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvsm.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvtestio.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvtestresults.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvtvmr.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvwinsys.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libnvwsi.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libcgdrv.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libardrv_dynamic.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvapputil.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvasfparserhal.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvaviparserhal.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvavp.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvos.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvomx.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvomxadaptor.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvomxilclient.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvrm.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvrm_graphics.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvddk_2d_v2.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvddk_2d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_asfparser.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_audio.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_aviparser.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_camera.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_contentpipe.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_image.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_manager.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_msaudio.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_parser.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_service.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_utils.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_video.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_vc1_video.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmm_writer.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmmlite.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmmlite_audio.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmmlite_utils.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvmmlite_video.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvodm_dtvtuner.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvodm_hdmi.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvodm_imager.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvodm_misc.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvodm_query.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvparser.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvsm.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvtestio.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvtestresults.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvtvmr.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvwinsys.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libnvwsi.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libcgdrv.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libardrv_dynamic.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 
 # Firmwares
-./adb pull /system/etc/firmware/ ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/firmware/
+adb pull /system/etc/firmware/ ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/firmware/
 
 # OMX
-./adb pull /system/lib/libsomxcmn.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxcore.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxaacd.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxaace.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxac3d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxamrd.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxflacd.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxmp3d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxmp43d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxsr263d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxwmad.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxwmv7d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsomxwmv8d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxcmn.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxcore.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxaacd.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxaace.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxac3d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxamrd.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxflacd.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxmp3d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxmp43d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxsr263d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxwmad.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxwmv7d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsomxwmv8d.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 
-./adb pull /system/lib/libsavsac.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsavscmn.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsavsff.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsavsmeta.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsavsvc.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libsthmb.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsavsac.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsavscmn.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsavsff.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsavsmeta.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsavsvc.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsthmb.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 
-./adb pull /system/lib/libstagefrighthw.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libstagefrighthw.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 
 # Camera
-./adb pull /system/cameradata/ ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/cameradata/
+adb pull /system/cameradata/ ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/cameradata/
 
 # BT
-./adb pull /system/bin/brcm_patchram_plus ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/bin/brcm_patchram_plus ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 chmod 755 ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/brcm_patchram_plus
 
 # TVOut
-./adb pull /system/bin/bintvoutservice ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libtvoutinterface.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libtvoutservice.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
-./adb pull /system/lib/libtvout_jni.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/bin/bintvoutservice ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libtvoutinterface.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libtvoutservice.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libtvout_jni.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 chmod 755 ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/bintvoutservice
 
 # Other files
-./adb pull /system/bin/nvcpud ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/bin/nvcpud ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
 chmod 755 ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/nvcpud
 
 # fi

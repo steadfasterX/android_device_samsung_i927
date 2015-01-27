@@ -1,4 +1,4 @@
-# Copyright (C) 2007 The Android Open Source Project
+# Copyright(c) 2007 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -45,13 +45,28 @@ TARGET_USERIMAGES_USE_EXT4 := true
 
 BOARD_NAND_PAGE_SIZE := 4096
 BOARD_NAND_SPARE_SIZE := 128
+
+#######
+# Kernel options. If you want to build a TWRP kernel disable
+# the "Normal" part and enable the "TWRP" part.
+# Do not forget to disable TARGET_PREBUILT_RECOVERY_KERNEL, too
+
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ttyUSB0,115200 console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
 KERNEL_MODULES_DIR := /system/lib/modules
-TARGET_KERNEL_SOURCE := kernel/samsung/i927
-TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
+#TARGET_KERNEL_SOURCE := kernel/samsung/i927
+
+#Normal kernel:
+#TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
 #TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
+TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/recovery/kernel
+
+# TWRP kernel:
+TARGET_KERNEL_CONFIG := twrp_i927_defconfig
+
+#
+######
 
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.n1
 
@@ -92,7 +107,7 @@ TARGET_PROVIDES_LIBAUDIO := false
 # Camera
 BOARD_USES_PROPRIETARY_LIBCAMERA := true
 BOARD_SECOND_CAMERA_DEVICE := true
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DDICS_CAMERA_BLOB -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DDICS_CAMERA_BLOB -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK -Os
 BOARD_CAMERA_HAVE_ISO := true
 
 # Graphics
@@ -165,38 +180,55 @@ BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../$(LOCAL_PATH)/recovery/recovery_keys.c
 BOARD_CUSTOM_GRAPHICS := ../../../$(LOCAL_PATH)/recovery/graphics.c
 RECOVERY_FSTAB_VERSION := 2
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/fstab.n1
+#TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery/twrp.fstab
 
 BOARD_UMS_LUNFILE := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 
+#######################################################################
 # TWRP
+#
 DEVICE_RESOLUTION := 480x800
+TARGET_USERIMAGES_USE_F2FS := false
 TW_INTERNAL_STORAGE_PATH := "/sdcard"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 TW_NO_REBOOT_BOOTLOADER := true
-TW_DEFAULT_EXTERNAL_STORAGE := true
 TW_HAS_DOWNLOAD_MODE := true
 TW_NO_SCREEN_BLANK := true
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/pwm-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
 TW_NO_SCREEN_BLANK := true
-#TW_INCLUDE_CRYPTO := false
-#TW_CRYPTO_MNT_POINT := "/data"
-#TW_CRYPTO_KEY_LOC := "/efs/metadata"
-#TW_CRYPTO_FS_TYPE := "ext4"
-#TW_INCLUDE_CRYPTO_SAMSUNG := true
-#TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,noauto_da_alloc,discard,journal_async_commit,errors=panic      wait,check,encryptable=/efs/metadata"
-#TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p6"
-#TW_CRYPTO_FS_FLAGS := "0x00000406"
-#TW_EXCLUDE_SUPERSU := true
-TWHAVE_SELINUX := true
+
+# Support for (device/file) de-/encryption in TWRP (ICS only - not JB or higher)
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_SAMSUNG := true
+TW_CRYPTO_KEY_LOC := "/efs/metadata"
+TW_CRYPTO_REAL_BLKDEV := "/dev/block/platform/sdhci-tegra.3/by-num/p6"
+TW_CRYPTO_MNT_POINT := "/data"
+TW_CRYPTO_FS_TYPE := "ext4"
+TW_CRYPTO_FS_OPTIONS := "journal_async_commit,noauto_da_alloc,errors=panic"
+TW_CRYPTO_FS_FLAGS := "0x00000406"
+
+# decrypting internal storage /sdcard
+TW_CRYPTO_SD_REAL_BLKDEV := "/dev/block/mmcblk0p4"
+TW_CRYPTO_SD_FS_TYPE := "vfat"
+
+###
+#defaults to external storage instead of internal on dual storage devices
+TW_DEFAULT_EXTERNAL_STORAGE := true
+###
+
+TW_HAVE_SELINUX := true
 TW_DISABLE_TTF := true
 HAVE_SELINUX := true
-
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
+#
+# END
+#######################################################################
+
 
 # SElinux
 ifeq ($(HAVE_SELINUX),true)
