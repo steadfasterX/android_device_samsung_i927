@@ -54,16 +54,17 @@ BOARD_NAND_SPARE_SIZE := 128
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ttyUSB0,115200 console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
+
 KERNEL_MODULES_DIR := /system/lib/modules
-#TARGET_KERNEL_SOURCE := kernel/samsung/i927
+TARGET_KERNEL_SOURCE := kernel/samsung/i927
 
 #Normal kernel:
 #TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
 #TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
-TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/recovery/kernel
+#TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/recovery/kernel
 
 # TWRP kernel:
-TARGET_KERNEL_CONFIG := twrp_i927_defconfig
+#TARGET_KERNEL_CONFIG := twrp_i927_defconfig
 
 #
 ######
@@ -80,17 +81,17 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
 
-
 TARGET_NO_KERNEL := false
 TARGET_NO_RECOVERY := false
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
-
 # Required to build a recovery image of 5MB max
 ifeq ($(TARGET_NO_RECOVERY),false)
+    TARGET_KERNEL_CONFIG := twrp_i927_defconfig
+    #TARGET_KERNEL_CONFIG := $(LOCAL_PATH)/recovery/kernel-config
     BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/recovery/bootimg.mk
-    TARGET_PREBUILT_RECOVERY_KERNEL := $(LOCAL_PATH)/recovery/kernel
+    #TARGET_PREBUILT_RECOVERY_KERNEL := $(LOCAL_PATH)/recovery/kernel
 endif
 
 
@@ -107,7 +108,7 @@ TARGET_PROVIDES_LIBAUDIO := false
 # Camera
 BOARD_USES_PROPRIETARY_LIBCAMERA := true
 BOARD_SECOND_CAMERA_DEVICE := true
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DDICS_CAMERA_BLOB -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK -Os
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DDICS_CAMERA_BLOB -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK
 BOARD_CAMERA_HAVE_ISO := true
 
 # Graphics

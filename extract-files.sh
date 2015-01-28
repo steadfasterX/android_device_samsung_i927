@@ -19,6 +19,12 @@
 DEVICE=i927
 MANUFACTURER=samsung
 
+#Touchwiz CRYPTO
+mkdir -p ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsec_km.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libsec_ecryptfs.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+adb pull /system/lib/libkeyutils.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/
+
 # HAL
 mkdir -p ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
 adb pull /system/lib/hw/gralloc.tegra.so ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/hw/
