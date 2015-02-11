@@ -46,6 +46,11 @@ TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_NAND_PAGE_SIZE := 4096
 BOARD_NAND_SPARE_SIZE := 128
 
+TARGET_NO_KERNEL := false
+TARGET_NO_RECOVERY := false
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
+
 #######
 # Kernel options. If you want to build a TWRP kernel disable
 # the "Normal" part and enable the "TWRP" part.
@@ -55,15 +60,21 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ttyUSB0,115200 console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt
 KERNEL_MODULES_DIR := /system/lib/modules
-#TARGET_KERNEL_SOURCE := kernel/samsung/i927
+TARGET_KERNEL_SOURCE := kernel/samsung/i927
+KERNEL_TOOLCHAIN_PREFIX:= ../../arm-eabi-4.7/bin/arm-eabi-
 
 #Normal kernel:
 #TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
 #TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
-TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/recovery/kernel
 
 # TWRP kernel:
-TARGET_KERNEL_CONFIG := twrp_i927_defconfig
+# Required to build a recovery image of 5MB max
+ifeq ($(TARGET_NO_RECOVERY),false)
+    #TARGET_KERNEL_CONFIG := twrp_i927_bubor_defconfig
+    TARGET_KERNEL_CONFIG := twrp_i927_defconfig
+    BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/recovery/bootimg.mk
+    #TARGET_PREBUILT_RECOVERY_KERNEL := $(LOCAL_PATH)/recovery/sediKERNEL
+endif
 
 #
 ######
@@ -79,19 +90,6 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
-
-
-TARGET_NO_KERNEL := false
-TARGET_NO_RECOVERY := false
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_RADIOIMAGE := true
-
-
-# Required to build a recovery image of 5MB max
-ifeq ($(TARGET_NO_RECOVERY),false)
-    BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/recovery/bootimg.mk
-    TARGET_PREBUILT_RECOVERY_KERNEL := $(LOCAL_PATH)/recovery/kernel
-endif
 
 
 # RIL
@@ -191,10 +189,7 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 #
 DEVICE_RESOLUTION := 480x800
 TARGET_USERIMAGES_USE_F2FS := false
-TW_INTERNAL_STORAGE_PATH := "/sdcard"
-TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
-TW_EXTERNAL_STORAGE_PATH := "/external_sd"
-TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+
 TW_NO_REBOOT_BOOTLOADER := true
 TW_HAS_DOWNLOAD_MODE := true
 TW_NO_SCREEN_BLANK := true
@@ -202,7 +197,7 @@ TW_BRIGHTNESS_PATH := "/sys/class/backlight/pwm-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
 TW_NO_SCREEN_BLANK := true
 
-# Support for (device/file) de-/encryption in TWRP (ICS only - not JB or higher)
+# Support for (device/file) de-/encryption in TWRP
 TW_INCLUDE_CRYPTO := true
 #TW_INCLUDE_JB_CRYPTO := true
 TW_INCLUDE_CRYPTO_SAMSUNG := true
@@ -212,19 +207,28 @@ TW_CRYPTO_MNT_POINT := "/data"
 TW_CRYPTO_FS_TYPE := "ext4"
 TW_CRYPTO_FS_OPTIONS := "journal_async_commit,noauto_da_alloc,errors=panic"
 TW_CRYPTO_FS_FLAGS := "0x00000406"
+
 # decrypting internal storage /sdcard
+TW_INTERNAL_STORAGE_PATH := "/sdcard"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
 TW_CRYPTO_SD_REAL_BLKDEV := "/dev/block/mmcblk0p4"
-#TW_CRYPTO_SD_REAL_BLKDEV := "/devices/platform/sdhci-tegra.3/mmc_host/mmc0/mmc0"
 TW_CRYPTO_SD_FS_TYPE := "vfat"
+
+# external SD
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 
 ###
 #defaults to external storage instead of internal on dual storage devices
 TW_DEFAULT_EXTERNAL_STORAGE := true
 ###
 
-TW_HAVE_SELINUX := true
+#TW_USE_TOOLBOX := false
 TW_DISABLE_TTF := true
-#HAVE_SELINUX := true
+
+TWHAVE_SELINUX := true
+HAVE_SELINUX := false
+
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
 #
 # END

@@ -15,7 +15,7 @@ PRODUCT_PACKAGES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-    static_busybox \
+    libbusybox \
     make_ext4fs \
     setup_fs
 
@@ -44,8 +44,16 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ueventd.n1.rc:root/ueventd.n1.rc \
 
 # SELinux
+ifeq ($(HAVE_SELINUX),true)
 PRODUCT_PACKAGES += \
     libselinux libsepol
+endif
+
+# Kernel (if prebuilt kernel was specified)
+ifeq ($(TARGET_PREBUILT_RECOVERY_KERNEL),true)
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/recovery/sediKERNEL:kernel
+endif
 
 # Wifi, BT
 PRODUCT_COPY_FILES += \
