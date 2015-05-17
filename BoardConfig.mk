@@ -60,10 +60,13 @@ KERNEL_TOOLCHAIN_PREFIX:= ../../arm-eabi-4.7/bin/arm-eabi-
 KERNEL_MODULES_DIR := /system/lib/modules
 TARGET_KERNEL_SOURCE := kernel/samsung/i927
 
-#Normal kernel:
+#CM kernel:
 #TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
 #TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
 #TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/recovery/kernel
+
+# sediKERNEL:
+TARGET_KERNEL_CONFIG := sedikernel_i927_defconfig
 
 # TWRP kernel:
 #TARGET_KERNEL_CONFIG := twrp_i927_defconfig
@@ -90,7 +93,7 @@ TARGET_NO_RADIOIMAGE := true
 
 # Required to build a recovery image of 5MB max
 ifeq ($(TARGET_NO_RECOVERY),false)
-    TARGET_KERNEL_CONFIG := twrp_i927_defconfig
+    #TARGET_KERNEL_CONFIG := twrp_i927_defconfig
     #TARGET_KERNEL_CONFIG := $(LOCAL_PATH)/recovery/kernel-config
     BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/recovery/bootimg.mk
     TARGET_PREBUILT_RECOVERY_KERNEL := $(LOCAL_PATH)/recovery/kernel
