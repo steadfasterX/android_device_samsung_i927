@@ -20,9 +20,10 @@ on init
     symlink /sdcard /storage/sdcard0
     symlink /external_sd /storage/sdcard1
     symlink /system/etc /etc
-    mount tmpfs nodev /tmp
+    mount ramfs ramfs /tmp
     chown root shell /tmp
-    chmod 0777 /tmp
+    chmod 0775 /tmp
+    mount ext4 /dev/block/mmcblk0p1 /efs
 on boot
     ifup lo
     hostname localhost
