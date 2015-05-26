@@ -55,7 +55,9 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_CMDLINE := mem=511M@0M secmem=1M@511M mem=512M@512M vmalloc=256M fota_boot=false tegra_fbmem=800K@0x18012000 video=tegrafb console=ttyUSB0,115200 console=ram usbcore.old_scheme_first=1 lp0_vec=8192@0x1819E000 emmc_checksum_done=true emmc_checksum_pass=true tegraboot=sdmmc gpt androidboot.selinux=permissive
 
-KERNEL_TOOLCHAIN_PREFIX:= ../../arm-eabi-4.7/bin/arm-eabi-
+# TOOLCHAINS
+KERNEL_TOOLCHAIN_PREFIX:= $(ANDROID_BUILD_TOP)/arm-eabi-4.7/bin/arm-eabi-
+ARM_EABI_TOOLCHAIN :=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/arm-eabi-4.7/bin
 
 KERNEL_MODULES_DIR := /system/lib/modules
 TARGET_KERNEL_SOURCE := kernel/samsung/i927

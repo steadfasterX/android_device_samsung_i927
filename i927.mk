@@ -206,6 +206,22 @@ PRODUCT_PROPERTY_OVERRIDES += \
 #selinux set to permissive
 PRODUCT_PROPERTY_OVERRIDES += ro.boot.selinux=permissive 
 
+# Since Android 4.2.2, USB debugging requires authentication, something that is not possible during boot. 
+# To disable this, set the following property in default.prop (inside initrd):
+# ro.adb.secure=0
+# To get root access this is a must:
+# ro.secure=0
+# will allow you to run adbd as root via the adb root command:
+#ro.debuggable=1
+#service.adb.root=1
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.secure=0 \
+    ro.adb.secure=0 \
+    ro.debuggable=1 \
+    service.adb.root=1 \
+    persist.service.adb.enable=1 \
+    persist.service.debuggable=1
+
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
