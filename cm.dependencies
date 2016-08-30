@@ -1,31 +1,23 @@
 [
     {
-	"remote":       "github",
+	"remote":       "simplegithub",
 	"account":      "CyanogenMod",
         "repository": 	"android_packages_apps_SamsungServiceMode",
         "target_path": 	"packages/apps/SamsungServiceMode",
 	"revision":     "ics"
     },
     {
-	"remote":       "github",
+	"remote":       "simplegithub",
         "account": 	"steadfasterX",
         "repository": 	"kernel_samsung_i927",
         "target_path": 	"kernel/samsung/i927",
         "revision":     "sediKERNEL"
     },
     {
-	"remote":       "github",
+	"remote":       "simplegithub",
         "account": 	"buborh",
         "repository":   "android_vendor_samsung_i927",
         "target_path":  "vendor/samsung/i927",
         "revision":     "omni"
     },
-    {
-	"remote":       "github",
-        "account": 	"tonyp",
-        "repository":   "android_vendor_google",
-        "target_path":  "vendor/google",
-        "revision":     "ics"
-    }
-
 ]
