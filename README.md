@@ -17,7 +17,7 @@
   <project name="buborh/android_vendor_samsung_i927" path="vendor/samsung/i927" remote="simplegithub" revision="omni" />
 </manifest>
 ~~~
-4) `repo sync --current -j 8 (adjust -j if needed)`
+4) `repo sync --current -j 8` (adjust -j if needed)
 
 5) `source build/envsetup && lunch cm_i927-userdebug`
 
