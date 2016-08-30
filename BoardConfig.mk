@@ -60,7 +60,7 @@ KERNEL_TOOLCHAIN_PREFIX:= $(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/arm-
 ARM_EABI_TOOLCHAIN :=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/arm-eabi-4.7/bin
 
 KERNEL_MODULES_DIR := /system/lib/modules
-TARGET_KERNEL_SOURCE := kernel/samsung/i927
+#TARGET_KERNEL_SOURCE := kernel/samsung/i927
 
 #CM kernel:
 #TARGET_KERNEL_CONFIG := cyanogenmod_i927_defconfig
@@ -89,7 +89,7 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 BOARD_HAS_LARGE_FILESYSTEM := true
 
 TARGET_NO_KERNEL := false
-TARGET_NO_RECOVERY := false
+TARGET_NO_RECOVERY := true
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
